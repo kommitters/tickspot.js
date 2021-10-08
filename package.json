@@ -1,0 +1,21 @@
+{
+  "name": "toggltick-js",
+  "version": "0.1.0",
+  "keywords": [
+    "Toggl",
+    "Tickspot",
+    "toggltick",
+    "toggltick-js"
+  ],
+  "description": "Syncs Toggl time entries into Tickspot",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kommitters/toggltick-js"
+  },
+  "author": {
+    "name": "kommitters Open Source",
+    "email": "oss@kommit.co"
+  },
+  "license": "MIT"
+}
