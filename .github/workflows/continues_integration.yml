@@ -1,0 +1,48 @@
+name: Continues Integration
+
+on: [pull_request]
+
+jobs:
+  lint:
+    name: Lint on node ${{ matrix.node }}
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node: [14]
+        os: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: remove node_modules
+        run: rm -rf node_modules
+
+      - name: install
+        run: npm install
+
+      - name: lint
+        run: npm run lint
+
+  test:
+    name: Tests on node ${{ matrix.node }}
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node: [14]
+        os: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: remove node_modules
+        run: rm -rf node_modules
+
+      - name: install
+        run: npm install
+
+      - name: test
+        run: npm run test
