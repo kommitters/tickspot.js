@@ -1,4 +1,6 @@
-export default function cli(args) {
+import togglAuth from './togglAuth.js';
+
+export default function cli() {
   console.log('welcome!'); // eslint-disable-line no-console
-  console.log(args); // eslint-disable-line no-console
+  togglAuth();
 }
