@@ -1,4 +1,3 @@
-export default function cli(args) {
+export default function cli() {
   console.log('welcome!'); // eslint-disable-line no-console
-  console.log(args); // eslint-disable-line no-console
 }
