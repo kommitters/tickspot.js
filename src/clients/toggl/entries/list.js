@@ -1,17 +1,14 @@
 import axios from 'axios';
-import TOKENS from '../../../../config.js';
+import TOKENS from 'toggltick-js/config';
+import baseUrl from 'toggltick-js/src/clients/baseUrl';
 
 const { TOGGL_API_TOKEN } = TOKENS;
-const URL = 'https://api.track.toggl.com/api/v8/time_entries';
+const { TogglBaseURL } = baseUrl;
+const URL = `${TogglBaseURL}/time_entries`;
 
-// eslint-disable-next-line camelcase
-export default async function getTogglEntries(start_date, end_date) {
-  try {
-    const response = await axios.get(URL, { auth: { username: TOGGL_API_TOKEN, password: 'api_token' }, params: { start_date, end_date } });
-    console.log(response.data); // eslint-disable-line no-console
-    return response.data;
-  } catch (error) {
-    console.log(error); // eslint-disable-line no-console
-    return error;
-  }
+export default async function getTogglEntries(startDate, endDate) {
+  const response = await axios.get(URL, { auth: { username: TOGGL_API_TOKEN, password: 'api_token' }, params: { start_date: startDate, end_date: endDate } })
+    .catch((error) => error.response);
+  if (response?.data) return response.data;
+  return [];
 }

@@ -19,5 +19,6 @@ module.exports = {
         js: 'ignorePackages',
       },
     ],
+    'import/no-unresolved': 'off',
   },
 };

@@ -1,4 +1,4 @@
-export const togglResponse = {
+export const togglGetEntriesResponse = {
   status: 200,
   statusText: 'OK',
   headers: {
@@ -54,7 +54,7 @@ export const togglResponse = {
     },
   ],
 };
-export const togglError = {
+export const togglGetEntriesError = {
   response: {
     status: 403,
     statusText: 'Forbidden',
