@@ -1,10 +1,10 @@
 import axios from 'axios';
-import getTogglEntries from 'toggltick-js/src/clients/toggl/entries/list';
-import { togglGetEntriesError, togglGetEntriesResponse } from '../../fixture/clients/toggl/listResponse.js';
+import getTogglEntries from '#src/clients/toggl/entries/list.js';
+import { togglGetEntriesError, togglGetEntriesResponse } from '#test/fixture/clients/toggl/listResponse';
 
 jest.mock('axios');
 
-describe('togglAuth', () => {
+describe('togglListEntries', () => {
   describe('when API call is successful', () => {
     it('should return the toggl data', async () => {
       axios.get.mockResolvedValueOnce(togglGetEntriesResponse);

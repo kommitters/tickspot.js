@@ -23,9 +23,10 @@
     "toggltickjs": "bin/cli.js"
   },
   "type": "module",
-  "exports": {
-    "./config": "./config.js",
-    "./src/*": "./src/*.js"
+  "imports": {
+    "#config": "./config.js",
+    "#src/*": "./src/*.js",
+    "#test/*": "./test/*.js"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",

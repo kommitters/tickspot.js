@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TOGGL_API_TOKEN, TOGGL_BASE_URL } from 'toggltick-js/config';
+import { TOGGL_API_TOKEN, TOGGL_BASE_URL } from '#config';
 
 const URL = `${TOGGL_BASE_URL}/time_entries`;
 
@@ -9,6 +9,7 @@ const getTogglEntries = async (startDate, endDate) => {
     params: { start_date: startDate, end_date: endDate },
   })
     .catch((error) => error.response);
+
   if (response?.data) return response.data;
   return [];
 };
