@@ -11,6 +11,7 @@ const getTogglEntries = async (startDate, endDate) => {
     .catch((error) => error.response);
 
   if (response?.data) return response.data;
+
   return [];
 };
 
