@@ -1,5 +1,5 @@
 import responseGenerator from './responseGenerator.js';
-import { dataEntryCreate, dataEntryCreateMissed } from './dataEntryCreateEntry.js';
+import dataEntry from './dataEntryCreateEntry.js';
 
 const dataSuccessful = {
   data: {
@@ -19,11 +19,11 @@ const dataSuccessful = {
 };
 const messageTimeMissed = "duration can't be blank";
 const auth = 'Basic Hdjeu3849274hdbcyruayr137udschs7';
-const requiredData = { timeEntry: dataEntryCreate };
+const requiredData = { timeEntry: dataEntry };
+const dataEntryMissed = { ...dataEntry, duration: null };
 
 const togglCreateEntriesResponse = responseGenerator(200, 'OK', 'post', requiredData, dataSuccessful, auth);
 const togglCreateEntriesError = { response: responseGenerator(403, 'Forbidden', 'post', requiredData, '', null) };
-const toogglCreateEntriesMissedData = { response: responseGenerator(400, 'Bad Request', 'post', dataEntryCreateMissed, messageTimeMissed, auth) };
-// console.log(toogglCreateEntriesMissedData);
+const toogglCreateEntriesMissedData = { response: responseGenerator(400, 'Bad Request', 'post', dataEntryMissed, messageTimeMissed, auth) };
 
 export { togglCreateEntriesResponse, togglCreateEntriesError, toogglCreateEntriesMissedData };
