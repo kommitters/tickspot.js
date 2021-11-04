@@ -1,98 +1,23 @@
-export const togglGetEntriesResponse = {
-  status: 200,
-  statusText: 'OK',
-  headers: {
-    server: 'nginx',
-    date: 'Fri, 22 Oct 2021 16:16:18 GMT',
-    'content-type': 'application/json; charset=utf-8',
-    'content-length': '1437',
-    'cache-control': 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0',
-    'x-toggl-request-id': 'dd9b6f6833d1efd8a3bbb7f573a63dd1',
-    'x-service-level': 'GREEN',
-    via: '1.1 google',
-    'alt-svc': 'clear',
-    connection: 'close',
+import responseGenerator from './responseGenerator.js';
+
+const dataSuccessful = [
+  {
+    id: 5539418734,
+    guid: 'g55759550gy1c18f32620d9beyt88511',
+    wid: 8573648,
+    pid: 175738645,
+    billable: false,
+    start: '2021-10-20T20:05:34+00:00',
+    stop: '2021-10-20T21:06:12+00:00',
+    duration: 3638,
+    description: 'Test',
+    duronly: false,
+    at: '2021-10-20T20:06:28+00:00',
+    uid: 7320352,
   },
-  config: {
-    transitional: {
-      silentJSONParsing: true,
-      forcedJSONParsing: true,
-      clarifyTimeoutError: false,
-    },
-    adapter: ['httpAdapter'],
-    transformRequest: [['transformRequest']],
-    transformResponse: [['transformResponse']],
-    timeout: 0,
-    xsrfCookieName: 'XSRF-TOKEN',
-    xsrfHeaderName: 'X-XSRF-TOKEN',
-    maxContentLength: -1,
-    maxBodyLength: -1,
-    validateStatus: ['validateStatus'],
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      Authorization: 'Basic Hdjeu3849274hdbcyruayr137udschs7',
-      'User-Agent': 'axios/0.23.0',
-    },
-    method: 'get',
-    url: 'https://api.track.toggl.com/api/v8/me',
-    data: undefined,
-  },
-  data: [
-    {
-      id: 5539418734,
-      guid: 'g55759550gy1c18f32620d9beyt88511',
-      wid: 8573648,
-      pid: 175738645,
-      billable: false,
-      start: '2021-10-20T20:05:34+00:00',
-      stop: '2021-10-20T21:06:12+00:00',
-      duration: 3638,
-      description: 'Test',
-      duronly: false,
-      at: '2021-10-20T20:06:28+00:00',
-      uid: 7320352,
-    },
-  ],
-};
-export const togglGetEntriesError = {
-  response: {
-    status: 403,
-    statusText: 'Forbidden',
-    headers: {
-      server: 'nginx',
-      date: 'Fri, 22 Oct 2021 16:38:06 GMT',
-      'content-length': '0',
-      'cache-control': 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0',
-      'x-authorization-missing': 'true',
-      'x-toggl-request-id': 'c0471e7508f72bbabbcb7a709e379f66',
-      via: '1.1 google',
-      'alt-svc': 'clear',
-      connection: 'close',
-    },
-    config: {
-      transitional: {
-        silentJSONParsing: true,
-        forcedJSONParsing: true,
-        clarifyTimeoutError: false,
-      },
-      adapter: ['httpAdapter'],
-      transformRequest: [['transformRequest']],
-      transformResponse: [['transformResponse']],
-      timeout: 0,
-      xsrfCookieName: 'XSRF-TOKEN',
-      xsrfHeaderName: 'X-XSRF-TOKEN',
-      maxContentLength: -1,
-      maxBodyLength: -1,
-      validateStatus: ['validateStatus'],
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        Authorization: 'Basic Mjc5YTQwNWExMzc3NWM1NjIzZjM4ZjRjZjE5YjU4ODc=',
-        'User-Agent': 'axios/0.23.0',
-      },
-      method: 'get',
-      url: 'https://api.track.toggl.com/api/v8/me',
-      data: undefined,
-    },
-    data: '',
-  },
-};
+];
+const auth = 'Basic Hdjeu3849274hdbcyruayr137udschs7';
+const togglGetEntriesResponse = responseGenerator(200, 'OK', 'get', null, dataSuccessful, auth);
+const togglGetEntriesError = { response: responseGenerator(403, 'Forbidden', 'get', null, '', null) };
+
+export { togglGetEntriesResponse, togglGetEntriesError };

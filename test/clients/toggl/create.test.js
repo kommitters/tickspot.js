@@ -1,7 +1,7 @@
 import axios from 'axios';
 import createTogglEntries from '#src/clients/toggl/entries/create.js';
-import dataEntryCreate from '#test/fixture/clients/toggl/dataEntryCreateEntry.js';
-import { togglCreateEntriesError, togglCreateEntriesResponse } from '#test/fixture/clients/toggl/createResponse';
+import { dataEntryCreate, dataEntryCreateMissed } from '#test/fixture/clients/toggl/dataEntryCreateEntry.js';
+import { togglCreateEntriesError, togglCreateEntriesResponse, toogglCreateEntriesMissedData } from '#test/fixture/clients/toggl/createResponse';
 
 jest.mock('axios');
 
@@ -30,7 +30,14 @@ describe('togglCreateEntries', () => {
       axios.post.mockRejectedValueOnce(togglCreateEntriesError);
       const response = await createTogglEntries(dataEntryCreate);
 
-      expect(response).toEqual([]);
+      expect(response).toBe(togglCreateEntriesError.response.data);
+    });
+
+    it('Should reject with an error when required data missed', async () => {
+      axios.post.mockRejectedValue(toogglCreateEntriesMissedData);
+      const response = await createTogglEntries(dataEntryCreateMissed);
+
+      expect(response).toBe(toogglCreateEntriesMissedData.response.data);
     });
   });
 });

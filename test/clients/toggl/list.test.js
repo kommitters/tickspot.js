@@ -19,7 +19,7 @@ describe('togglListEntries', () => {
       axios.get.mockRejectedValueOnce(togglGetEntriesError);
       const response = await getTogglEntries();
 
-      return expect(response).toEqual([]);
+      return expect(response).toBe(togglGetEntriesError.response.data);
     });
   });
 });
