@@ -8,9 +8,14 @@
  * @param {string} authorization authorization in base64
  * @returns complete response
  */
-const responseGenerator = (status, statusText, method, requestData,
-  dataResponse, authorization) => ({
-
+const responseGenerator = (
+  status,
+  statusText,
+  method,
+  requestData,
+  dataResponse,
+  authorization,
+) => ({
   status,
   statusText,
   headers: {
@@ -18,7 +23,8 @@ const responseGenerator = (status, statusText, method, requestData,
     date: 'Fri, 22 Oct 2021 16:16:18 GMT',
     'content-type': 'application/json; charset=utf-8',
     'content-length': '1437',
-    'cache-control': 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0',
+    'cache-control':
+      'no-cache,private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0',
     'x-toggl-request-id': 'dd9b6f6833d1efd8a3bbb7f573a63dd1',
     'x-service-level': 'GREEN',
     via: '1.1 google',

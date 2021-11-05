@@ -10,7 +10,8 @@ const URL = `${TOGGL_BASE_URL}/time_entries`;
  * start: time entry start time (string, required, ISO 8601 date and time)
  * duration: time entry duration in seconds.(integer, required)
  * created_with: the name of your client app (string, required)
- * For more information visit https://github.com/toggl/toggl_api_docs/blob/master/chapters/time_entries.md#time-entries
+ * For more information visit:
+ * https://github.com/toggl/toggl_api_docs/blob/master/chapters/time_entries.md#time-entries
  * @returns data entry confirmation.
  */
 const createTogglEntries = async (dataEntry) => {

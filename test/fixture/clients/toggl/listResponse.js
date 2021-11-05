@@ -18,6 +18,8 @@ const dataSuccessful = [
 ];
 const auth = 'Basic Hdjeu3849274hdbcyruayr137udschs7';
 const togglGetEntriesResponse = responseGenerator(200, 'OK', 'get', null, dataSuccessful, auth);
-const togglGetEntriesError = { response: responseGenerator(403, 'Forbidden', 'get', null, '', null) };
+const togglGetEntriesError = {
+  response: responseGenerator(403, 'Forbidden', 'get', null, '', null),
+};
 
 export { togglGetEntriesResponse, togglGetEntriesError };

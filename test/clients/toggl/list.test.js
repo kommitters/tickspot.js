@@ -1,6 +1,7 @@
 import axios from 'axios';
 import getTogglEntries from '#src/clients/toggl/entries/list.js';
-import { togglGetEntriesError, togglGetEntriesResponse } from '#test/fixture/clients/toggl/listResponse';
+import { togglGetEntriesError, togglGetEntriesResponse }
+  from '#test/fixture/clients/toggl/listResponse';
 
 jest.mock('axios');
 

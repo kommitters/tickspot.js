@@ -20,5 +20,11 @@ module.exports = {
       },
     ],
     'import/no-unresolved': 'off',
+    'max-len': [
+      'error',
+      {
+        code: 100,
+      },
+    ],
   },
 };
