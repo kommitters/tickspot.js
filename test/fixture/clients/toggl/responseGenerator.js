@@ -8,7 +8,9 @@
  * @param {string} authorization authorization in base64
  * @returns complete response
  */
-const responseGenerator = (status, statusText, method, requestData, data, authorization) => ({
+const responseGenerator = (status, statusText, method, requestData,
+  dataResponse, authorization) => ({
+
   status,
   statusText,
   headers: {
@@ -47,7 +49,7 @@ const responseGenerator = (status, statusText, method, requestData, data, author
     url: 'https://api.track.toggl.com/api/v8/me',
     data: requestData,
   },
-  data,
+  data: dataResponse,
 });
 
 export default responseGenerator;
