@@ -1,8 +1,11 @@
 import axios from 'axios';
 import createTogglEntries from '#src/clients/toggl/entries/create.js';
 import dataEntry from '#test/fixture/clients/toggl/dataEntryCreateEntry.js';
-import { togglCreateEntriesError, togglCreateEntriesResponse, toogglCreateEntriesMissedData }
-  from '#test/fixture/clients/toggl/createResponse';
+import {
+  togglCreateEntriesError,
+  togglCreateEntriesResponse,
+  toogglCreateEntriesMissedData,
+} from '#test/fixture/clients/toggl/createResponse';
 
 jest.mock('axios');
 
