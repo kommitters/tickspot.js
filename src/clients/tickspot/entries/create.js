@@ -23,7 +23,7 @@ const auth = `Token token=${TICKSPOT_API_TOKEN}`;
  * @returns data entry confirmation.
  */
 const createTickEntries = async (dataEntry, userAgentEmail = USER_AGENT_EMAIL) => {
-  const response = await axios.post(URL, { ...dataEntry },
+  const response = await axios.post(URL, dataEntry,
     { headers: { Authorization: auth, 'User-Agent': `Toggltickjs (${userAgentEmail})` } })
     .catch((error) => error.response);
 

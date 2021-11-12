@@ -14,7 +14,7 @@ const dataSuccessful = {
     updated_at: '2021-11-09T11:30:40.000-05:00',
   },
 };
-const messageTimeMissed = { errors: { hours: [Array] } };
+const messageTimeMissed = { errors: { hours: [] } };
 const auth = 'Token token=12345akeu785asd45ac48';
 const requiredData = { ...dataEntry };
 const dataEntryMissed = { ...dataEntry, hours: null };
