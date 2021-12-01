@@ -1,5 +1,5 @@
 # TogglTick
-Syncs Toggl time entries into Tickspot
+CLient for tickspot v2 api
 
 ## Installation
 
@@ -22,7 +22,7 @@ This library is licensed under an MIT license. See [LICENSE][license] for detail
 ## Acknowledgements
 Made with 💙 by [kommitters Open Source](https://kommit.co)
 
-[license]: https://github.com/kommitters/toggltick-js/blob/main/LICENSE
-[coc]: https://github.com/kommitters/toggltick-js/blob/main/CODE_OF_CONDUCT.md
-[changelog]: https://github.com/kommitters/toggltick-js/blob/main/CHANGELOG.md
-[contributing]: https://github.com/kommitters/toggltick-js/blob/main/CONTRIBUTING.md
+[license]: https://github.com/kommitters/tickspot.js/blob/main/LICENSE
+[coc]: https://github.com/kommitters/tickspot.js/blob/main/CODE_OF_CONDUCT.md
+[changelog]: https://github.com/kommitters/tickspot.js/blob/main/CHANGELOG.md
+[contributing]: https://github.com/kommitters/tickspot.js/blob/main/CONTRIBUTING.md

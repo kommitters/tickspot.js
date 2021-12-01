@@ -2,7 +2,7 @@
 
 First off, thanks for taking the time to contribute, it is encouraging! 🎉🙌
 
-We want to make it as easy as possible to contribute changes that help the [TooglTick][repo] library to grow and thrive. There are a few guidelines that we ask contributors to follow so that we can merge your changes quickly.
+We want to make it as easy as possible to contribute changes that help the [tickspot.js][repo] library to grow and thrive. There are a few guidelines that we ask contributors to follow so that we can merge your changes quickly.
 
 ## Getting started
 
@@ -51,12 +51,11 @@ alternatives.
 
 ## Additional resources
 
-* [Toggl](https://toggl.com/)
 * [Tickspot](https://www.tickspot.com/)
 * #get in touch: [oss@kommit.co](mailto:oss@kommit.co) | [@kommitters_oss](https://twitter.com/kommitters_oss) on twitter.
 
-[repo]: https://github.com/kommitters/toggltick-js
-[coc]: https://github.com/kommitters/toggltick-js/blob/main/CODE_OF_CONDUCT.md
+[repo]: https://github.com/kommitters/tickspot.js
+[coc]: https://github.com/kommitters/tickspot.js/blob/main/CODE_OF_CONDUCT.md
 [commit-msg]: https://github.com/erlang/otp/wiki/Writing-good-commit-messages
-[good-first-issue]: https://github.com/kommitters/toggltick-js/issues?q=label%3A%22%F0%9F%91%8B+Good+first+issue%22
-[help-wanted]: https://github.com/kommitters/toggltick-js/issues?q=label%3A%22%F0%9F%86%98+Help+wanted%22
+[good-first-issue]: https://github.com/kommitters/tickspot.js/issues?q=label%3A%22%F0%9F%91%8B+Good+first+issue%22
+[help-wanted]: https://github.com/kommitters/tickspot.js/issues?q=label%3A%22%F0%9F%86%98+Help+wanted%22

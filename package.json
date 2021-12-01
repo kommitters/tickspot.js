@@ -1,27 +1,22 @@
 {
-  "name": "toggltick-js",
+  "name": "tickspot.js",
   "version": "0.1.0",
   "keywords": [
-    "Toggl",
     "Tickspot",
-    "toggltick",
-    "toggltick-js"
+    "tickspot.js"
   ],
-  "description": "Syncs Toggl time entries into Tickspot",
+  "description": "Client for tickspot v2 api",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kommitters/toggltick-js"
+    "url": "https://github.com/kommitters/tickspot.js"
   },
   "author": {
     "name": "kommitters Open Source",
     "email": "oss@kommit.co"
   },
   "license": "MIT",
-  "homepage": "https://github.com/kommitters/toggltick-js#readme",
-  "bin": {
-    "toggltickjs": "bin/cli.js"
-  },
+  "homepage": "https://github.com/kommitters/tickspot.js#readme",
   "type": "module",
   "imports": {
     "#config": "./config.js",
