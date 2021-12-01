@@ -2,20 +2,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const {
-  TICK_SUBSCRIPTION_ID,
-  TICK_API_TOKEN,
-  TICK_USER_ID,
-  TICK_USER_AGENT_EMAIL,
-  TICK_BASE_URL_START,
-  TICK_BASE_URL_API_VERSION,
-} = process.env;
+const { TICK_BASE_URL_START } = process.env;
 
-const TICK_BASE_URL = `${TICK_BASE_URL_START}/${TICK_SUBSCRIPTION_ID}/${TICK_BASE_URL_API_VERSION}`;
-
-export {
-  TICK_API_TOKEN,
-  TICK_USER_ID,
-  TICK_USER_AGENT_EMAIL,
-  TICK_BASE_URL,
-};
+export default { TICK_BASE_URL_START };
