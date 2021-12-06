@@ -1,3 +1,3 @@
-export default function tickspot() {
-  console.log('welcome!'); // eslint-disable-line no-console
-}
+import Entries from './entries.js';
+
+export default Entries;
