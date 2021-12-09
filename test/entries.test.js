@@ -1,6 +1,7 @@
 import axios from 'axios';
-import Entries from '#src/index';
-import { dataEntryCreate, infoUser } from '#test/fixture/entries/dataEntries';
+import Client from '#src/index';
+import dataEntryCreate from '#test/fixture/entries/dataEntries';
+import infoUser from '#test/fixture/client';
 import {
   createEntriesResponse,
   createEntriesError,
@@ -8,7 +9,7 @@ import {
 } from '#test/fixture/entries/createResponse';
 
 jest.mock('axios');
-const entries = new Entries(infoUser);
+const client = new Client(infoUser);
 
 describe('createTickEntries', () => {
   describe('when API call is successful', () => {
@@ -17,13 +18,13 @@ describe('createTickEntries', () => {
     });
 
     it('should return the tick data entry', async () => {
-      const response = await entries.create(dataEntryCreate);
+      const response = await client.entries.create(dataEntryCreate);
 
       expect(response).toBe(createEntriesResponse.data);
     });
 
     it('should create the tick entry', async () => {
-      const response = await entries.create(dataEntryCreate);
+      const response = await client.entries.create(dataEntryCreate);
 
       expect(response.data.date).toBe(dataEntryCreate.date);
       expect(response.data.notes).toBe(dataEntryCreate.notes);
@@ -33,14 +34,14 @@ describe('createTickEntries', () => {
   describe('when API call is not succesful', () => {
     it('Should reject with an error when authentication fails', async () => {
       axios.post.mockRejectedValueOnce(createEntriesError);
-      const response = await entries.create(dataEntryCreate);
+      const response = await client.entries.create(dataEntryCreate);
 
       expect(response).toBe(createEntriesError.response.data);
     });
 
     it('Should reject with an error when required data missed', async () => {
       axios.post.mockRejectedValue(createEntriesMissedData);
-      const response = await entries.create({ ...dataEntryCreate, hours: null });
+      const response = await client.entries.create({ ...dataEntryCreate, hours: null });
 
       expect(response).toBe(createEntriesMissedData.response.data);
     });

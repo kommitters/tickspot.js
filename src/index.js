@@ -1,3 +1,3 @@
-import Entries from './entries.js';
+import Client from './client.js';
 
-export default Entries;
+export default Client;

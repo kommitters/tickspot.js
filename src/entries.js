@@ -1,5 +1,4 @@
 import axios from 'axios';
-import TICK_BASE_URL_START from '#config';
 
 /**
  * Entries module for tickspor v2 API
@@ -7,10 +6,10 @@ import TICK_BASE_URL_START from '#config';
  * https://github.com/tick/tick-api/blob/master/sections/entries.md
  */
 export default class Entries {
-  constructor({ subscriptionId, apiToken }) {
-    this.baseURL = `${TICK_BASE_URL_START}/${subscriptionId}/api/v2`;
-    this.auth = `Token token=${apiToken}`;
-    this.USER_AGENT_EMAIL = 'user@kommit.co';
+  constructor({ auth, baseURL, agentEmail }) {
+    this.baseURL = baseURL;
+    this.auth = auth;
+    this.USER_AGENT_EMAIL = agentEmail;
   }
 
   /**
@@ -21,6 +20,7 @@ export default class Entries {
  * notes
  * task_id: required*
  * user_id: will be ignored if the user is not an administrator
+ * @param {callback} dataCallback is an optional callback to handle the output data.
  * @returns data entry confirmation.
  */
   async create({
@@ -29,7 +29,7 @@ export default class Entries {
     notes,
     taskId,
     userId,
-  }) {
+  }, dataCallback) {
     const dataEntry = {
       date,
       hours,
@@ -45,6 +45,8 @@ export default class Entries {
         { Authorization: this.auth, 'User-Agent': `Toggltickjs (${this.USER_AGENT_EMAIL})` },
       })
       .catch((error) => error.response);
+
+    if (dataCallback) dataCallback(response.data);
 
     return response.data;
   }
