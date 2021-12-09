@@ -29,7 +29,7 @@ export default class Entries {
     notes,
     taskId,
     userId,
-  }, dataCallback) {
+  }, dataCallback = (data) => data) {
     const dataEntry = {
       date,
       hours,
@@ -46,8 +46,6 @@ export default class Entries {
       })
       .catch((error) => error.response);
 
-    if (dataCallback) dataCallback(response.data);
-
-    return response.data;
+    return dataCallback(response.data);
   }
 }
