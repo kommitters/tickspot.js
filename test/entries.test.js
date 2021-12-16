@@ -31,7 +31,7 @@ describe('createTickEntries', () => {
     });
   });
 
-  describe('when API call is not succesful', () => {
+  describe('when create method returns an error', () => {
     it('Should reject with an error when authentication fails', async () => {
       axios.post.mockRejectedValueOnce(createEntriesError);
       const response = await client.entries.create(dataEntryCreate);
@@ -43,7 +43,7 @@ describe('createTickEntries', () => {
       axios.post.mockRejectedValue(createEntriesMissedData);
       const response = await client.entries.create({ ...dataEntryCreate, hours: null });
 
-      expect(response).toBe(createEntriesMissedData.response.data);
+      expect(response).toEqual(new Error('hours field is missing'));
     });
   });
 });

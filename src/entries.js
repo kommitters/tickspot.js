@@ -21,7 +21,7 @@ export default class Entries {
  * task_id: required*
  * user_id: will be ignored if the user is not an administrator
  * @param {callback} dataCallback is an optional callback to handle the output data.
- * @returns data entry confirmation.
+ * @returns data entry confirmation or an error is a required field is missing.
  */
   async create({
     date,
@@ -29,7 +29,10 @@ export default class Entries {
     notes,
     taskId,
     userId,
-  }, dataCallback = (data) => data) {
+  }, dataCallback) {
+    if (!hours) return new Error('hours field is missing');
+    if (!taskId) return new Error('taskId field is missing');
+
     const dataEntry = {
       date,
       hours,
@@ -45,7 +48,6 @@ export default class Entries {
         { Authorization: this.auth, 'User-Agent': `Toggltickjs (${this.USER_AGENT_EMAIL})` },
       })
       .catch((error) => error.response);
-
-    return dataCallback(response.data);
+    return dataCallback ? dataCallback(response.data) : response.data;
   }
 }

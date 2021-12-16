@@ -1,9 +1,54 @@
 # TogglTick
-CLient for tickspot v2 api
+TogglTick is a Node.js client for [tickspot v2 api](https://github.com/tick/tick-api). 
 
 ## Installation
 
+### Install via NPM
+Get the package
+
+```shell
+$ npm i toggltick.js
+```
+
+Include the client at your application
+
+```javascript
+import Client from 'toggltick.js';
+```
 ## Usage
+Instance the Client with your subscription id, api token and user-agent email as following: 
+
+```javascript
+const client = new CLient({ subscriptionId: 'subscriptionId', apiToken: 'apiToken', agentEmail: 'agentEmail' })
+```
+
+### Entries
+With the entries module you can use the following methods: 
+- Create
+
+  The create method creates an entry with the following data: 
+  - date
+  - hours: required*
+  - notes: entry description
+  - task_id: required*
+  - user_id: will be ignored if the user is not an administrator
+
+  Optionally, you can add a callback to handle the response data from the tickspot API. 
+
+  For example: 
+  ```javascript
+  ...
+  const data = {
+  date: '2021-12-01',
+  hours: 2,
+  notes: 'Entry description',
+  taskId: 12345678,
+  };
+  const dataCallback = (data) => data;
+
+  client.entries.create(data, dataCallback);
+  ```
+  The create method returns a promise with the response data from the tickspot API or with your custom output data handled with the callback.
 
 ## Development
 
