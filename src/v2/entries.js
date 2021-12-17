@@ -48,6 +48,7 @@ export default class Entries {
         { Authorization: this.auth, 'User-Agent': `Toggltickjs (${this.USER_AGENT_EMAIL})` },
       })
       .catch((error) => error.response);
+
     return dataCallback ? dataCallback(response.data) : response.data;
   }
 }

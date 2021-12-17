@@ -10,7 +10,7 @@ Get the package
 $ npm i toggltick.js
 ```
 
-Include the client at your application
+Include the client in your application
 
 ```javascript
 import Client from 'toggltick.js';
@@ -39,12 +39,22 @@ With the entries module you can use the following methods:
   ```javascript
   ...
   const data = {
-  date: '2021-12-01',
-  hours: 2,
-  notes: 'Entry description',
-  taskId: 12345678,
+    date: '2021-12-01',
+    hours: 2,
+    notes: 'Entry description',
+    taskId: 12345678,
   };
-  const dataCallback = (data) => data;
+  
+  const callback = (dataResponse) => {
+    const date = new Date(dataResponse.date);
+    return {
+      EntryDate: {
+        day: date.getDate(),
+        month: date.getMonth(),
+        year: date.getFullYear(),
+      },
+    };
+  };
 
   client.entries.create(data, dataCallback);
   ```
