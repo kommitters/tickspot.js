@@ -1,4 +1,4 @@
-import ClientV2 from './v2/index.js';
+import ClientV2 from './v2/client.js';
 
 const tickspot = ({
   apiVersion,
