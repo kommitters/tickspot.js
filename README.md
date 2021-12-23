@@ -1,5 +1,5 @@
-# TogglTick
-TogglTick is a Node.js client for [tickspot v2 api](https://github.com/tick/tick-api). 
+# Tickspot.js
+Tickspot.js is a Node.js client for [tickspot api](https://github.com/tick/tick-api). 
 
 ## Installation
 
@@ -7,19 +7,19 @@ TogglTick is a Node.js client for [tickspot v2 api](https://github.com/tick/tick
 Get the package
 
 ```shell
-$ npm i toggltick.js
+$ npm i tickspot.js
 ```
 
 Include the client in your application
 
 ```javascript
-import Client from 'toggltick.js';
+import tickspot from 'tickspot.js';
 ```
 ## Usage
-Instance the Client with your subscription id, api token and user-agent email as following: 
+Call the tickspot method with the api version, your subscription id, api token and user-agent email, it will return a client instance. 
 
 ```javascript
-const client = new CLient({ subscriptionId: 'subscriptionId', apiToken: 'apiToken', agentEmail: 'agentEmail' })
+const client = tickspot({ apiVersion: 2, subscriptionId: 'subscriptionId', apiToken: 'apiToken', agentEmail: 'agentEmail' })
 ```
 
 ### Entries

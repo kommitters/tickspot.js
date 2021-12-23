@@ -1,10 +1,10 @@
 import axios from 'axios';
-import Client from '#src/v2/index';
+import tickspot from '#src/index';
 import createResponse from '#test/v2/fixture/entries/createResponse';
 import userInfo from '#test/v2/fixture/client';
 
 jest.mock('axios');
-const client = new Client(userInfo);
+const client = tickspot({ apiVersion: 2, ...userInfo });
 
 describe('createTickEntries', () => {
   const dataEntry = {
@@ -15,11 +15,8 @@ describe('createTickEntries', () => {
   };
   const dataEntryMissed = { ...dataEntry, hours: null };
 
-  const succesfulResponse = createResponse(dataEntry, 'succesful');
-  const authenticationError = createResponse(dataEntry, 'authenticationError');
-  const dataMissedError = createResponse(dataEntryMissed, 'dataMissedError');
-
   describe('when API call is successful', () => {
+    const succesfulResponse = createResponse(dataEntry, 'succesful');
     beforeEach(() => {
       axios.post.mockResolvedValueOnce(succesfulResponse);
     });
@@ -40,6 +37,7 @@ describe('createTickEntries', () => {
 
   describe('when create method returns an error', () => {
     it('Should reject with an error when authentication fails', async () => {
+      const authenticationError = createResponse(dataEntry, 'authenticationError');
       axios.post.mockRejectedValueOnce(authenticationError);
       const response = await client.entries.create(dataEntry);
 
@@ -47,6 +45,7 @@ describe('createTickEntries', () => {
     });
 
     it('Should reject with an error when required data missed', async () => {
+      const dataMissedError = createResponse(dataEntryMissed, 'dataMissedError');
       axios.post.mockRejectedValue(dataMissedError);
       const response = await client.entries.create({ ...dataEntryMissed, hours: null });
 
