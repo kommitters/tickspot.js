@@ -8,12 +8,15 @@ import axios from 'axios';
 export default class Entries {
   constructor({ auth, baseURL, agentEmail }) {
     this.baseURL = baseURL;
-    this.auth = auth;
-    this.USER_AGENT_EMAIL = agentEmail;
+    this.DEFAULT_HEADERS = {
+      Authorization: auth,
+      'User-Agent':
+      `tickspot.js (${agentEmail})`,
+    };
   }
 
   /**
- * Create Toggl Entries
+ * Create Tick Entries
  * @param {object} {} is an object with the data entry. The following are the object keys:
  * date
  * hours: required*
@@ -42,13 +45,45 @@ export default class Entries {
     };
     const URL = `${this.baseURL}/entries.json`;
 
-    const response = await axios.post(URL, dataEntry,
-      {
-        headers:
-        { Authorization: this.auth, 'User-Agent': `Toggltickjs (${this.USER_AGENT_EMAIL})` },
-      })
-      .catch((error) => error.response);
+    const response = await axios.post(
+      URL,
+      dataEntry,
+      { headers: this.DEFAULT_HEADERS },
+    ).catch((error) => error.response);
 
     return dataCallback ? dataCallback(response.data) : response.data;
+  }
+
+  /**
+ * List Tick Entries
+ * @param {object} {} is an object with the params to get the entries.
+ * The following are the object keys:
+ * startDate: required*
+ * endDate: required*
+ * user_id: will be ignored if the user is not an administrator
+ * @param {callback} dataCallback is an optional callback to handle the output data.
+ * @returns array with the list entries or an error is a required field is missing.
+ */
+  async list({
+    startDate,
+    endDate,
+    userId,
+  }, dataCallback) {
+    if (!startDate) return new Error('startDate field is missing');
+    if (!endDate) return new Error('endDate field is missing');
+
+    const params = {
+      start_date: startDate,
+      end_date: endDate,
+      user_id: userId,
+    };
+    const URL = `${this.baseURL}/entries.json`;
+
+    return axios.get(
+      URL,
+      { headers: this.DEFAULT_HEADERS, params },
+    )
+      .then(({ data }) => (dataCallback ? dataCallback(data) : data))
+      .catch((error) => error);
   }
 }
