@@ -69,8 +69,8 @@ export default class Entries {
     endDate,
     userId,
   }, dataCallback) {
-    if (!startDate) return new Error('startDate field is missing');
-    if (!endDate) return new Error('endDate field is missing');
+    if (!startDate) throw new Error('startDate field is missing');
+    if (!endDate) throw new Error('endDate field is missing');
 
     const params = {
       start_date: startDate,
@@ -84,6 +84,8 @@ export default class Entries {
       { headers: this.DEFAULT_HEADERS, params },
     )
       .then(({ data }) => (dataCallback ? dataCallback(data) : data))
-      .catch((error) => error);
+      .catch((error) => {
+        throw new Error(error?.response?.data ?? error?.response ?? error);
+      });
   }
 }

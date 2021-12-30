@@ -71,6 +71,12 @@ describe('listTickEntries', () => {
     userId: 'userId',
   };
 
+  const baseURL = 'TICK_BASE_URL_START/123456/api/v2/entries.json';
+  const defaultHeaders = {
+    Authorization: 'Token token=ar425598573462y24ec1ceee728981663',
+    'User-Agent': 'tickspot.js (user@kommit.co)',
+  };
+
   describe('when API call is successful', () => {
     const responseData = [{ id: '234' }, { id: '235' }];
     beforeEach(() => {
@@ -82,12 +88,9 @@ describe('listTickEntries', () => {
       const response = await client.entries.list(params);
 
       expect(axios.get).toHaveBeenCalledTimes(1);
-      expect(axios.get).toHaveBeenCalledWith('TICK_BASE_URL_START/123456/api/v2/entries.json',
+      expect(axios.get).toHaveBeenCalledWith(baseURL,
         {
-          headers: {
-            Authorization: 'Token token=ar425598573462y24ec1ceee728981663',
-            'User-Agent': 'tickspot.js (user@kommit.co)',
-          },
+          headers: defaultHeaders,
           params: { end_date: '2021-11-09', start_date: '2021-11-08', user_id: 'userId' },
         });
       expect(response).toEqual([{ id: '234' }, { id: '235' }]);
@@ -95,25 +98,21 @@ describe('listTickEntries', () => {
   });
 
   describe('when list method returns an error', () => {
-    const responseError = new Error('test');
+    const responseError = 'test';
     beforeEach(() => {
       axios.get.mockClear();
       axios.get.mockRejectedValueOnce(responseError);
     });
 
     it('Should reject with an error', async () => {
-      const response = await client.entries.list(params);
+      await expect(client.entries.list(params)).rejects.toThrow(responseError);
 
       expect(axios.get).toHaveBeenCalledTimes(1);
-      expect(axios.get).toHaveBeenCalledWith('TICK_BASE_URL_START/123456/api/v2/entries.json',
+      expect(axios.get).toHaveBeenCalledWith(baseURL,
         {
-          headers: {
-            Authorization: 'Token token=ar425598573462y24ec1ceee728981663',
-            'User-Agent': 'tickspot.js (user@kommit.co)',
-          },
+          headers: defaultHeaders,
           params: { end_date: '2021-11-09', start_date: '2021-11-08', user_id: 'userId' },
         });
-      expect(response).toEqual(responseError);
     });
   });
 
@@ -125,12 +124,12 @@ describe('listTickEntries', () => {
     });
 
     it('Should reject with an error because of missing parameters', async () => {
-      const responseEmpty = await client.entries.list({});
-      const responseStartDate = await client.entries.list({ ...params, endDate: null });
+      await expect(client.entries.list({})).rejects.toThrow('startDate field is missing');
+
+      await expect(client.entries.list({ ...params, endDate: null }))
+        .rejects.toThrow('endDate field is missing');
 
       expect(axios.get).not.toHaveBeenCalled();
-      expect(responseEmpty).toEqual(Error('startDate field is missing'));
-      expect(responseStartDate).toEqual(Error('endDate field is missing'));
     });
   });
 });
