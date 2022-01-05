@@ -51,4 +51,26 @@ export default class Entries {
 
     return dataCallback ? dataCallback(response.data) : response.data;
   }
+
+  /**
+ * Get a entry information
+ * @param entryId
+ * entryId: required*
+ * @param {callback} dataCallback is an optional callback to handle the output data.
+ * @returns data entry or an error is a required field is missing.
+ */
+  async getEntry(entryId, dataCallback) {
+    if (!entryId) throw new Error('entryId field is missing');
+
+    const URL = `${this.baseURL}/entries/${entryId}.json`;
+
+    const response = await axios.get(URL,
+      {
+        headers:
+        { Authorization: this.auth, 'User-Agent': `tickspot.js (${this.USER_AGENT_EMAIL})` },
+      })
+      .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+
+    return dataCallback ? dataCallback(response.data) : response.data;
+  }
 }
