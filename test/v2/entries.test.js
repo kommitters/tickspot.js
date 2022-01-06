@@ -97,14 +97,14 @@ describe('listTickEntries', () => {
     });
   });
 
-  describe('when list method returns an error', () => {
+  describe('when API call returns an error', () => {
     const responseError = 'test';
     beforeEach(() => {
       axios.get.mockClear();
       axios.get.mockRejectedValueOnce(responseError);
     });
 
-    it('Should reject with an error', async () => {
+    it('an error should be thrown when making the call', async () => {
       await expect(client.entries.list(params)).rejects.toThrow(responseError);
 
       expect(axios.get).toHaveBeenCalledTimes(1);
@@ -116,14 +116,14 @@ describe('listTickEntries', () => {
     });
   });
 
-  describe('when list method returns an error because of missing parameters', () => {
+  describe('when the list method is not sent any parameter', () => {
     const responseData = [{ id: '234' }, { id: '235' }];
     beforeEach(() => {
       axios.get.mockClear();
       axios.get.mockResolvedValueOnce({ data: responseData });
     });
 
-    it('Should reject with an error because of missing parameters', async () => {
+    it('should throw an error specifying which parameter is missing', async () => {
       await expect(client.entries.list({})).rejects.toThrow('startDate field is missing');
 
       await expect(client.entries.list({ ...params, endDate: null }))
