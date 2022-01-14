@@ -39,27 +39,28 @@ describe('createTickEntries', () => {
     it('Should reject with an error when authentication fails', async () => {
       const authenticationError = createResponse(dataEntry, 'authenticationError');
       axios.post.mockRejectedValueOnce(authenticationError);
-      const response = await client.entries.create(dataEntry);
 
-      expect(response).toBe(authenticationError.response.data);
+      await expect(client.entries.create(dataEntry)).rejects.toThrow('authenticationError');
     });
 
     it('Should reject with an error when hours data missed', async () => {
       const dataEntryMissed = { ...dataEntry, hours: null };
       const dataMissedError = createResponse(dataEntryMissed, 'dataMissedError');
       axios.post.mockRejectedValue(dataMissedError);
-      const response = await client.entries.create(dataEntryMissed);
 
-      expect(response).toEqual(new Error('hours field is missing'));
+      await expect(
+        client.entries.create(dataEntryMissed),
+      ).rejects.toThrow('hours field is missing');
     });
 
     it('Should reject with an error when taskId data missed', async () => {
       const dataEntryMissed = { ...dataEntry, taskId: null };
       const dataMissedError = createResponse(dataEntryMissed, 'dataMissedError');
       axios.post.mockRejectedValue(dataMissedError);
-      const response = await client.entries.create(dataEntryMissed);
 
-      expect(response).toEqual(new Error('taskId field is missing'));
+      await expect(
+        client.entries.create(dataEntryMissed),
+      ).rejects.toThrow('taskId field is missing');
     });
   });
 });

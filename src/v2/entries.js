@@ -33,8 +33,8 @@ export default class Entries {
     taskId,
     userId,
   }, dataCallback) {
-    if (!hours) return new Error('hours field is missing');
-    if (!taskId) return new Error('taskId field is missing');
+    if (!hours) throw new Error('hours field is missing');
+    if (!taskId) throw new Error('taskId field is missing');
 
     const dataEntry = {
       date,
@@ -49,9 +49,13 @@ export default class Entries {
       URL,
       dataEntry,
       { headers: this.DEFAULT_HEADERS },
-    ).catch((error) => error.response);
+    )
+      .then(({ data }) => (dataCallback ? dataCallback(data) : data))
+      .catch((error) => {
+        throw new Error(error?.response?.data ?? error?.response ?? error);
+      });
 
-    return dataCallback ? dataCallback(response.data) : response.data;
+    return response;
   }
 
   /**

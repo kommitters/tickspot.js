@@ -13,7 +13,8 @@ const createResponse = (dataEntry, responseType) => {
     case 'authenticationError':
       return {
         response:
-          responseGenerator(Url, 401, 'Bad credentials or user agent', 'post', dataEntry, '', null),
+          responseGenerator(Url, 401, 'Bad credentials or user agent',
+            'post', dataEntry, 'authenticationError', null),
       };
 
     case 'dataMissedError':
