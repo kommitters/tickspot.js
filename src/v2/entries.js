@@ -79,7 +79,7 @@ export default class Entries {
     };
     const URL = `${this.baseURL}/entries.json`;
 
-    return axios.get(
+    const response = await axios.get(
       URL,
       { headers: this.DEFAULT_HEADERS, params },
     )
@@ -87,5 +87,7 @@ export default class Entries {
       .catch((error) => {
         throw new Error(error?.response?.data ?? error?.response ?? error);
       });
+
+    return response;
   }
 }
