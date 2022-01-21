@@ -5,11 +5,11 @@ const auth = 'Token token=12345akeu785asd45ac48';
 
 const responseFactory = (dataEntry, responseType, apiResponseData, url, method = 'get') => {
   switch (responseType) {
-    case 'create':
+    case 'created':
       return responseGenerator(url, 201, 'Created',
         'post', dataEntry, apiResponseData, auth);
 
-    case 'succesful':
+    case 'successful':
       return responseGenerator(url, 200, 'OK',
         method, dataEntry, apiResponseData, auth);
 

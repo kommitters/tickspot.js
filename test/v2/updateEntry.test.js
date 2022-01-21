@@ -1,12 +1,9 @@
 import axios from 'axios';
 import tickspot from '#src/index';
-import responseFactory from '#test/v2/fixture/responseFactory';
+import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import dataEntrySuccessful from './fixture/entries/updateEntryResponseData';
-import {
-  dataEntryNotFound,
-  dataEntryUnprocessableEntity,
-} from './fixture/entries/sharedEntryResponseData';
+import { notFoundResponse, unprocessableEntityResponse } from './fixture/shared/responseData';
 
 jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
@@ -14,7 +11,7 @@ const updateEntryUrl = 'https://www.tickspot.com/123456/api/v2/entries/123456.js
 
 describe('updateEntry', () => {
   describe('when the API call is successful', () => {
-    const responseData = responseFactory({}, 'succesful',
+    const responseData = responseFactory({}, 'successful',
       dataEntrySuccessful, updateEntryUrl, 'put');
 
     beforeEach(() => {
@@ -40,7 +37,7 @@ describe('updateEntry', () => {
   });
 
   describe('when the API call does not find a entry', () => {
-    const responseData = responseFactory({}, 'notFound', dataEntryNotFound, updateEntryUrl, 'put');
+    const responseData = responseFactory({}, 'notFound', notFoundResponse, updateEntryUrl, 'put');
 
     beforeEach(() => {
       axios.put.mockResolvedValueOnce(responseData);
@@ -64,7 +61,7 @@ describe('updateEntry', () => {
 
   describe('when the API call responds with an unprocessable entity', () => {
     const responseData = responseFactory({}, 'notFound',
-      dataEntryUnprocessableEntity, updateEntryUrl, 'put');
+      unprocessableEntityResponse, updateEntryUrl, 'put');
 
     beforeEach(() => {
       axios.put.mockResolvedValueOnce(responseData);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import tickspot from '#src/index';
-import responseFactory from '#test/v2/fixture/responseFactory';
+import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import dataSuccessful from './fixture/entries/createResponseData.js';
 
@@ -17,7 +17,7 @@ describe('createTickEntries', () => {
   };
 
   describe('when API call is successful', () => {
-    const succesfulResponse = responseFactory(dataEntry, 'create',
+    const succesfulResponse = responseFactory(dataEntry, 'created',
       dataSuccessful, createEntriesUrl);
 
     beforeEach(() => {
