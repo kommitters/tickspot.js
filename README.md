@@ -78,6 +78,39 @@ With the entries module you can use the following methods:
   ```
 The getEntry method returns a promise with the response data from the tickspot API or with your custom output data handled with the callback.
 
+- updateEntry
+
+   The updateEntry method will update the entry information from the parameters passed, this method needs:
+   - entryId: required*
+   - date:  optional. It does not allow update to future dates
+   - hours: optional. Time spent on this task.
+   - notes: optional. Entry description
+   - task_id: optional.
+   - user_id: optional. It will be ignored if the user is not an administrator
+   - billed: (boolean) optional. If it is true, the entry will be blocked
+
+    Optionally, you can add a callback to handle the response data from the tickspot API.
+
+     For example:
+     ```javascript
+  ...
+  const dataCallback = (dataResponse) => {
+     console.log(dataResponse);
+   };
+
+   const data = {
+    entryId: '101152129',
+    date: '2022-01-20',
+    hours: 1,
+    notes: 'Update entry test',
+    taskId: 14541850,
+    userId: 337683,
+    billed: true,
+  };
+
+  client.entries.updateEntry(data, dataCallback);
+
+ The updateEntry method returns a promise with the response data from the tickspot API or with your custom   output data handled with the callback.
 ## Development
 
 ## Code of conduct
