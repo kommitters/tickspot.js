@@ -1,4 +1,4 @@
-export const dataEntrySuccessful = {
+const dataEntrySuccessful = {
   data: {
     id: 123456,
     date: '2021-12-29',
@@ -24,11 +24,4 @@ export const dataEntrySuccessful = {
   },
 };
 
-export const dataEntryNotFound = {
-  data: {
-    status: 404,
-    statusText: 'Not Found',
-  },
-};
-
-export default { dataEntrySuccessful, dataEntryNotFound };
+export default dataEntrySuccessful;
