@@ -73,4 +73,49 @@ export default class Entries {
 
     return dataCallback ? dataCallback(response.data) : response.data;
   }
+
+  /**
+ * Update entry information
+ * @param {object} {} is an object with the data entry. The following are the object keys:
+ * entryId: required*
+ * date: it does not allow update to future dates
+ * hours
+ * notes
+ * taskId
+ * user_id: it will be ignored if the user is not an administrator
+ * billed: if it is true, the entry will be blocked
+ * @param {callback} dataCallback is an optional callback to handle the output data.
+ * @returns data entry or an error is a required field is missing.
+ */
+  async updateEntry({
+    entryId,
+    date,
+    hours,
+    notes,
+    taskId,
+    userId,
+    billed,
+  }, dataCallback) {
+    if (!entryId) throw new Error('entryId field is missing');
+
+    const dataEntry = {
+      date,
+      hours,
+      notes,
+      task_id: taskId,
+      user_id: userId,
+      billed,
+    };
+
+    const URL = `${this.baseURL}/entries/${entryId}.json`;
+
+    const response = await axios.put(URL, dataEntry,
+      {
+        headers:
+        { Authorization: this.auth, 'User-Agent': `tickspot.js (${this.USER_AGENT_EMAIL})` },
+      })
+      .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+
+    return dataCallback ? dataCallback(response.data) : response.data;
+  }
 }
