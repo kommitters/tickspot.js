@@ -2,8 +2,8 @@ import axios from 'axios';
 import tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
-import dataEntrySuccessful from './fixture/entries/updateEntryResponseData';
-import { notFoundResponse, unprocessableEntityResponse } from './fixture/shared/responseData';
+import dataEntrySuccessful from '../fixture/entries/updateEntryResponseData';
+import { notFoundResponse, unprocessableEntityResponse } from '../fixture/shared/responseData';
 
 jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });

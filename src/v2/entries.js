@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 /**
- * Entries module for tickspor v2 API
+ * Entries module for tickspot V2 API
  * For more information visit:
  * https://github.com/tick/tick-api/blob/master/sections/entries.md
  */
@@ -16,7 +16,7 @@ export default class Entries {
   }
 
   /**
- * Create Tick Entries
+ * Create Tickspot Entries
  * @param {object} {} is an object with the data entry. The following are the object keys:
  * date
  * hours: required*

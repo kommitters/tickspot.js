@@ -2,7 +2,7 @@ import axios from 'axios';
 import tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
-import dataSuccessful from './fixture/entries/createResponseData.js';
+import dataSuccessful from '#test/v2/fixture/entries/createResponseData.js';
 
 jest.mock('axios');
 jest.mock('#config', () => 'TICK_BASE_URL_START');
