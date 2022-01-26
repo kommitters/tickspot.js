@@ -50,12 +50,11 @@ export default class Entries {
       dataEntry,
       { headers: this.DEFAULT_HEADERS },
     )
-      .then(({ data }) => (dataCallback ? dataCallback(data) : data))
       .catch((error) => {
         throw new Error(error?.response?.data ?? error?.response ?? error);
       });
 
-    return response;
+    return dataCallback ? dataCallback(response.data) : response.data;
   }
 
   /**
