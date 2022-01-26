@@ -99,12 +99,11 @@ export default class Entries {
       URL,
       { headers: this.DEFAULT_HEADERS, params },
     )
-      .then(({ data }) => (dataCallback ? dataCallback(data) : data))
       .catch((error) => {
         throw new Error(error?.response?.data ?? error?.response ?? error);
       });
 
-    return response;
+    return dataCallback ? dataCallback(response.data) : response.data;
   }
 
   /**
@@ -120,10 +119,7 @@ export default class Entries {
     const URL = `${this.baseURL}/entries/${entryId}.json`;
 
     const response = await axios.get(URL,
-      {
-        headers:
-        { Authorization: this.auth, 'User-Agent': `tickspot.js (${this.USER_AGENT_EMAIL})` },
-      })
+      { headers: this.DEFAULT_HEADERS })
       .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
 
     return dataCallback ? dataCallback(response.data) : response.data;
@@ -165,10 +161,7 @@ export default class Entries {
     const URL = `${this.baseURL}/entries/${entryId}.json`;
 
     const response = await axios.put(URL, dataEntry,
-      {
-        headers:
-        { Authorization: this.auth, 'User-Agent': `tickspot.js (${this.USER_AGENT_EMAIL})` },
-      })
+      { headers: this.DEFAULT_HEADERS })
       .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
 
     return dataCallback ? dataCallback(response.data) : response.data;

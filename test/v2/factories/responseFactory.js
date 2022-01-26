@@ -21,7 +21,7 @@ const responseFactory = (dataEntry, responseType, apiResponseData, url, method =
       return {
         response:
           responseGenerator(url, 401, 'Bad credentials or user agent',
-            'post', dataEntry, '', null),
+            'post', dataEntry, 'authenticationError', null),
       };
 
     case 'dataMissedError':
