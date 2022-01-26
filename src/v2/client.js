@@ -1,6 +1,6 @@
-import TICK_BASE_URL_START from '#config';
+import TICK_BASE_URL_START from './constants.js';
 import Entries from './entries.js';
-import Tasks from './tasks.js';
+import Tasks from './resources/tasks.js';
 
 /**
  * Client module for tickspor v2 API, it is the main class.

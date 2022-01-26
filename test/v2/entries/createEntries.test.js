@@ -5,7 +5,6 @@ import userInfo from '#test/v2/fixture/client';
 import dataSuccessful from '#test/v2/fixture/entries/createResponseData.js';
 
 jest.mock('axios');
-jest.mock('#config', () => 'TICK_BASE_URL_START');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const createEntriesUrl = 'https://www.tickspot.com/123456/api/v2/entries.json';
 
