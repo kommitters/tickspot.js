@@ -64,7 +64,11 @@ export default class Entries {
  * The following are the object keys:
  * startDate: required*
  * endDate: required*
- * user_id: will be ignored if the user is not an administrator
+ * userId: will be ignored if the user is not an administrator
+ * projectId
+ * taskId
+ * billable
+ * billed
  * @param {callback} dataCallback is an optional callback to handle the output data.
  * @returns array with the list entries or an error is a required field is missing.
  */
@@ -72,6 +76,10 @@ export default class Entries {
     startDate,
     endDate,
     userId,
+    projectId,
+    taskId,
+    billable,
+    billed,
   }, dataCallback) {
     if (!startDate) throw new Error('startDate field is missing');
     if (!endDate) throw new Error('endDate field is missing');
@@ -80,6 +88,10 @@ export default class Entries {
       start_date: startDate,
       end_date: endDate,
       user_id: userId,
+      billable,
+      project_id: projectId,
+      billed,
+      task_id: taskId,
     };
     const URL = `${this.baseURL}/entries.json`;
 
