@@ -118,4 +118,29 @@ export default class Entries {
 
     return dataCallback ? dataCallback(response.data) : response.data;
   }
+
+  /**
+ * Delete a entry
+ * @param entryId
+ * entryId: required*
+ * @param {callback} dataCallback is an optional callback to handle the output data.
+ * @returns true if the entry was deleted or an error is a required field is missing,
+ * or some API response error.
+ */
+  async deleteEntry(entryId, dataCallback) {
+    if (!entryId) throw new Error('entryId field is missing');
+
+    const URL = `${this.baseURL}/entries/${entryId}.json`;
+
+    const response = await axios.delete(URL,
+      {
+        headers:
+        { Authorization: this.auth, 'User-Agent': `tickspot.js (${this.USER_AGENT_EMAIL})` },
+      })
+      .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+
+    const responseValue = response.status === 204;
+
+    return dataCallback ? dataCallback(responseValue) : responseValue;
+  }
 }

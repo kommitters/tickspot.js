@@ -111,6 +111,25 @@ The getEntry method returns a promise with the response data from the tickspot A
   client.entries.updateEntry(data, dataCallback);
 
  The updateEntry method returns a promise with the response data from the tickspot API or with your custom   output data handled with the callback.
+
+- deleteEntry
+  The deleteEntry method will delete the entry, this method needs:
+  - entryId: required*
+
+   Optionally, you can add a callback to handle the response data from the tickspot API.
+
+   For example:
+
+  ```javascript
+  ...
+  const dataCallback = (dataResponse) => {
+     console.log(dataResponse);
+   };
+
+  client.entries.deleteEntry('100773532', dataCallback);
+
+The deleteEntry method returns true if the entry was deleted or some error about API  response or if any mandatory field is missing.
+
 ## Development
 
 ## Code of conduct
