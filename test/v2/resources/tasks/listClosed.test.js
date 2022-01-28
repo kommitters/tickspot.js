@@ -2,7 +2,7 @@ import axios from 'axios';
 import tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
-import dataSuccessful from '#test/v2/fixture/tasks/closedTasksFixture';
+import succesfulResponseData from '#test/v2/fixture/tasks/closedTasksFixture';
 import authenticationErrorTests from '#test/v2/shared/authentication';
 import {
   badResponseCallbackTests,
@@ -11,7 +11,7 @@ import {
 
 jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
-const listClosedTasksURL = `${client.baseURL}/tasks/closed.json`;
+const URL = `${client.baseURL}/tasks/closed.json`;
 
 describe('#listClosed', () => {
   beforeEach(() => {
@@ -19,21 +19,21 @@ describe('#listClosed', () => {
   });
 
   describe('when API call is successful', () => {
-    const succesfulResponse = responseFactory(
-      {},
-      'successful',
-      dataSuccessful,
-      listClosedTasksURL,
-    );
+    const requestResponse = responseFactory({
+      requestData: {},
+      responseType: 'successful',
+      responseData: succesfulResponseData,
+      URL,
+    });
 
     beforeEach(() => {
-      axios.get.mockResolvedValueOnce(succesfulResponse);
+      axios.get.mockResolvedValueOnce(requestResponse);
     });
 
     it('should return a list of closed tasks', async () => {
       const response = await client.tasks.listClosed();
       expect(axios.get).toHaveBeenCalledTimes(1);
-      expect(response).toBe(succesfulResponse.data);
+      expect(response).toBe(requestResponse.data);
     });
   });
 
@@ -41,7 +41,7 @@ describe('#listClosed', () => {
     requestToExecute: async () => {
       await client.tasks.listClosed();
     },
-    URL: listClosedTasksURL,
+    URL,
   });
 
   badResponseCallbackTests({
@@ -58,6 +58,7 @@ describe('#listClosed', () => {
       const response = await client.tasks.listClosed(dataCallback);
       return [response, dataCallback];
     },
-    responseData: dataSuccessful,
+    responseData: succesfulResponseData,
+    URL,
   });
 });

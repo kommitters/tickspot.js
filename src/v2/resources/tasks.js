@@ -1,9 +1,9 @@
-import baseResource from '#src/v2/baseResource';
+import BaseResource from '#src/v2/baseResource';
 
 /**
  * Tasks module for tickspot V2 API
  */
-class Tasks extends baseResource {
+class Tasks extends BaseResource {
   /**
    * This method will return all closed tasks across all projects
    *

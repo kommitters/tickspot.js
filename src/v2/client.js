@@ -1,5 +1,5 @@
 import TICK_BASE_URL_START from './constants.js';
-import Entries from './entries.js';
+import Entries from './resources/entries.js';
 import Tasks from './resources/tasks.js';
 
 /**

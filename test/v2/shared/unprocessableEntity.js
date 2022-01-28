@@ -1,34 +1,36 @@
 import axios from 'axios';
 import responseFactory from '#test/v2/factories/responseFactory';
+import { unprocessableEntityResponse } from '#test/v2/fixture/shared/responseData';
 
 /**
- * This will generate a test when auth fails.
+ * This will generate a test for Unprocessable Entity.
  *
  * @param {String} URL endpoint to generate the mock response.
  * @param {String} method HTTP method.
  * @param {callback} requestToExecute
  *    receives a function that will execute the request that will throw the error
  */
-const authenticationErrorTests = ({
+const unprocessableEntityTests = ({
   URL, method = 'get', requestToExecute,
 }) => {
-  describe('when the API returns an authentication error', () => {
-    const authenticationError = responseFactory({
+  describe('when the API call does not find a resource', () => {
+    const responseData = responseFactory({
       requestData: {},
-      responseType: 'authenticationError',
-      responseData: {},
+      responseType: 'unprocessableEntity',
+      responseData: unprocessableEntityResponse,
       URL,
+      method,
     });
 
     beforeEach(() => {
       if (method === 'get') {
-        axios.get.mockRejectedValueOnce(authenticationError);
+        axios.get.mockRejectedValueOnce(responseData);
       } else if (method === 'post') {
-        axios.post.mockRejectedValueOnce(authenticationError);
+        axios.post.mockRejectedValueOnce(responseData);
       } else if (method === 'put') {
-        axios.put.mockRejectedValueOnce(authenticationError);
+        axios.put.mockRejectedValueOnce(responseData);
       } else if (method === 'delete') {
-        axios.delete.mockRejectedValueOnce(authenticationError);
+        axios.delete.mockRejectedValueOnce(responseData);
       }
     });
 
@@ -45,10 +47,10 @@ const authenticationErrorTests = ({
         } else if (method === 'delete') {
           expect(axios.delete).toHaveBeenCalledTimes(1);
         }
-        expect(error).toEqual(new Error('Request Error: 401'));
+        expect(error).toEqual(new Error('Request Error: 422'));
       }
     });
   });
 };
 
-export default authenticationErrorTests;
+export default unprocessableEntityTests;
