@@ -13,10 +13,7 @@ describe('updateEntry', () => {
   describe('when the API call is successful', () => {
     const responseData = responseFactory({}, 'successful',
       dataEntrySuccessful, updateEntryUrl, 'put');
-
-    beforeEach(() => {
-      axios.put.mockResolvedValueOnce(responseData);
-    });
+    axios.put.mockResolvedValueOnce(responseData);
 
     it('should return the updated entry information', async () => {
       const data = {
@@ -38,10 +35,7 @@ describe('updateEntry', () => {
 
   describe('when the API call does not find a entry', () => {
     const responseData = responseFactory({}, 'notFound', notFoundResponse, updateEntryUrl, 'put');
-
-    beforeEach(() => {
-      axios.put.mockResolvedValueOnce(responseData);
-    });
+    axios.put.mockResolvedValueOnce(responseData);
 
     it('should return 404 status', async () => {
       const data = {
@@ -62,10 +56,7 @@ describe('updateEntry', () => {
   describe('when the API call responds with an unprocessable entity', () => {
     const responseData = responseFactory({}, 'notFound',
       unprocessableEntityResponse, updateEntryUrl, 'put');
-
-    beforeEach(() => {
-      axios.put.mockResolvedValueOnce(responseData);
-    });
+    axios.put.mockResolvedValueOnce(responseData);
 
     it('should return 422 status', async () => {
       const data = {

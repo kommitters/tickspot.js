@@ -12,10 +12,7 @@ const getEntryUrl = 'https://www.tickspot.com/123456/api/v2/entries/123456.json'
 describe('getEntry', () => {
   describe('when API call is successful', () => {
     const responseData = responseFactory({}, 'successful', dataEntrySuccessful, getEntryUrl);
-
-    beforeEach(() => {
-      axios.get.mockResolvedValueOnce(responseData);
-    });
+    axios.get.mockResolvedValueOnce(responseData);
 
     it('should return the entry information', async () => {
       const response = await client.entries.getEntry('123456');
@@ -37,10 +34,7 @@ describe('getEntry', () => {
 
   describe('when API call does not find a resource', () => {
     const responseData = responseFactory({}, 'notFound', notFoundResponse, getEntryUrl);
-
-    beforeEach(() => {
-      axios.get.mockResolvedValueOnce(responseData);
-    });
+    axios.get.mockResolvedValueOnce(responseData);
 
     it('should return 404 status', async () => {
       const response = await client.entries.getEntry('123456');

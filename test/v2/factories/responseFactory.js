@@ -13,6 +13,10 @@ const responseFactory = (dataEntry, responseType, apiResponseData, url, method =
       return responseGenerator(url, 200, 'OK',
         method, dataEntry, apiResponseData, auth);
 
+    case 'successfulNoContent':
+      return responseGenerator(url, 204, 'No Content',
+        method, dataEntry, apiResponseData, auth);
+
     case 'notFound':
       return responseGenerator(url, 404, 'Not Found',
         method, dataEntry, apiResponseData, auth);

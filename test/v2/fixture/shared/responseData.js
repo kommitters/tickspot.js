@@ -12,4 +12,11 @@ export const unprocessableEntityResponse = {
   },
 };
 
-export default { notFoundResponse, unprocessableEntityResponse };
+export const noContentResponse = {
+  data: {
+    status: 204,
+    statusText: 'No Content',
+  },
+};
+
+export default { notFoundResponse, unprocessableEntityResponse, noContentResponse };
