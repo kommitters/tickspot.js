@@ -10,6 +10,10 @@ const client = tickspot({ apiVersion: 2, ...userInfo });
 const getEntryUrl = 'https://www.tickspot.com/123456/api/v2/entries/123456.json';
 
 describe('getEntry', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('when API call is successful', () => {
     const responseData = responseFactory({}, 'successful', dataEntrySuccessful, getEntryUrl);
     axios.get.mockResolvedValueOnce(responseData);

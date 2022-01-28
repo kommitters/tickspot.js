@@ -10,6 +10,10 @@ const client = tickspot({ apiVersion: 2, ...userInfo });
 const updateEntryUrl = 'https://www.tickspot.com/123456/api/v2/entries/123456.json';
 
 describe('updateEntry', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('when the API call is successful', () => {
     const responseData = responseFactory({}, 'successful',
       dataEntrySuccessful, updateEntryUrl, 'put');
