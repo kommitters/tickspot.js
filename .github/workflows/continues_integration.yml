@@ -1,6 +1,12 @@
 name: Continues Integration
 
-on: [pull_request]
+on: 
+  pull_request:
+    types: [opened, reopened]
+  push:
+    branches:
+      - master
+      - 'v*'
 
 jobs:
   lint:
@@ -45,6 +51,4 @@ jobs:
         run: npm install
 
       - name: test
-        env:
-          TICK_BASE_URL_START: https://www.tickspot.com
         run: npm run test
