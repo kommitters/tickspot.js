@@ -21,7 +21,7 @@ describe('BaseResource', () => {
 
   describe('.makeRequest', () => {
     describe.each(['get', 'post', 'put', 'delete'])('.%s method', (method) => {
-      describe(`When makeRequest is called for ${method}`, () => {
+      describe(`when makeRequest is called for ${method}`, () => {
         beforeEach(() => {
           if (method === 'get') {
             axios.get.mockResolvedValueOnce({ data: {} });
@@ -34,7 +34,7 @@ describe('BaseResource', () => {
           }
         });
 
-        it(`Should also call axios.${method}`, async () => {
+        it(`should also call axios.${method}`, async () => {
           const result = await resource.makeRequest({
             URL,
             method,

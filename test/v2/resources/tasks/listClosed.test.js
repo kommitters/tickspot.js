@@ -2,7 +2,7 @@ import axios from 'axios';
 import tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
-import succesfulResponseData from '#test/v2/fixture/tasks/closedTasksFixture';
+import successfulResponseData from '#test/v2/fixture/tasks/closedTasksFixture';
 import authenticationErrorTests from '#test/v2/shared/authentication';
 import {
   badResponseCallbackTests,
@@ -22,7 +22,7 @@ describe('#listClosed', () => {
     const requestResponse = responseFactory({
       requestData: {},
       responseType: 'successful',
-      responseData: succesfulResponseData,
+      responseData: successfulResponseData,
       URL,
     });
 
@@ -58,7 +58,7 @@ describe('#listClosed', () => {
       const response = await client.tasks.listClosed(dataCallback);
       return [response, dataCallback];
     },
-    responseData: succesfulResponseData,
+    responseData: successfulResponseData,
     URL,
   });
 });

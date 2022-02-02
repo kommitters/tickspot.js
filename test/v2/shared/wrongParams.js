@@ -7,11 +7,11 @@ import responseFactory from '#test/v2/factories/responseFactory';
  * @param {String} URL endpoint to generate the mock response.
  * @param {String} method HTTP method.
  * @param {callback} requestToExecute
- *    receives a function that will execute the request that will throw the error
- * @param {Array} paramsList list of required params
+ *    receives a function that will execute the request that will throw the error.
+ * @param {Array} paramsList list of required params.
  * @param {Object} requestData object of params to send in the request.
  * @param {Boolean} positionalParam true if method receives a positional param,
- *                                  false if mehtod receives an object of named params
+ *                                  false if mehtod receives an object of named params.
  */
 const wrongParamsTests = ({
   URL,

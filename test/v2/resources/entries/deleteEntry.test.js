@@ -28,7 +28,7 @@ describe('deleteEntry', () => {
       axios.delete.mockResolvedValueOnce(requestResponse);
     });
 
-    it('should return true ', async () => {
+    it('should return true', async () => {
       const response = await client.entries.deleteEntry('123456');
 
       expect(axios.delete).toHaveBeenCalledTimes(1);

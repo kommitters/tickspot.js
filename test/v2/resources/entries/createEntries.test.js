@@ -2,7 +2,7 @@ import axios from 'axios';
 import tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
-import succesfulResponseData from '#test/v2/fixture/entries/createResponseData.js';
+import successfulResponseData from '#test/v2/fixture/entries/createResponseData.js';
 import authenticationErrorTests from '#test/v2/shared/authentication';
 import {
   badResponseCallbackTests,
@@ -30,7 +30,7 @@ describe('createTickEntries', () => {
     const requestResponse = responseFactory({
       requestData: entryData,
       responseType: 'created',
-      responseData: succesfulResponseData,
+      responseData: successfulResponseData,
       URL,
     });
 
@@ -75,7 +75,7 @@ describe('createTickEntries', () => {
       const response = await client.entries.create(entryData, dataCallback);
       return [response, dataCallback];
     },
-    responseData: succesfulResponseData,
+    responseData: successfulResponseData,
     method: 'post',
     URL,
   });

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import tickspot from '#src/index';
 import userInfo from '#test/v2/fixture/client';
-import succesfulResponseData from '#test/v2/fixture/entries/listEntriesResponseData';
+import successfulResponseData from '#test/v2/fixture/entries/listEntriesResponseData';
 import responseFactory from '#test/v2/factories/responseFactory';
 import authenticationErrorTests from '#test/v2/shared/authentication';
 import {
@@ -29,7 +29,7 @@ describe('listTickEntries', () => {
     const requestResponse = responseFactory({
       requestData: {},
       responseType: 'successful',
-      responseData: succesfulResponseData,
+      responseData: successfulResponseData,
       URL,
     });
 
@@ -73,7 +73,7 @@ describe('listTickEntries', () => {
       const response = await client.entries.list(params, dataCallback);
       return [response, dataCallback];
     },
-    responseData: succesfulResponseData,
+    responseData: successfulResponseData,
     URL,
   });
 

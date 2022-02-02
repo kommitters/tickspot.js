@@ -8,7 +8,7 @@ import { unprocessableEntityResponse } from '#test/v2/fixture/shared/responseDat
  * @param {String} URL endpoint to generate the mock response.
  * @param {String} method HTTP method.
  * @param {callback} requestToExecute
- *    receives a function that will execute the request that will throw the error
+ *    receives a function that will execute the request that will throw the error.
  */
 const unprocessableEntityTests = ({
   URL, method = 'get', requestToExecute,

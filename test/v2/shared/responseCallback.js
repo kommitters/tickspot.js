@@ -6,7 +6,7 @@ import responseFactory from '#test/v2/factories/responseFactory';
  *
  * @param {String} method HTTP method.
  * @param {callback} requestToExecute
- *    receives a function that will execute the request that will throw the error
+ *    receives a function that will execute the request that will throw the error.
  */
 const badResponseCallbackTests = ({
   method = 'get', requestToExecute,
@@ -45,7 +45,7 @@ const validResponseCallbackTests = ({
   URL, method = 'get', responseData, requestToExecute,
 }) => {
   describe('when responseCallback is sent', () => {
-    const succesfulResponse = responseFactory({
+    const successfulResponse = responseFactory({
       requestData: {},
       responseType: method === 'delete' ? 'successfulNoContent' : 'successful',
       responseData,
@@ -55,13 +55,13 @@ const validResponseCallbackTests = ({
 
     beforeEach(() => {
       if (method === 'get') {
-        axios.get.mockResolvedValueOnce(succesfulResponse);
+        axios.get.mockResolvedValueOnce(successfulResponse);
       } else if (method === 'post') {
-        axios.post.mockResolvedValueOnce(succesfulResponse);
+        axios.post.mockResolvedValueOnce(successfulResponse);
       } else if (method === 'put') {
-        axios.put.mockResolvedValueOnce(succesfulResponse);
+        axios.put.mockResolvedValueOnce(successfulResponse);
       } else if (method === 'delete') {
-        axios.delete.mockResolvedValueOnce(succesfulResponse);
+        axios.delete.mockResolvedValueOnce(successfulResponse);
       }
     });
 
@@ -81,7 +81,7 @@ const validResponseCallbackTests = ({
 
         if (method !== 'delete') {
           expect(dataCallback).toHaveBeenCalledTimes(1);
-          expect(response).toEqual({ newStructure: { ...succesfulResponse.data } });
+          expect(response).toEqual({ newStructure: { ...successfulResponse.data } });
         } else {
           expect(dataCallback).toHaveBeenCalledTimes(0);
         }

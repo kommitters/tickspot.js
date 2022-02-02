@@ -1,17 +1,17 @@
 import BaseResource from '#src/v2/baseResource';
 
 /**
- * Entries module for tickspot V2 API
+ * Entries module for tickspot V2 API.
  * For more information visit:
  * https://github.com/tick/tick-api/blob/master/sections/entries.md
  */
 class Entries extends BaseResource {
   /**
-   * This will return all time entries that meet the provided parameters
+   * This will return all time entries that meet the provided parameters.
    * @param {object} Entry contains the params to get the entries.
-   *    [Required] startDate. Format is: 'YYYY-MM-DD'.
-   *    [Required] endDate. Format is: 'YYYY-MM-DD'.
-   *    [Optional] userId, will be ignored if the user is not an administrator
+   *    [Required] startDate, Format is: 'YYYY-MM-DD'.
+   *    [Required] endDate, Format is: 'YYYY-MM-DD'.
+   *    [Optional] userId, will be ignored if the user is not an administrator.
    *    [Optional] taskId, related parent task.
    *    [Optional] billable
    *    [Optional] billed
@@ -50,7 +50,7 @@ class Entries extends BaseResource {
 
   /**
    * This will return specific entry info.
-   * @param {Number} entryId, entry unique identificator
+   * @param {Number} entryId, entry unique identificator.
    * @param {function} responseCallback
    *    is an optional function to perform a process over the response data.
    *
@@ -67,10 +67,10 @@ class Entries extends BaseResource {
    * This will create a new entry from the parameters passed.
    * @param {object} Entry contains the fields to send in the body request.
    *    [Optional] date, if not sent it will take the current date. Format is: 'YYYY-MM-DD'.
-   *    [Required] hours, time spent on this entry
-   *    [Optional] notes, entry description
-   *    [Required] taskId, related parent task
-   *    [Optional] userId, will be ignored if the user is not an administrator
+   *    [Required] hours, time spent on this entry.
+   *    [Optional] notes, entry description.
+   *    [Required] taskId, related parent task.
+   *    [Optional] userId, will be ignored if the user is not an administrator.
    * @param {function} responseCallback
    *    is an optional function to perform a process over the response data.
    *
@@ -101,14 +101,14 @@ class Entries extends BaseResource {
   }
 
   /**
-   * This will update the entry from the parameters passed
+   * This will update the entry from the parameters passed.
    * @param {object} Entry contains the fields to send in the body request.
    *    [Required] entryId, entry unique identificator.
    *    [Optional] date, if not sent it will take the current date. Format is: 'YYYY-MM-DD'.
-   *    [Optional] hours, time spent on this entry
-   *    [Optional] notes, entry description
-   *    [Optional] taskId, related parent task
-   *    [Optional] userId, will be ignored if the user is not an administrator
+   *    [Optional] hours, time spent on this entry.
+   *    [Optional] notes, entry description.
+   *    [Optional] taskId, related parent task.
+   *    [Optional] userId, will be ignored if the user is not an administrator.
    *    [Optional] billed
    * @param {function} responseCallback
    *    is an optional function to perform a process over the response data.
@@ -142,8 +142,8 @@ class Entries extends BaseResource {
   }
 
   /**
-   * This will delete the entry
-   * @param {Number} entryId, entry unique identificator
+   * This will delete the entry.
+   * @param {Number} entryId, entry unique identificator.
    *
    * @returns {Boolean} true if entry was deleted or an error if the process fails.
    */

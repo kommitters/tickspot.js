@@ -7,7 +7,7 @@ import responseFactory from '#test/v2/factories/responseFactory';
  * @param {String} URL endpoint to generate the mock response.
  * @param {String} method HTTP method.
  * @param {callback} requestToExecute
- *    receives a function that will execute the request that will throw the error
+ *    receives a function that will execute the request that will throw the error.
  */
 const authenticationErrorTests = ({
   URL, method = 'get', requestToExecute,
