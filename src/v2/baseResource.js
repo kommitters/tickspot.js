@@ -31,24 +31,30 @@ class BaseResource {
     }
 
     let response;
-    if (method === 'get') {
-      response = await axios
-        .get(URL, { headers: this.DEFAULT_HEADERS, params })
-        .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
-    } else if (method === 'post') {
-      response = await axios
-        .post(URL, body, { headers: this.DEFAULT_HEADERS })
-        .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
-    } else if (method === 'put') {
-      response = await axios
-        .put(URL, body, { headers: this.DEFAULT_HEADERS })
-        .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
-    } else if (method === 'delete') {
-      response = await axios
-        .delete(URL, { headers: this.DEFAULT_HEADERS })
-        .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+    switch (method) {
+      case 'get':
+        response = await axios
+          .get(URL, { headers: this.DEFAULT_HEADERS, params })
+          .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+        break;
+      case 'post':
+        response = await axios
+          .post(URL, body, { headers: this.DEFAULT_HEADERS })
+          .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+        break;
+      case 'put':
+        response = await axios
+          .put(URL, body, { headers: this.DEFAULT_HEADERS })
+          .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+        break;
+      case 'delete':
+        response = await axios
+          .delete(URL, { headers: this.DEFAULT_HEADERS })
+          .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+        return response.status === 204;
 
-      return response.status === 204;
+      default:
+        return new Error('Method not allowed');
     }
 
     return responseCallback ? responseCallback(response.data) : response.data;

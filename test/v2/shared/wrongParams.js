@@ -1,5 +1,5 @@
-import axios from 'axios';
 import responseFactory from '#test/v2/factories/responseFactory';
+import { mockRejectedValueOnce, shouldHaveBeenCalledTimes } from './utils/axios';
 
 /**
  * This will generate a test when a required param is not sent.
@@ -33,15 +33,7 @@ const wrongParamsTests = ({
       });
 
       beforeEach(() => {
-        if (method === 'get') {
-          axios.get.mockRejectedValueOnce(requestParamsError);
-        } else if (method === 'post') {
-          axios.post.mockRejectedValueOnce(requestParamsError);
-        } else if (method === 'put') {
-          axios.put.mockRejectedValueOnce(requestParamsError);
-        } else if (method === 'delete') {
-          axios.delete.mockRejectedValueOnce(requestParamsError);
-        }
+        mockRejectedValueOnce({ method, responseData: requestParamsError });
       });
 
       it('an error should be thrown when making the call', async () => {
@@ -52,6 +44,7 @@ const wrongParamsTests = ({
             await requestToExecute(requestParams);
           }
         } catch (error) {
+          shouldHaveBeenCalledTimes({ method, times: 0 });
           expect(error).toEqual(new Error(`${param} field is missing`));
         }
       });

@@ -1,5 +1,5 @@
-import axios from 'axios';
 import responseFactory from '#test/v2/factories/responseFactory';
+import { mockResolvedValueOnce, shouldHaveBeenCalledTimes } from './utils/axios';
 
 /**
  * This will generate a test when the callback sent to a function is not a function.
@@ -16,15 +16,7 @@ const badResponseCallbackTests = ({
       try {
         await requestToExecute();
       } catch (error) {
-        if (method === 'get') {
-          expect(axios.get).toHaveBeenCalledTimes(0);
-        } else if (method === 'post') {
-          expect(axios.post).toHaveBeenCalledTimes(0);
-        } else if (method === 'put') {
-          expect(axios.put).toHaveBeenCalledTimes(0);
-        } else if (method === 'delete') {
-          expect(axios.delete).toHaveBeenCalledTimes(0);
-        }
+        shouldHaveBeenCalledTimes({ method, times: 0 });
         expect(error).toEqual(
           new Error('responseCallback must be a function'),
         );
@@ -54,30 +46,14 @@ const validResponseCallbackTests = ({
     });
 
     beforeEach(() => {
-      if (method === 'get') {
-        axios.get.mockResolvedValueOnce(successfulResponse);
-      } else if (method === 'post') {
-        axios.post.mockResolvedValueOnce(successfulResponse);
-      } else if (method === 'put') {
-        axios.put.mockResolvedValueOnce(successfulResponse);
-      } else if (method === 'delete') {
-        axios.delete.mockResolvedValueOnce(successfulResponse);
-      }
+      mockResolvedValueOnce({ method, responseData: successfulResponse });
     });
 
     it(`should ${method === 'delete' ? 'NOT' : ''} call the responseCallback function`,
       async () => {
         const [response, dataCallback] = await requestToExecute();
 
-        if (method === 'get') {
-          expect(axios.get).toHaveBeenCalledTimes(1);
-        } else if (method === 'post') {
-          expect(axios.post).toHaveBeenCalledTimes(1);
-        } else if (method === 'put') {
-          expect(axios.put).toHaveBeenCalledTimes(1);
-        } else if (method === 'delete') {
-          expect(axios.delete).toHaveBeenCalledTimes(1);
-        }
+        shouldHaveBeenCalledTimes({ method, times: 1 });
 
         if (method !== 'delete') {
           expect(dataCallback).toHaveBeenCalledTimes(1);

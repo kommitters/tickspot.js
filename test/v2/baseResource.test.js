@@ -1,4 +1,3 @@
-import axios from 'axios';
 import BaseResource from '#src/v2/baseResource';
 import userInfo from '#test/v2/fixture/client';
 import { TICK_BASE_URL_START } from '#src/v2/constants';
@@ -6,6 +5,7 @@ import {
   badResponseCallbackTests,
   validResponseCallbackTests,
 } from '#test/v2/shared/responseCallback';
+import { mockResolvedValueOnce, shouldHaveBeenCalledTimes } from './shared/utils/axios';
 
 jest.mock('axios');
 const auth = `Token token=${userInfo.apiToken}`;
@@ -23,15 +23,7 @@ describe('BaseResource', () => {
     describe.each(['get', 'post', 'put', 'delete'])('.%s method', (method) => {
       describe(`when makeRequest is called for ${method}`, () => {
         beforeEach(() => {
-          if (method === 'get') {
-            axios.get.mockResolvedValueOnce({ data: {} });
-          } else if (method === 'post') {
-            axios.post.mockResolvedValueOnce({ data: {} });
-          } else if (method === 'put') {
-            axios.put.mockResolvedValueOnce({ data: {} });
-          } else if (method === 'delete') {
-            axios.delete.mockResolvedValueOnce({ status: 204 });
-          }
+          mockResolvedValueOnce({ method, responseData: { data: {} } });
         });
 
         it(`should also call axios.${method}`, async () => {
@@ -45,15 +37,7 @@ describe('BaseResource', () => {
 
           expect(result).toEqual(method === 'delete' ? true : {});
 
-          if (method === 'get') {
-            expect(axios.get).toHaveBeenCalledTimes(1);
-          } else if (method === 'post') {
-            expect(axios.post).toHaveBeenCalledTimes(1);
-          } else if (method === 'put') {
-            expect(axios.put).toHaveBeenCalledTimes(1);
-          } else if (method === 'delete') {
-            expect(axios.delete).toHaveBeenCalledTimes(1);
-          }
+          shouldHaveBeenCalledTimes({ method, times: 1 });
         });
       });
 
@@ -89,6 +73,19 @@ describe('BaseResource', () => {
         responseData: {},
         URL,
         method,
+      });
+    });
+
+    describe('when the method does not exist', () => {
+      it('an error should be thrown', async () => {
+        try {
+          await resource.makeRequest({
+            URL,
+            method: 'wrong',
+          });
+        } catch (error) {
+          expect(error).toEqual(new Error('Method not allowed'));
+        }
       });
     });
   });

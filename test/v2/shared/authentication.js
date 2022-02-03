@@ -1,5 +1,5 @@
-import axios from 'axios';
 import responseFactory from '#test/v2/factories/responseFactory';
+import { mockRejectedValueOnce, shouldHaveBeenCalledTimes } from './utils/axios';
 
 /**
  * This will generate a test when auth fails.
@@ -21,30 +21,14 @@ const authenticationErrorTests = ({
     });
 
     beforeEach(() => {
-      if (method === 'get') {
-        axios.get.mockRejectedValueOnce(authenticationError);
-      } else if (method === 'post') {
-        axios.post.mockRejectedValueOnce(authenticationError);
-      } else if (method === 'put') {
-        axios.put.mockRejectedValueOnce(authenticationError);
-      } else if (method === 'delete') {
-        axios.delete.mockRejectedValueOnce(authenticationError);
-      }
+      mockRejectedValueOnce({ method, responseData: authenticationError });
     });
 
     it('an error should be thrown when making the call', async () => {
       try {
         await requestToExecute();
       } catch (error) {
-        if (method === 'get') {
-          expect(axios.get).toHaveBeenCalledTimes(1);
-        } else if (method === 'post') {
-          expect(axios.post).toHaveBeenCalledTimes(1);
-        } else if (method === 'put') {
-          expect(axios.put).toHaveBeenCalledTimes(1);
-        } else if (method === 'delete') {
-          expect(axios.delete).toHaveBeenCalledTimes(1);
-        }
+        shouldHaveBeenCalledTimes({ method, times: 1 });
         expect(error).toEqual(new Error('Request Error: 401'));
       }
     });
