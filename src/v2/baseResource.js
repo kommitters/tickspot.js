@@ -30,29 +30,33 @@ class BaseResource {
       throw new Error('responseCallback must be a function');
     }
 
+    const catchFunction = (error) => {
+      throw new Error(`Request Error: ${error.response.status}`);
+    };
+
     let response;
     switch (method) {
       case 'get':
         response = await axios
           .get(URL, { headers: this.DEFAULT_HEADERS, params })
-          .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+          .catch(catchFunction);
         break;
       case 'post':
         response = await axios
           .post(URL, body, { headers: this.DEFAULT_HEADERS })
-          .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+          .catch(catchFunction);
         break;
       case 'put':
         response = await axios
           .put(URL, body, { headers: this.DEFAULT_HEADERS })
-          .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
+          .catch(catchFunction);
         break;
       case 'delete':
         response = await axios
           .delete(URL, { headers: this.DEFAULT_HEADERS })
-          .catch((error) => { throw new Error(`Request Error: ${error.response.status}`); });
-        return response.status === 204;
+          .catch(catchFunction);
 
+        return response.status === 204;
       default:
         return new Error('Method not allowed');
     }

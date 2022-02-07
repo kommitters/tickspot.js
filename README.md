@@ -58,7 +58,23 @@ const params = {
   billable: true,
 };
 
-client.entries.list(params);
+const result = await client.entries.list(params);
+
+// The result would be something like the following:
+[
+  {
+    id: 1,
+    date: "2014-09-17",
+    hours: 2.88,
+    notes: "Example Entry.",
+    task_id: 24,
+    user_id: 4,
+    url: "https://www.tickspot.com/api/v2/123/entries/1.json",
+    created_at: "2021-11-08T15:03:19.000-04:00",
+    updated_at: "2021-11-08T15:03:19.000-04:00"
+  },
+  ...
+]
 ```
 
 Optionally, You can send a callback to perform an action on the response data. e.g:
@@ -81,7 +97,18 @@ const callback = (responseData) =>
     };
   });
 
-client.entries.list(params, callback);
+const result = await client.entries.list(params, callback);
+// The result would be something like the following:
+[
+  {
+    id: 1,
+    notes: 'Example Entry.',
+    day: 08,
+    month: 11,
+    year: 2021
+  }
+  ...
+]
 ```
 
 #### Get Entry
@@ -91,7 +118,33 @@ This will return the specified entry info. This method needs the following param
 - [Required] entryId, entry unique identificator.
 
 ```javascript
-client.entries.getEntry("100773532");
+const result = await client.entries.getEntry(1);
+
+// The result would be something like the following:
+{
+  id: 1,
+  date: '2021-11-08',
+  hours: 0.5,
+  notes: 'Example Task',
+  task_id: 1,
+  user_id: 1,
+  url: 'https://secure.tickspot.com/123/api/v2/entries/1.json',
+  created_at: '2021-11-08T08:46:26.000-05:00',
+  updated_at: '2021-11-08T08:46:26.000-05:00',
+  task: {
+    id: 1,
+    name: '2 - Development',
+    budget: null,
+    position: 2,
+    project_id: 1,
+    date_closed: null,
+    billable: true,
+    url: 'https://secure.tickspot.com/123/api/v2/tasks/1.json',
+    created_at: '2020-04-21T12:39:39.000-04:00',
+    updated_at: '2022-02-07T17:21:51.000-05:00'
+  }
+}
+
 ```
 
 Optionally, You can send a callback to perform an action on the response data. e.g:
@@ -108,7 +161,17 @@ const callback = (responseData) => {
   };
 };
 
-client.entries.getEntry("100773532", callback);
+const result = await client.entries.getEntry(1, callback);
+
+// The result would be something like the following:
+{
+  id: 1,
+  notes: 'Example Task.',
+  day: 8,
+  month: 11,
+  year: 2021
+}
+
 ```
 
 #### Create an Entry
@@ -125,13 +188,24 @@ The create method returns a promise with the response data from the tickspot API
 
 ```javascript
 const data = {
-  date: "2021-12-01",
+  date: "2021-11-08",
   hours: 2,
   notes: "Entry description",
   taskId: 12345678,
 };
 
 const result = await client.entries.create(data);
+
+// The result would be something like the following:
+{
+  date: "2021-11-08",
+  hours: 1.5,
+  notes: "Entry description",
+  task_id: 12345678,
+  user_id: 1,
+  created_at: '2021-11-08T17:40:11.000-05:00',
+  updated_at: '2021-11-08T17:41:00.000-05:00'
+}
 ```
 
 Optionally, You can send a callback to perform an action on the response data. e.g:
@@ -156,6 +230,15 @@ const callback = (responseData) => {
 };
 
 const result = await client.entries.create(data, callback);
+
+// The result would be something like the following:
+{
+  entryDate: {
+    day: 08,
+    moth: 11,
+    year: 2021
+  }
+}
 ```
 
 #### Update Entry
@@ -173,16 +256,29 @@ This method will update the entry information from the parameters passed. The pa
 
 ```javascript
 const data = {
-  entryId: "101152129",
-  date: "2022-01-20",
+  entryId: 1,
+  date: "2022-01-22",
   hours: 1,
   notes: "Update entry test",
-  taskId: 14541850,
-  userId: 337683,
+  taskId: 12345678,
+  userId: 2,
   billed: true,
 };
 
-client.entries.updateEntry(data);
+const result = await client.entries.updateEntry(data);
+
+// The result would be something like the following:
+{
+  id: 1,
+  date: '2022-01-22',
+  hours: 1,
+  notes: 'Update entry test',
+  task_id: 12345678,
+  user_id: 2,
+  url: 'https://secure.tickspot.com/123/api/v2/entries/1.json',
+  created_at: '2022-02-07T17:40:11.000-05:00',
+  updated_at: '2022-02-07T17:41:00.000-05:00'
+}
 ```
 
 Optionally, You can send a callback to perform an action on the response data. e.g:
@@ -209,7 +305,15 @@ const data = {
   billed: true,
 };
 
-client.entries.updateEntry(data, callback);
+const result = await client.entries.updateEntry(data, callback);
+// The result would be something like the following:
+{
+  id: 1,
+  notes: 'Update entry test',
+  day: 22,
+  moth: 1,
+  year: 2022,
+}
 ```
 
 #### Delete Entry
@@ -219,7 +323,9 @@ This method will delete the entry. The params you can send are the following:
 - [Required] entryId, entry unique identificator.
 
 ```javascript
-client.entries.deleteEntry("100773532");
+const result = await client.entries.deleteEntry("100773532");
+
+// The result will be true if task was deleted
 ```
 
 ### Tasks
@@ -231,24 +337,55 @@ This module allows you to interact with the Tickspot tasks.
 This method will return all closed tasks across all projects.
 
 ```javascript
-client.tasks.listClosed();
+const result = await client.tasks.listClosed();
+
+// The result would be something like the following:
+[
+  {
+    id: 1,
+    name: "Example Task",
+    budget: 14.0,
+    position: 1,
+    project_id: 16,
+    date_closed: "2021-11-08",
+    billable: true,
+    url: "https://www.tickspot.com/api/v2/123/tasks/1.json",
+    created_at: "2021-11-08T15:03:18.000-04:00",
+    updated_at: "2021-11-08T15:03:18.000-04:00"
+  },
+  ...
+]
 ```
 
 Optionally, You can send a callback to perform an action on the response data. e.g:
 
 ```javascript
 const callback = (responseData) => {
-  const date = new Date(responseData.date);
+  const date = new Date(responseData.date_closed);
   return {
     id: responseData.id,
-    notes: responseData.notes,
+    name: responseData.name,
+    budget: `${responseData.budget}`
     day: date.getDate(),
     month: date.getMonth(),
     year: date.getFullYear(),
   };
 };
 
-client.tasks.listClosed(callback);
+const result = await client.tasks.listClosed(callback);
+
+// The result would be something like the following:
+[
+  {
+    id: 1,
+    name: "Example Task",
+    budget: "$14.0",
+    day: 08,
+    month: 11,
+    year: 2021
+  },
+  ...
+]
 ```
 
 ## Code of conduct
