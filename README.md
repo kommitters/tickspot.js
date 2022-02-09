@@ -388,6 +388,64 @@ const result = await client.tasks.listClosed(callback);
 ]
 ```
 
+#### List All Opened Tasks
+
+This method will return all opened tasks across all projects.
+
+```javascript
+const result = await client.tasks.listOpened();
+
+// The result would be something like the following:
+[
+  {
+    id: 25,
+    name: "Software Development",
+    budget: 14.0,
+    position: 1,
+    project_id: 16,
+    date_closed: null,
+    billable: false,
+    url:"https://www.tickspot.com/api/v2/123/tasks/25.json",
+    created_at:"2014-09-18T15:03:18.000-04:00",
+    updated_at:"2014-09-18T15:03:18.000-04:00"
+  }
+  ...
+]
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  console.log(responseData.map((task) => {
+    const date = new Date(task.created_at);
+    return {
+      id: task.id,
+      name: task.name,
+      budget: task.budget,
+      day: date.getDate(),
+      month: date.getMonth(),
+      year: date.getFullYear(),
+    };
+  }));
+};
+
+const result = await client.tasks.listOpened(callback);
+
+// The result would be something like the following:
+[
+  {
+    id: 25,
+    name: "Software Development",
+    budget: 14.0,
+    day: 08,
+    month: 11,
+    year: 2021
+  },
+  ...
+]
+```
+
 ## Code of conduct
 
 We welcome everyone to contribute. Make sure you have read the [CODE_OF_CONDUCT][coc] before.
