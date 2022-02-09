@@ -22,9 +22,8 @@ class Tasks extends BaseResource {
    * @param {callback} responseCallback
    *    is an optional function to perform a process over the response data.
    *
-   * @return {Array} list of all opened tasks across all projects..
+   * @return {Array} list of all opened tasks across all projects.
    */
-
   async listOpened(responseCallback) {
     const URL = `${this.baseURL}/tasks.json`;
     return this.makeRequest({ URL, method: 'get', responseCallback });

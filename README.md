@@ -361,15 +361,17 @@ Optionally, You can send a callback to perform an action on the response data. e
 
 ```javascript
 const callback = (responseData) => {
-  const date = new Date(responseData.date_closed);
-  return {
-    id: responseData.id,
-    name: responseData.name,
-    budget: `${responseData.budget}`
-    day: date.getDate(),
-    month: date.getMonth(),
-    year: date.getFullYear(),
-  };
+  responseData.map((task) => {
+    const date = new Date(task.date_closed);
+    return {
+      id: task.id,
+      name: task.name,
+      budget: task.budget,
+      day: date.getDate(),
+      month: date.getMonth(),
+      year: date.getFullYear(),
+    };
+  });
 };
 
 const result = await client.tasks.listClosed(callback);
@@ -417,7 +419,7 @@ Optionally, You can send a callback to perform an action on the response data. e
 
 ```javascript
 const callback = (responseData) => {
-  console.log(responseData.map((task) => {
+  responseData.map((task) => {
     const date = new Date(task.created_at);
     return {
       id: task.id,
@@ -427,7 +429,7 @@ const callback = (responseData) => {
       month: date.getMonth(),
       year: date.getFullYear(),
     };
-  }));
+  });
 };
 
 const result = await client.tasks.listOpened(callback);
