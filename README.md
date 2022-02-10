@@ -388,6 +388,76 @@ const result = await client.tasks.listClosed(callback);
 ]
 ```
 
+#### Update Task
+
+This method will update the task information from the parameters passed. The params you can send are the following:
+
+- [Required] taskId, task unique identificator.
+- [Required] budget, it is allowed to update this value to null.
+- [Optional] billable.
+- [Optional] name, task name.
+- [Optional] position.
+- [Optional] projectId, project unique identificator.
+- [Optional] dateClosed, the format is: 'YYYY-MM-DD'..
+
+```javascript
+const data = {
+  taskId: 123456,
+  budget: null,
+  billable: false,
+  name: 'Update task test',
+  position: 25,
+  projectId: 7890,
+  dateClosed: '2022-01-20',
+};
+
+const result = await client.tasks.update(data);
+
+// The result would be something like the following:
+{
+  id: 123456,
+  name: 'Update task test',
+  budget: null,
+  position: 25,
+  project_id: 7890,
+  date_closed: '2022-01-20',
+  billable: false,
+  url: 'https://secure.tickspot.com/7890/api/v2/tasks/123456.json',
+  created_at: '2022-02-08T20:41:50.000-05:00',
+  updated_at: '2022-02-08T20:41:50.000-05:00',
+}
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  return {
+    id: responseData.id,
+    name: responseData.name,
+    billable: responseData.billable,
+  };
+};
+
+const data = {
+  taskId: 123456,
+  budget: null,
+  billable: false,
+  name: 'Update task test',
+  position: 25,
+  projectId: 7890,
+  dateClosed: '2022-01-20',
+};
+
+const result = await client.tasks.update(data, callback);
+// The result would be something like the following:
+{
+  id: 1,
+  name: 'Update task test',
+  billable: false,
+}
+```
+
 ## Code of conduct
 
 We welcome everyone to contribute. Make sure you have read the [CODE_OF_CONDUCT][coc] before.

@@ -132,7 +132,7 @@ class Entries extends BaseResource {
       ...(notes && { notes }),
       ...(taskId && { task_id: taskId }),
       ...(userId && { user_id: userId }),
-      ...(billed && { billed }),
+      ...(typeof billed === 'boolean' && { billed }),
     };
 
     const URL = `${this.baseURL}/entries/${entryId}.json`;
