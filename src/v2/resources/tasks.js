@@ -28,6 +28,21 @@ class Tasks extends BaseResource {
     const URL = `${this.baseURL}/tasks.json`;
     return this.makeRequest({ URL, method: 'get', responseCallback });
   }
+
+  /**
+   * This method will return the specified task.
+   * @param {Number} taskId, task unique identificator.
+   * @param {callback} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @returns {object} task data on tickspot or an error if the process fails.
+   */
+  async getTask(taskId, responseCallback) {
+    if (!taskId) throw new Error('taskId field is missing');
+
+    const URL = `${this.baseURL}/tasks/${taskId}.json`;
+    return this.makeRequest({ URL, method: 'get', responseCallback });
+  }
 }
 
 export default Tasks;

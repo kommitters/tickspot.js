@@ -447,7 +447,77 @@ const result = await client.tasks.listOpened(callback);
   ...
 ]
 ```
+#### Get Single Task
 
+This method will return the specified task. This method needs the following params:
+
+- [Required] taskId, task unique identificator.
+
+```javascript
+const result = await client.tasks.getTask(1);
+
+// The result would be something like the following:
+{
+  id: 1,
+  name: 'Software Development',
+  budget: null,
+  position: 1,
+  project_id: 2,
+  date_closed: null,
+  billable: false,
+  created_at: '2020-04-21T16:06:53.000-04:00',
+  updated_at: '2022-01-17T17:51:25.000-05:00',
+  total_hours: 1860.192,
+  entries: {
+    count: 932,
+    url: 'https://secure.tickspot.com/114217/api/v2/tasks/14541833/entries.json',
+    updated_at: '2021-12-16T16:11:14.000-05:00'
+  },
+  project: {
+    id: 2,
+    name: 'Internal Projects',
+    budget: null,
+    date_closed: null,
+    notifications: false,
+    billable: false,
+    recurring: false,
+    client_id: 365968,
+    owner_id: 324080,
+    url: 'https://secure.tickspot.com/114217/api/v2/projects/2.json',
+    created_at: '2020-04-21T16:06:53.000-04:00',
+    updated_at: '2022-02-10T19:22:45.000-05:00'
+  }
+}
+
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  const date = new Date(responseData.created_at);
+  return {
+    id: responseData.id,
+    name: responseData.name,
+    projectName: responseData.project.name,
+    day: date.getDate(),
+    month: date.getMonth(),
+    year: date.getFullYear(),
+  };
+};
+
+const result = await client.tasks.getTask(1, callback);
+
+// The result would be something like the following:
+{
+  id: 1,
+  name: 'Software Development',
+  projectName: 'Internal Projects',
+  day: 21,
+  month: 3,
+  year: 2020
+}
+```
 ## Code of conduct
 
 We welcome everyone to contribute. Make sure you have read the [CODE_OF_CONDUCT][coc] before.
