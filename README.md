@@ -470,7 +470,7 @@ const result = await client.tasks.getTask(1);
   total_hours: 1860.192,
   entries: {
     count: 932,
-    url: 'https://secure.tickspot.com/114217/api/v2/tasks/14541833/entries.json',
+    url: 'https://secure.tickspot.com/654321/api/v2/tasks/14541833/entries.json',
     updated_at: '2021-12-16T16:11:14.000-05:00'
   },
   project: {
@@ -483,7 +483,7 @@ const result = await client.tasks.getTask(1);
     recurring: false,
     client_id: 365968,
     owner_id: 324080,
-    url: 'https://secure.tickspot.com/114217/api/v2/projects/2.json',
+    url: 'https://secure.tickspot.com/654321/api/v2/projects/2.json',
     created_at: '2020-04-21T16:06:53.000-04:00',
     updated_at: '2022-02-10T19:22:45.000-05:00'
   }
