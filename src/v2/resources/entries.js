@@ -1,4 +1,5 @@
 import BaseResource from '#src/v2/baseResource';
+import listEntriesService from '../helpers/listEntries.helper';
 
 /**
  * Entries module for tickspot V2 API.
@@ -8,7 +9,7 @@ import BaseResource from '#src/v2/baseResource';
 class Entries extends BaseResource {
   /**
    * This will return all time entries that meet the provided parameters.
-   * @param {object} Entry contains the params to get the entries.
+   * @param {object} Filters contains the params to get the entries.
    *    [Required] startDate, Format is: 'YYYY-MM-DD'.
    *    [Required] endDate, Format is: 'YYYY-MM-DD'.
    *    [Optional] userId, will be ignored if the user is not an administrator.
@@ -29,20 +30,16 @@ class Entries extends BaseResource {
     billable,
     billed,
   }, responseCallback) {
-    if (!startDate) throw new Error('startDate field is missing');
-    if (!endDate) throw new Error('endDate field is missing');
+    const { URL, params } = listEntriesService({
+      startDate,
+      endDate,
+      userId,
+      projectId,
+      taskId,
+      billable,
+      billed,
+    }, { baseURL: this.baseURL });
 
-    const params = {
-      start_date: startDate,
-      end_date: endDate,
-      ...(userId && { user_id: userId }),
-      ...(billable && { billable }),
-      ...(projectId && { project_id: projectId }),
-      ...(billed && { billed }),
-      ...(taskId && { task_id: taskId }),
-    };
-
-    const URL = `${this.baseURL}/entries.json`;
     return this.makeRequest({
       URL, method: 'get', params, responseCallback,
     });
