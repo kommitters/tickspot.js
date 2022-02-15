@@ -398,7 +398,7 @@ This method will update the task information from the parameters passed. The par
 - [Optional] name, task name.
 - [Optional] position.
 - [Optional] projectId, project unique identificator.
-- [Optional] dateClosed, the format is: 'YYYY-MM-DD'..
+- [Optional] dateClosed, the format is: 'YYYY-MM-DD'.
 
 ```javascript
 const data = {
