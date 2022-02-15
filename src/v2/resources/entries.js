@@ -38,10 +38,7 @@ class Entries extends BaseResource {
       taskId,
       billable,
       billed,
-    }, {
-      baseURL: this.baseURL,
-      module: 'entries',
-    });
+    }, { baseURL: this.baseURL });
 
     return this.makeRequest({
       URL, method: 'get', params, responseCallback,

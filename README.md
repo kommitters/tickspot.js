@@ -528,7 +528,6 @@ This will return all entries that are related to a specific task and meet the pr
 - [Required] startDate. The format is: 'YYYY-MM-DD'.
 - [Required] endDate. The format is: 'YYYY-MM-DD'.
 - [Optional] userId, will be ignored if the user is not an administrator.
-- [Optional] userId, will be ignored if the user is not an administrator.
 - [Optional] billable.
 - [Optional] billed.
 
@@ -541,7 +540,7 @@ const params = {
   endDate: "2021-11-09",
   billable: true,
 };
-const result = await client.entries.list(params);
+const result = await client.tasks.listEntries(params);
 // The result would be something like the following:
 [
   {
@@ -578,7 +577,7 @@ const callback = (responseData) =>
       year: date.getFullYear(),
     };
   });
-const result = await client.entries.list(params, callback);
+const result = await client.tasks.listEntries(params, callback);
 // The result would be something like the following:
 [
   {
