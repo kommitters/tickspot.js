@@ -361,15 +361,17 @@ Optionally, You can send a callback to perform an action on the response data. e
 
 ```javascript
 const callback = (responseData) => {
-  const date = new Date(responseData.date_closed);
-  return {
-    id: responseData.id,
-    name: responseData.name,
-    budget: `${responseData.budget}`
-    day: date.getDate(),
-    month: date.getMonth(),
-    year: date.getFullYear(),
-  };
+  responseData.map((task) => {
+    const date = new Date(task.date_closed);
+    return {
+      id: task.id,
+      name: task.name,
+      budget: task.budget,
+      day: date.getDate(),
+      month: date.getMonth(),
+      year: date.getFullYear(),
+    };
+  });
 };
 
 const result = await client.tasks.listClosed(callback);
@@ -380,6 +382,64 @@ const result = await client.tasks.listClosed(callback);
     id: 1,
     name: "Example Task",
     budget: "$14.0",
+    day: 08,
+    month: 11,
+    year: 2021
+  },
+  ...
+]
+```
+
+#### List All Opened Tasks
+
+This method will return all opened tasks across all projects.
+
+```javascript
+const result = await client.tasks.listOpened();
+
+// The result would be something like the following:
+[
+  {
+    id: 25,
+    name: "Software Development",
+    budget: 14.0,
+    position: 1,
+    project_id: 16,
+    date_closed: null,
+    billable: false,
+    url:"https://www.tickspot.com/api/v2/123/tasks/25.json",
+    created_at:"2014-09-18T15:03:18.000-04:00",
+    updated_at:"2014-09-18T15:03:18.000-04:00"
+  }
+  ...
+]
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  responseData.map((task) => {
+    const date = new Date(task.created_at);
+    return {
+      id: task.id,
+      name: task.name,
+      budget: task.budget,
+      day: date.getDate(),
+      month: date.getMonth(),
+      year: date.getFullYear(),
+    };
+  });
+};
+
+const result = await client.tasks.listOpened(callback);
+
+// The result would be something like the following:
+[
+  {
+    id: 25,
+    name: "Software Development",
+    budget: 14.0,
     day: 08,
     month: 11,
     year: 2021
@@ -410,9 +470,7 @@ const data = {
   projectId: 7890,
   dateClosed: '2022-01-20',
 };
-
 const result = await client.tasks.update(data);
-
 // The result would be something like the following:
 {
   id: 123456,
@@ -438,7 +496,6 @@ const callback = (responseData) => {
     billable: responseData.billable,
   };
 };
-
 const data = {
   taskId: 123456,
   budget: null,
@@ -448,7 +505,6 @@ const data = {
   projectId: 7890,
   dateClosed: '2022-01-20',
 };
-
 const result = await client.tasks.update(data, callback);
 // The result would be something like the following:
 {
@@ -458,6 +514,77 @@ const result = await client.tasks.update(data, callback);
 }
 ```
 
+#### Get Single Task
+
+This method will return the specified task. This method needs the following params:
+
+- [Required] taskId, task unique identificator.
+
+```javascript
+const result = await client.tasks.getTask(1);
+
+// The result would be something like the following:
+{
+  id: 1,
+  name: 'Software Development',
+  budget: null,
+  position: 1,
+  project_id: 2,
+  date_closed: null,
+  billable: false,
+  created_at: '2020-04-21T16:06:53.000-04:00',
+  updated_at: '2022-01-17T17:51:25.000-05:00',
+  total_hours: 1860.192,
+  entries: {
+    count: 932,
+    url: 'https://secure.tickspot.com/654321/api/v2/tasks/14541833/entries.json',
+    updated_at: '2021-12-16T16:11:14.000-05:00'
+  },
+  project: {
+    id: 2,
+    name: 'Internal Projects',
+    budget: null,
+    date_closed: null,
+    notifications: false,
+    billable: false,
+    recurring: false,
+    client_id: 365968,
+    owner_id: 324080,
+    url: 'https://secure.tickspot.com/654321/api/v2/projects/2.json',
+    created_at: '2020-04-21T16:06:53.000-04:00',
+    updated_at: '2022-02-10T19:22:45.000-05:00'
+  }
+}
+
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  const date = new Date(responseData.created_at);
+  return {
+    id: responseData.id,
+    name: responseData.name,
+    projectName: responseData.project.name,
+    day: date.getDate(),
+    month: date.getMonth(),
+    year: date.getFullYear(),
+  };
+};
+
+const result = await client.tasks.getTask(1, callback);
+
+// The result would be something like the following:
+{
+  id: 1,
+  name: 'Software Development',
+  projectName: 'Internal Projects',
+  day: 21,
+  month: 3,
+  year: 2020
+}
+```
 ## Code of conduct
 
 We welcome everyone to contribute. Make sure you have read the [CODE_OF_CONDUCT][coc] before.
