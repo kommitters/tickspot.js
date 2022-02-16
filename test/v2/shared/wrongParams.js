@@ -20,6 +20,7 @@ const wrongParamsTests = ({
   paramsList = [],
   requestData,
   positionalParam = false,
+  type = 'request',
 }) => {
   paramsList.forEach((param) => {
     describe(`when the API return a missing param error (${param})`, () => {
@@ -33,18 +34,26 @@ const wrongParamsTests = ({
       });
 
       beforeEach(() => {
-        mockRejectedValueOnce({ method, responseData: requestParamsError });
+        if (type === 'request') {
+          mockRejectedValueOnce({ method, responseData: requestParamsError });
+        }
       });
 
       it('an error should be thrown when making the call', async () => {
         try {
-          if (positionalParam) {
-            await requestToExecute();
-          } else {
-            await requestToExecute(requestParams);
+          if (type === 'request') {
+            if (positionalParam) {
+              await requestToExecute();
+            } else {
+              await requestToExecute(requestParams);
+            }
+          } else if (type === 'method') {
+            requestToExecute(requestParams);
           }
         } catch (error) {
-          shouldHaveBeenCalledTimes({ method, times: 0 });
+          if (type === 'request') {
+            shouldHaveBeenCalledTimes({ method, times: 0 });
+          }
           expect(error).toEqual(new Error(`${param} field is missing`));
         }
       });
