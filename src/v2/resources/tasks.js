@@ -6,6 +6,44 @@ import listEntriesService from '../helpers/listEntries.helper';
  */
 class Tasks extends BaseResource {
   /**
+   * This method will create a new task, it is strictly limited to administrators.
+   *
+   * @param {object} Task contains the params to create the task.
+   *    [Required] name
+   *    [Required] projectId
+   *    [Optional] budget
+   *    [Optional] billable
+   *    [Optional] dateClosed
+   * @param {callback} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @return {Object} a object with created task data.
+   */
+  async create({
+    budget,
+    billable,
+    name,
+    projectId,
+    dateClosed,
+  }, responseCallback) {
+    if (!name) throw new Error('name field is missing');
+    if (!projectId) throw new Error('projectId field is missing');
+
+    const body = {
+      budget,
+      ...(typeof billable === 'boolean' && { billable }),
+      ...(name && { name }),
+      ...(projectId && { project_id: projectId }),
+      ...(dateClosed && { date_closed: dateClosed }),
+    };
+
+    const URL = `${this.baseURL}/tasks.json`;
+    return this.makeRequest({
+      URL, method: 'post', body, responseCallback,
+    });
+  }
+
+  /**
    * This method will return the specified task.
    * @param {Number} taskId, task unique identificator.
    * @param {callback} responseCallback

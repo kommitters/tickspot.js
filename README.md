@@ -448,6 +448,66 @@ const result = await client.tasks.listOpened(callback);
 ]
 ```
 
+#### Create Task
+
+This method will create a new task from the parameters passed. The params you can send are the following:
+
+- [Required] name, task name.
+- [Required] projectId, project unique identificator.
+- [Optional] budget.
+- [Optional] billable.
+- [Optional] dateClosed, the format is: 'YYYY-MM-DD'.
+
+```javascript
+const data = {
+  name: 'New task test',
+  projectId: 7890,
+  budget: null,
+  billable: false,
+  dateClosed: '2022-01-20',
+};
+const result = await client.tasks.create(data);
+// The result would be something like the following:
+{
+  id: 123456,
+  name: 'New task test',
+  budget: null,
+  position: 25,
+  project_id: 7890,
+  date_closed: '2022-01-20',
+  billable: false,
+  url: 'https://secure.tickspot.com/7890/api/v2/tasks/123456.json',
+  created_at: '2022-02-08T20:41:50.000-05:00',
+  updated_at: '2022-02-08T20:41:50.000-05:00',
+}
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  return {
+    id: responseData.id,
+    name: responseData.name,
+    billable: responseData.billable,
+  };
+};
+const data = {
+  name: 'New task test',
+  projectId: 7890,
+  budget: null,
+  billable: false,
+  dateClosed: '2022-01-20',
+};
+const result = await client.tasks.create(data, callback);
+// The result would be something like the following:
+{
+  id: 1,
+  name: 'New task test',
+  billable: false,
+}
+```
+
 #### Update Task
 
 This method will update the task information from the parameters passed. The params you can send are the following:
