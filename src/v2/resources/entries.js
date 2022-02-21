@@ -1,5 +1,5 @@
 import BaseResource from '#src/v2/baseResource';
-import listEntriesService from '../helpers/listEntries.helper';
+import listEntriesHelper from '#src/v2/helpers/listEntriesHelper';
 
 /**
  * Entries module for tickspot V2 API.
@@ -30,7 +30,7 @@ class Entries extends BaseResource {
     billable,
     billed,
   }, responseCallback) {
-    const { URL, params } = listEntriesService({
+    const { URL, params } = listEntriesHelper({
       startDate,
       endDate,
       userId,

@@ -1,5 +1,5 @@
 import wrongParamsTests from '#test/v2/shared/wrongParams';
-import listEntriesHelper from '../../../src/v2/helpers/listEntries.helper';
+import listEntriesHelper from '#src/v2/helpers/listEntriesHelper';
 
 describe('listEntriesHelper', () => {
   const modules = ['entries', 'users', 'projects', 'tasks'];

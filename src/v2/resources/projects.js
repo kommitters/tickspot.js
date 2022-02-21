@@ -3,7 +3,6 @@ import BaseResource from '#src/v2/baseResource';
 /**
  * Projects module for tickspot V2 API.
  */
-
 class Projects extends BaseResource {
   /**
    * This method will return all opened projects.
