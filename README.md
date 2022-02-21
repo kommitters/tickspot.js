@@ -734,7 +734,7 @@ const result = await client.projects.listOpened(1);
 [
   {
     id: 16,
-    name: 'Project #1',
+    name: "Project #1",
     budget: null,
     date_closed: null,
     notifications: false,
@@ -742,13 +742,13 @@ const result = await client.projects.listOpened(1);
     recurring: false,
     client_id: 987654,
     owner_id: 123987,
-    url: 'https://secure.tickspot.com/654321/api/v2/projects/16.json',
-    created_at: '2020-04-21T12:35:46.000-04:00',
-    updated_at: '2022-02-14T16:30:15.000-05:00',
+    url: "https://secure.tickspot.com/654321/api/v2/projects/16.json",
+    created_at: "2020-04-21T12:35:46.000-04:00",
+    updated_at: "2022-02-14T16:30:15.000-05:00",
   },
   {
     id: 4,
-    name: 'Project #2',
+    name: "Project #2",
     budget: null,
     date_closed: null,
     notifications: false,
@@ -756,12 +756,11 @@ const result = await client.projects.listOpened(1);
     recurring: false,
     client_id: 987654,
     owner_id: 123987,
-    url: 'https://secure.tickspot.com/654321/api/v2/projects/4.json',
-    created_at: '2020-04-21T15:56:06.000-04:00',
-    updated_at: '2022-02-14T13:30:06.000-05:00',
+    url: "https://secure.tickspot.com/654321/api/v2/projects/4.json",
+    created_at: "2020-04-21T15:56:06.000-04:00",
+    updated_at: "2022-02-14T13:30:06.000-05:00",
   },
-]
-
+];
 ```
 
 Optionally, You can send a callback to perform an action on the response data. e.g:
@@ -785,6 +784,66 @@ const result = await client.projects.listOpened(1, callback);
   { name: 'Project #3' },
   ...
 ]
+```
+
+### Users
+
+This module allows you to interact with the Tickspot users.
+
+#### List Users
+
+This method will return information about the users on the subscription. Non-administrators will only have visibility of themselves,while administrators will see everyone.
+
+```javascript
+const result = await client.users.list();
+
+// The result would be something like the following:
+[
+  {
+    id: 4,
+    first_name: "Anakin",
+    last_name: "Skywalker",
+    email: "user@tickspot.com",
+    timezone: "Hawaii",
+    updated_at: "2014-11-19T12:53:46.000-05:00",
+  },
+  {
+    id: 1,
+    first_name: "Luke",
+    last_name: "Skywalker",
+    email: "owner@tickspot.com",
+    timezone: "Hawaii",
+    updated_at: "2015-01-30T15:13:44.000-05:00",
+  },
+];
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) =>
+  responseData.map((user) => {
+    return {
+      id: user.id,
+      name: user.first_name,
+      email: user.email,
+    };
+  });
+
+const result = await client.users.list(callback);
+// The result would be something like the following:
+[
+  {
+    id: 4,
+    name: "Anakin",
+    email: "user@tickspot.com",
+  },
+  {
+    id: 1,
+    name: "Luke",
+    email: "owner@tickspot.com",
+  },
+];
 ```
 
 ## Code of conduct
