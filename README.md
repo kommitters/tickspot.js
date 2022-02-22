@@ -792,7 +792,7 @@ This module allows you to interact with the Tickspot users.
 
 #### List Users
 
-This method will return information about the users on the subscription. Non-administrators will only have visibility of themselves,while administrators will see everyone.
+This method will return information about the users on the subscription. Non-administrators will only have visibility of themselves, while administrators will see everyone.
 
 ```javascript
 const result = await client.users.list();
