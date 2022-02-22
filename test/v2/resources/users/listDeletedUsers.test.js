@@ -2,7 +2,7 @@ import axios from 'axios';
 import tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
-import listUsersFixture from '#test/v2/fixture/users/listUsersFixture';
+import listDeletedUsersFixture from '#test/v2/fixture/users/listDeletedUsersFixture';
 import authenticationErrorTests from '#test/v2/shared/authentication';
 import {
   badResponseCallbackTests,
@@ -11,9 +11,9 @@ import {
 
 jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/users.json`;
+const URL = `${client.baseURL}/users/deleted.json`;
 
-describe('#list', () => {
+describe('#listDeleted', () => {
   beforeEach(() => {
     axios.get.mockClear();
   });
@@ -22,7 +22,7 @@ describe('#list', () => {
     const requestResponse = responseFactory({
       requestData: {},
       responseType: 'successful',
-      responseData: listUsersFixture,
+      responseData: listDeletedUsersFixture,
       URL,
     });
 
@@ -30,8 +30,8 @@ describe('#list', () => {
       axios.get.mockResolvedValueOnce(requestResponse);
     });
 
-    it('should return a list with all users', async () => {
-      const response = await client.users.list();
+    it('should return a list with all deleted users', async () => {
+      const response = await client.users.listDeleted();
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -39,14 +39,14 @@ describe('#list', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.users.list();
+      await client.users.listDeleted();
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.users.list({});
+      await client.users.listDeleted({});
     },
   });
 
@@ -55,10 +55,10 @@ describe('#list', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.users.list(dataCallback);
+      const response = await client.users.listDeleted(dataCallback);
       return [response, dataCallback];
     },
-    responseData: listUsersFixture,
+    responseData: listDeletedUsersFixture,
     URL,
   });
 });
