@@ -130,7 +130,7 @@ class Tasks extends BaseResource {
    * This method will return all time entries that are related to the task
    *
    * @param {object} Filters contains the params to get the entries.
-   *    [Optional] taskId, related parent task.
+   *    [Required] taskId, related parent task.
    *    [Required] startDate, Format is: 'YYYY-MM-DD'.
    *    [Required] endDate, Format is: 'YYYY-MM-DD'.
    *    [Optional] userId, will be ignored if the user is not an administrator.

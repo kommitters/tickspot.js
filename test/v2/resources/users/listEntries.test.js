@@ -12,14 +12,13 @@ import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/tasks/123/entries.json`;
+const URL = `${client.baseURL}/users/123/entries.json`;
 
 describe('#listEntries', () => {
   const params = {
     startDate: '2021-11-08',
     endDate: '2021-11-09',
-    userId: 'userId',
-    taskId: 123,
+    userId: 123,
   };
 
   beforeEach(() => {
@@ -38,8 +37,8 @@ describe('#listEntries', () => {
       axios.get.mockResolvedValueOnce(requestResponse);
     });
 
-    it('should return a list with all entries related to a task', async () => {
-      const response = await client.tasks.listEntries(params);
+    it('should return a list with all entries related to a user', async () => {
+      const response = await client.users.listEntries(params);
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -47,14 +46,14 @@ describe('#listEntries', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.tasks.listEntries(params);
+      await client.users.listEntries(params);
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.tasks.listEntries(params, {});
+      await client.users.listEntries(params, {});
     },
   });
 
@@ -63,7 +62,7 @@ describe('#listEntries', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.tasks.listEntries(params, dataCallback);
+      const response = await client.users.listEntries(params, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -72,10 +71,10 @@ describe('#listEntries', () => {
 
   wrongParamsTests({
     requestToExecute: async (requestParams) => {
-      await client.tasks.listEntries(requestParams);
+      await client.users.listEntries(requestParams);
     },
     URL,
     requestData: params,
-    paramsList: ['startDate', 'endDate', 'taskId'],
+    paramsList: ['startDate', 'endDate', 'userId'],
   });
 });

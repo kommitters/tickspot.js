@@ -1,4 +1,5 @@
 import BaseResource from '#src/v2/baseResource';
+import listEntriesHelper from '#src/v2/helpers/listEntriesHelper';
 
 /**
  * Users module for tickspot V2 API.
@@ -16,6 +17,48 @@ class Users extends BaseResource {
     const URL = `${this.baseURL}/users.json`;
     return this.makeRequest({
       URL, method: 'get', responseCallback,
+    });
+  }
+
+  /**
+   * This method will return all time entries that are related to a user.
+   *
+   * @param {object} Filters contains the params to get the entries.
+   *    [Required] startDate, Format is: 'YYYY-MM-DD'.
+   *    [Required] endDate, Format is: 'YYYY-MM-DD'.
+   *    [Required] userId, will be ignored if the user is not an administrator.
+   *    [Optional] taskId, related parent task.
+   *    [Optional] billable
+   *    [Optional] billed
+   * @param {function} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @returns {object} array with the list of entries or an error if the process fails.
+   */
+  async listEntries({
+    taskId,
+    startDate,
+    endDate,
+    userId,
+    projectId,
+    billable,
+    billed,
+  }, responseCallback) {
+    const { URL, params } = listEntriesHelper({
+      startDate,
+      endDate,
+      userId,
+      projectId,
+      taskId,
+      billable,
+      billed,
+    }, {
+      baseURL: this.baseURL,
+      module: 'users',
+    });
+
+    return this.makeRequest({
+      URL, method: 'get', params, responseCallback,
     });
   }
 }
