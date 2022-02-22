@@ -127,7 +127,7 @@ class Tasks extends BaseResource {
   }
 
   /**
-   * This method will return all time entries that are related to the task
+   * This method will return all time entries that are related to the task.
    *
    * @param {object} Filters contains the params to get the entries.
    *    [Optional] taskId, related parent task.
