@@ -846,6 +846,49 @@ const result = await client.users.list(callback);
 ];
 ```
 
+#### List Deleted Users
+
+This method will return users who have been deleted from the subscription and have time entries. Non-administrators will not have access.
+
+```javascript
+const result = await client.users.listDeleted();
+
+// The result would be something like the following:
+[
+  {
+    id: 5,
+    first_name: "Darth",
+    last_name: "Vader",
+    email: "dv@tickspot.com",
+    timezone: "Death Star",
+    updated_at: "2014-11-19T12:53:46.000-05:00",
+  },
+];
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) =>
+  responseData.map((user) => {
+    return {
+      id: user.id,
+      name: user.first_name,
+      email: user.email,
+    };
+  });
+
+const result = await client.users.listDeleted(callback);
+// The result would be something like the following:
+[
+  {
+    id: 5,
+    naem: "Darth",
+    email: "dv@tickspot.com",
+  },
+];
+```
+
 #### List User Entries
 
 This will return all entries that are related to a specific user and meet the provided parameters. You can send some params to filter the response, those params are the following:
@@ -866,7 +909,6 @@ const params = {
   endDate: "2021-11-09",
   billable: true,
 };
-
 const result = await client.users.listEntries(params);
 // The result would be something like the following:
 [
@@ -893,7 +935,6 @@ const params = {
   startDate: "2021-11-08",
   endDate: "2021-11-09",
 };
-
 const callback = (responseData) =>
   responseData.map((entry) => {
     const date = new Date(entry.date);
@@ -905,7 +946,6 @@ const callback = (responseData) =>
       year: date.getFullYear(),
     };
   });
-
 const result = await client.users.listEntries(params, callback);
 // The result would be something like the following:
 [

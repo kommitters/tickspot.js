@@ -21,6 +21,21 @@ class Users extends BaseResource {
   }
 
   /**
+   * This will return users who have been deleted from the subscription and have time entries.
+   * Non-administrators will not have access.
+   *
+   * @param {callback} responseCallback
+   *    is an optional function to perform a process over the response data.
+   * @return {Array} list of all deleted users.
+   */
+  async listDeleted(responseCallback) {
+    const URL = `${this.baseURL}/users/deleted.json`;
+    return this.makeRequest({
+      URL, method: 'get', responseCallback,
+    });
+  }
+
+  /**
    * This method will return all time entries that are related to a user.
    *
    * @param {object} Filters contains the params to get the entries.
