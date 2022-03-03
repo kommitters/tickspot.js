@@ -788,6 +788,58 @@ const result = await client.projects.listOpened(1, callback);
 ]
 ```
 
+#### List Closed Projects
+
+This method will return all closed projects. This method needs the following params:
+
+- [Required] page, parameter for your request.
+
+```javascript
+const result = await client.projects.listOpened(1);
+
+// The result would be something like the following:
+[
+  {
+    id: 16,
+    name: "Project #1",
+    budget: null,
+    date_closed: '2022-01-21',
+    notifications: false,
+    billable: true,
+    recurring: false,
+    client_id: 987654,
+    owner_id: 123987,
+    url: "https://secure.tickspot.com/654321/api/v2/projects/16.json",
+    created_at: "2020-04-21T12:35:46.000-04:00",
+    updated_at: "2022-02-14T16:30:15.000-05:00",
+  },
+  ...
+];
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+
+const callback = (responseData) => {
+  responseData.map((project) => {
+    return {
+      name: project.name,
+      dateClosed: project.date_closed,
+    };
+  });
+};
+
+const result = await client.projects.listClosed(1, callback);
+
+// The result would be something like the following:
+[
+  { name: 'Project #1', dateClosed: '2019-03-04' },
+  { name: 'Project #2', dateClosed: '2019-03-14' },
+  ...
+]
+```
+
 #### List Project Entries
 
 This will return all entries that are related to a specific project and meet the provided parameters. You can send some params to filter the response, those params are the following:

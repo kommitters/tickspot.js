@@ -2,7 +2,7 @@ import axios from 'axios';
 import tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
-import successfulResponseData from '#test/v2/fixture/projects/openedProjectsFixture';
+import successfulResponseData from '#test/v2/fixture/projects/listProjectsFixture';
 import authenticationErrorTests from '#test/v2/shared/authentication';
 import {
   badResponseCallbackTests,
@@ -12,14 +12,21 @@ import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/projects.json`;
 
-describe('#listOpened', () => {
+const methods = ['listOpened', 'listClosed'];
+
+const getUrl = (method) => (method === 'listOpened'
+  ? `${client.baseURL}/projects.json`
+  : `${client.baseURL}/projects/closed.json`);
+
+describe.each(methods)('Project Methods', (method) => {
   beforeEach(() => {
-    axios.get.mockClear();
+    axios.get.mockReset();
   });
 
-  describe('when API call is successful', () => {
+  const URL = getUrl(method);
+
+  describe(`${method}: when API call is successful`, () => {
     const requestResponse = responseFactory({
       requestData: {},
       responseType: 'successful',
@@ -31,8 +38,8 @@ describe('#listOpened', () => {
       axios.get.mockResolvedValueOnce(requestResponse);
     });
 
-    it('should return a list with all opened projects', async () => {
-      const response = await client.projects.listOpened(1);
+    it(`should return a ${method} projects`, async () => {
+      const response = await client.projects[`${method}`](1);
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -40,14 +47,14 @@ describe('#listOpened', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.projects.listOpened(1);
+      await client.projects[`${method}`](1);
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.projects.listOpened(1, {});
+      await client.projects[`${method}`](1, {});
     },
   });
 
@@ -56,7 +63,7 @@ describe('#listOpened', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.projects.listOpened(1, dataCallback);
+      const response = await client.projects[`${method}`](1, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -65,7 +72,7 @@ describe('#listOpened', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.projects.listOpened();
+      await client.projects[`${method}`]();
     },
     URL,
     paramsList: ['page'],

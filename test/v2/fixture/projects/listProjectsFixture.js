@@ -1,4 +1,4 @@
-const openedProjectsFixture = [
+const listProjectsFixture = [
   {
     id: 16,
     name: 'Project #1',
@@ -29,4 +29,4 @@ const openedProjectsFixture = [
   },
 ];
 
-export default openedProjectsFixture;
+export default listProjectsFixture;
