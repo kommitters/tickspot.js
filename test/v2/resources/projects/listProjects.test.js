@@ -19,14 +19,14 @@ const getUrl = (method) => (method === 'listOpened'
   ? `${client.baseURL}/projects.json`
   : `${client.baseURL}/projects/closed.json`);
 
-describe.each(methods)('Project Methods', (method) => {
+describe.each(methods)('%s', (method) => {
   beforeEach(() => {
     axios.get.mockReset();
   });
 
   const URL = getUrl(method);
 
-  describe(`${method}: when API call is successful`, () => {
+  describe('when API call is successful', () => {
     const requestResponse = responseFactory({
       requestData: {},
       responseType: 'successful',
@@ -38,7 +38,7 @@ describe.each(methods)('Project Methods', (method) => {
       axios.get.mockResolvedValueOnce(requestResponse);
     });
 
-    it(`should return a ${method} projects`, async () => {
+    it('should return a list of projects', async () => {
       const response = await client.projects[`${method}`](1);
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);

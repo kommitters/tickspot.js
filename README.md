@@ -795,7 +795,7 @@ This method will return all closed projects. This method needs the following par
 - [Required] page, parameter for your request.
 
 ```javascript
-const result = await client.projects.listOpened(1);
+const result = await client.projects.listClosed(1);
 
 // The result would be something like the following:
 [
