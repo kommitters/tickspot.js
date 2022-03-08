@@ -86,6 +86,21 @@ class Projects extends BaseResource {
       URL, method: 'get', params, responseCallback,
     });
   }
+
+  /**
+   * This will return specific project info.
+   * @param {Number} projectId, project unique identificator.
+   * @param {function} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @returns {object} entry info or an error if the process fails.
+   */
+  async getProject(projectId, responseCallback) {
+    if (!projectId) throw new Error('projectId field is missing');
+
+    const URL = `${this.baseURL}/projects/${projectId}.json`;
+    return this.makeRequest({ URL, method: 'get', responseCallback });
+  }
 }
 
 export default Projects;
