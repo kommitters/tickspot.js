@@ -6,6 +6,53 @@ import listEntriesHelper from '#src/v2/helpers/listEntriesHelper';
  */
 class Projects extends BaseResource {
   /**
+   * This method will create a new project, it is strictly limited to administrators,
+   * no tasks will be created, time entries will not be allowed until at least one
+   * task is created.
+   * @param {object} Task contains the params to create the task.
+   *    [Required] name
+   *    [Required] client_id
+   *    [Required] owner_id
+   *    [Optional] budget
+   *    [Optional] notifications
+   *    [Optional] billable
+   *    [Optional] recurring
+
+   * @param {callback} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @return {Object} a object with created project data.
+   */
+  async create({
+    name,
+    clientId,
+    ownerId,
+    budget,
+    notifications,
+    billable,
+    recurring,
+  }, responseCallback) {
+    if (!name) throw new Error('name field is missing');
+    if (!clientId) throw new Error('clientId field is missing');
+    if (!ownerId) throw new Error('ownerId field is missing');
+
+    const body = {
+      name,
+      budget,
+      ...(clientId && { client_id: clientId }),
+      ...(ownerId && { owner_id: ownerId }),
+      ...(typeof notifications === 'boolean' && { notifications }),
+      ...(typeof billable === 'boolean' && { billable }),
+      ...(typeof recurring === 'boolean' && { recurring }),
+    };
+
+    const URL = `${this.baseURL}/projects.json`;
+    return this.makeRequest({
+      URL, method: 'post', body, responseCallback,
+    });
+  }
+
+  /**
    * This method will return all opened projects.
    * @param {Number} page, the first page returns
    *     up to 100 records and you can check the next page for more results

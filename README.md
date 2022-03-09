@@ -723,6 +723,76 @@ const result = await client.tasks.listEntries(params, callback);
 
 This module allows you to interact with the Tickspot projects.
 
+#### Create Project
+
+This method will create a new project from the parameters passed. No tasks will be created. Time entries will not be allowed until at least one task is created. It is strictly limited to administrators
+
+This method will return the new project info. This method needs the following params:
+
+- [Required] name, name of the project
+- [Required] clientId, related to the client
+- [Required] ownerId, owner of the project
+- [Optional] budget.
+- [Optional] notifications.
+- [Optional] billable.
+- [Optional] recurring.
+
+```javascript
+const data = {
+  name: 'test #1',
+  clientId: 123456,
+  ownerId: 654321,
+  budget: 50.0,
+  notifications: false,
+  billable: false,
+  recurring: false,
+};
+
+const result = await client.projects.create(data);
+
+// The result would be something like the following:
+{
+  id: 123,
+  name: 'test #1',
+  budget: 50,
+  date_closed: null,
+  notifications: false,
+  billable: false,
+  recurring: false,
+  client_id: 365968,
+  owner_id: 337683,
+  url: 'https://secure.tickspot.com/654321/api/v2/projects/123.json',
+  created_at: '2022-03-08T17:29:02.000-05:00',
+  updated_at: '2022-03-08T17:29:02.000-05:00'
+}
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  return {
+    name: responseData.name,
+    budget: responseData.budget
+  };
+};
+
+const data = {
+  name: 'test #1',
+  clientId: 123456,
+  ownerId: 654321,
+  budget: 50.0,
+  notifications: false,
+  billable: false,
+  recurring: false,
+};
+
+const result = await client.projects.create(data, callback);
+
+// The result would be something like the following:
+{ name: 'test #1', budget: 50 }
+```
+
 #### List All Opened Projects
 
 This method will return all opened projects. This method needs the following params:
