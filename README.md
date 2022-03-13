@@ -793,6 +793,75 @@ const result = await client.projects.create(data, callback);
 { name: 'test #1', budget: 50 }
 ```
 
+#### Update Project
+
+This method will update a specific project from the parameters passed.
+
+This method will return the project info. This method needs the following params:
+
+- [Required] projectId, project unique identificator.
+- [Optional] name, name of the project
+- [Optional] clientId, related to the client
+- [Optional] ownerId, owner of the project
+- [Optional] budget.
+- [Optional] notifications.
+- [Optional] billable.
+- [Optional] recurring.
+
+```javascript
+const data = {
+  projectId: 2210008,
+  name: 'test #1',
+  client_id: 654321,
+  ownerId: 123456,
+  budget: 40.0,
+  notifications: false,
+  billable: false,
+  recurring: false,
+};
+
+const result = await client.projects.updateProject(data);
+// The result would be something like the following:
+{
+  id: 2210008,
+  name: 'test #1',
+  budget: 40,
+  date_closed: null,
+  notifications: false,
+  billable: false,
+  recurring: false,
+  client_id: 654321,
+  owner_id: 123456,
+  url: 'https://secure.tickspot.com/987654/api/v2/projects/2210008.json',
+  created_at: '2022-03-13T10:19:12.000-04:00',
+  updated_at: '2022-03-13T10:36:20.000-04:00'
+}
+```
+Optionally, you can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  return {
+    name: responseData.name,
+    budget: responseData.budget
+  };
+};
+
+const data = {
+  projectId: 2210008,
+  name: 'test #1',
+  client_id: 654321,
+  ownerId: 123456,
+  budget: 40.0,
+  notifications: false,
+  billable: false,
+  recurring: false,
+};
+
+const result = await client.projects.updateProject(data, callback);
+// The result would be something like the following:
+{ name: 'test #1', budget: 40 }
+````
 #### List All Opened Projects
 
 This method will return all opened projects. This method needs the following params:

@@ -53,6 +53,52 @@ class Projects extends BaseResource {
   }
 
   /**
+   * This will update the project from the parameters passed.
+   * @param {object} Task contains the params to update the task.
+   *    [Required] projectId, project unique identificator.
+   *    [Optional] name
+   *    [Optional] client_id
+   *    [Optional] owner_id
+   *    [Optional] budget
+   *    [Optional] notifications
+   *    [Optional] billable
+   *    [Optional] recurring
+   * @param {function} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @returns {object} project info or an error if the process fails.
+   */
+
+  async updateProject({
+    projectId,
+    name,
+    clientId,
+    ownerId,
+    budget,
+    notifications,
+    billable,
+    recurring,
+  }, responseCallback) {
+    if (!projectId) throw new Error('projectId field is missing');
+
+    const body = {
+      ...(name && { name }),
+      ...(budget && { budget }),
+      ...(clientId && { client_id: clientId }),
+      ...(ownerId && { owner_id: ownerId }),
+      ...(typeof notifications === 'boolean' && { notifications }),
+      ...(typeof billable === 'boolean' && { billable }),
+      ...(typeof recurring === 'boolean' && { recurring }),
+    };
+
+    const URL = `${this.baseURL}/projects/${projectId}.json`;
+
+    return this.makeRequest({
+      URL, method: 'put', body, responseCallback,
+    });
+  }
+
+  /**
    * This method will return all opened projects.
    * @param {Number} page, the first page returns
    *     up to 100 records and you can check the next page for more results
@@ -140,7 +186,7 @@ class Projects extends BaseResource {
    * @param {function} responseCallback
    *    is an optional function to perform a process over the response data.
    *
-   * @returns {object} entry info or an error if the process fails.
+   * @returns {object} project info or an error if the process fails.
    */
   async getProject(projectId, responseCallback) {
     if (!projectId) throw new Error('projectId field is missing');
