@@ -68,7 +68,6 @@ class Projects extends BaseResource {
    *
    * @returns {object} project info or an error if the process fails.
    */
-
   async updateProject({
     projectId,
     name,

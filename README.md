@@ -795,9 +795,7 @@ const result = await client.projects.create(data, callback);
 
 #### Update Project
 
-This method will update a specific project from the parameters passed.
-
-This method will return the project info. This method needs the following params:
+This method will update a specific project from the parameters passed and return the project info. This method needs the following params:
 
 - [Required] projectId, project unique identificator.
 - [Optional] name, name of the project
