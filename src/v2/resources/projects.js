@@ -98,6 +98,19 @@ class Projects extends BaseResource {
   }
 
   /**
+   * This will will delete the project.
+   * @param {Number} projectId, project unique identificator.
+   * The project and all time entries will be immediately deleted
+   * @returns {Boolean} true if the project was deleted or an error if the process fails.
+   */
+  async deleteProject(projectId) {
+    if (!projectId) throw new Error('projectId field is missing');
+
+    const URL = `${this.baseURL}/projects/${projectId}.json`;
+    return this.makeRequest({ URL, method: 'delete' });
+  }
+
+  /**
    * This method will return all opened projects.
    * @param {Number} page, the first page returns
    *     up to 100 records and you can check the next page for more results
