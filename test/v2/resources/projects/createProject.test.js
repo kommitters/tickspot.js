@@ -14,7 +14,7 @@ jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const URL = `${client.baseURL}/projects.json`;
 
-describe('createProject', () => {
+describe('#create', () => {
   const projectData = {
     name: 'test #1',
     clientId: 654321,

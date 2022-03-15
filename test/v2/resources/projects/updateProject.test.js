@@ -14,7 +14,7 @@ jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const URL = `${client.baseURL}/projects/123456.json`;
 
-describe('createProject', () => {
+describe('#update', () => {
   const projectData = {
     projectId: 123456,
     name: 'test #1',
@@ -43,14 +43,14 @@ describe('createProject', () => {
     });
 
     it('should update the specific project', async () => {
-      const response = await client.projects.updateProject(projectData);
+      const response = await client.projects.update(projectData);
       expect(response.data.name).toBe(projectData.name);
     });
   });
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.projects.updateProject(projectData);
+      await client.projects.update(projectData);
     },
     URL,
     method: 'put',
@@ -58,7 +58,7 @@ describe('createProject', () => {
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.projects.updateProject(projectData, {});
+      await client.projects.update(projectData, {});
     },
     method: 'put',
   });
@@ -68,7 +68,7 @@ describe('createProject', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.projects.updateProject(projectData, dataCallback);
+      const response = await client.projects.update(projectData, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -78,7 +78,7 @@ describe('createProject', () => {
 
   wrongParamsTests({
     requestToExecute: async (requestParams) => {
-      await client.projects.updateProject(requestParams);
+      await client.projects.update(requestParams);
     },
     URL,
     method: 'put',

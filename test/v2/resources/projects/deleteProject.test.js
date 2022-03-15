@@ -11,7 +11,7 @@ jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const URL = `${client.baseURL}/projects/123456.json`;
 
-describe('deleteProject', () => {
+describe('#delete', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -29,7 +29,7 @@ describe('deleteProject', () => {
     });
 
     it('should return true', async () => {
-      const response = await client.projects.deleteProject(123456);
+      const response = await client.projects.delete(123456);
 
       expect(axios.delete).toHaveBeenCalledTimes(1);
       expect(axios.delete).toHaveBeenCalledWith(
@@ -43,7 +43,7 @@ describe('deleteProject', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.projects.deleteProject(123456);
+      await client.projects.delete(123456);
     },
     URL,
     method: 'delete',
@@ -51,7 +51,7 @@ describe('deleteProject', () => {
 
   notFoundTests({
     requestToExecute: async () => {
-      await client.projects.deleteProject(654321);
+      await client.projects.delete(654321);
     },
     URL,
     method: 'delete',
@@ -59,7 +59,7 @@ describe('deleteProject', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.projects.deleteProject();
+      await client.projects.delete();
     },
     URL,
     paramsList: ['projectId'],
