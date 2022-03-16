@@ -574,6 +574,19 @@ const result = await client.tasks.update(data, callback);
 }
 ```
 
+#### Delete Task
+
+This method will delete a specific task. The params you can send are the following:
+- [Required] taskId, the task unique identificator.
+
+**Warning**: Only tasks without any entries can be deleted
+
+```javascript
+const result = await client.tasks.delete(123456);
+
+// The result will be true if the task was deleted
+```
+
 #### Get Single Task
 
 This method will return the specified task. This method needs the following params:
@@ -859,7 +872,7 @@ const data = {
 const result = await client.projects.update(data, callback);
 // The result would be something like the following:
 { name: 'test #1', budget: 40 }
-````
+```
 
 #### Delete Project
 

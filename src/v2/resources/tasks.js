@@ -115,6 +115,20 @@ class Tasks extends BaseResource {
   }
 
   /**
+   * This method will delete a specified task, it is strictly limited to administrators.
+   *
+   * @param {Number} taskId, task unique identificator.
+   * Only tasks without any entries can be deleted
+   * @returns {Boolean} true if the task was deleted or an error if the process fails.
+   */
+  async delete(taskId) {
+    if (!taskId) throw new Error('taskId field is missing');
+
+    const URL = `${this.baseURL}/tasks/${taskId}.json`;
+    return this.makeRequest({ URL, method: 'delete' });
+  }
+
+  /**
    * This method will return all opened tasks across all projects.
    * @param {callback} responseCallback
    *    is an optional function to perform a process over the response data.
