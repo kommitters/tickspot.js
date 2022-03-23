@@ -1135,6 +1135,55 @@ const result = await client.projects.getProject(16, callback);
 { id: 16 }
 ```
 
+#### List Project Tasks
+
+This method will return all opened tasks for the project. This method needs the following params:
+
+- [Required] projectId, project unique identificator.
+
+```javascript
+const result = await client.projects.listOpenedTasks(16);
+// The result would be something like the following:
+[
+  {
+    id: 123456,
+    name: 'Task #1',
+    budget: null,
+    position: 1,
+    project_id: 16,
+    date_closed: null,
+    billable: false,
+    url: 'https://secure.tickspot.com/16/api/v2/tasks/123456.json',
+    created_at: '2020-04-21T16:06:53.000-04:00',
+    updated_at: '2022-01-17T17:51:25.000-05:00'
+  },
+  {
+
+  },
+  ...
+]
+````
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  responseData.map((task) => {
+    return {
+      id: task.id,
+      name: task.name,
+    };
+  });
+};
+
+const result = await client.projects.listOpenedTasks(16, callback);
+// The result would be something like the following:
+[
+  { id: 123456, name: 'Task #1' },
+  { id: 654321, name: 'Task #2' },
+  ...
+]
+```
 ### Users
 
 This module allows you to interact with the Tickspot users.

@@ -206,6 +206,21 @@ class Projects extends BaseResource {
     const URL = `${this.baseURL}/projects/${projectId}.json`;
     return this.makeRequest({ URL, method: 'get', responseCallback });
   }
+
+  /**
+   * This will return all opened tasks for the project
+   * @param {Number} projectId, project unique identificator.
+   * @param {function} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @returns {object} project info or an error if the process fails.
+   */
+  async listOpenedTasks(projectId, responseCallback) {
+    if (!projectId) throw new Error('projectId field is missing');
+
+    const URL = `${this.baseURL}/projects/${projectId}/tasks.json`;
+    return this.makeRequest({ URL, method: 'get', responseCallback });
+  }
 }
 
 export default Projects;
