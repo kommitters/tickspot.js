@@ -213,12 +213,27 @@ class Projects extends BaseResource {
    * @param {function} responseCallback
    *    is an optional function to perform a process over the response data.
    *
-   * @returns {object} project info or an error if the process fails.
+   * @return {Array} a list of all opened tasks for the specific project.
    */
   async listOpenedTasks(projectId, responseCallback) {
     if (!projectId) throw new Error('projectId field is missing');
 
     const URL = `${this.baseURL}/projects/${projectId}/tasks.json`;
+    return this.makeRequest({ URL, method: 'get', responseCallback });
+  }
+
+  /**
+   * This will return all closed tasks for the project
+   * @param {Number} projectId, project unique identificator.
+   * @param {function} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @return {Array} a list of all closed tasks for the specific project.
+   */
+  async listClosedTasks(projectId, responseCallback) {
+    if (!projectId) throw new Error('projectId field is missing');
+
+    const URL = `${this.baseURL}/projects/${projectId}/tasks/closed.json`;
     return this.makeRequest({ URL, method: 'get', responseCallback });
   }
 }
