@@ -7,7 +7,7 @@ Tickspot.js is a Node.js client for [tickspot api](https://github.com/tick/tick-
 Get the package via npm
 
 ```shell
-$ npm i tickspot.js
+npm i tickspot.js
 ```
 
 ## Usage
@@ -577,6 +577,7 @@ const result = await client.tasks.update(data, callback);
 #### Delete Task
 
 This method will delete a specific task. The params you can send are the following:
+
 - [Required] taskId, the task unique identificator.
 
 **Warning**: Only tasks without any entries can be deleted
@@ -848,6 +849,7 @@ const result = await client.projects.update(data);
   updated_at: '2022-03-13T10:36:20.000-04:00'
 }
 ```
+
 Optionally, you can send a callback to perform an action on the response data. e.g:
 
 ```javascript
@@ -877,6 +879,7 @@ const result = await client.projects.update(data, callback);
 #### Delete Project
 
 This method will delete a specific project. The params you can send are the following:
+
 - [Required] projectId, the project unique identificator.
 
 **Warning**: The project and all time entries will be immediately deleted
@@ -886,7 +889,6 @@ const result = await client.projects.delete(123456);
 
 // The result will be true if the project was deleted
 ```
-
 
 #### List All Opened Projects
 
@@ -1162,7 +1164,7 @@ const result = await client.projects.listOpenedTasks(16);
   },
   ...
 ]
-````
+```
 
 Optionally, You can send a callback to perform an action on the response data. e.g:
 
@@ -1212,7 +1214,7 @@ const result = await client.projects.listClosedTasks(16);
   },
   ...
 ]
-````
+```
 
 Optionally, You can send a callback to perform an action on the response data. e.g:
 
@@ -1408,6 +1410,61 @@ const result = await client.users.listEntries(params, callback);
     month: 11,
     year: 2021
   }
+  ...
+]
+```
+
+### Clients
+
+This module allows you to interact with the Tickspot clients.
+
+#### List All Clients
+
+This method will return all the clients that have opened projects. This method needs the following params:
+
+- [Required] page, parameter for your request.
+
+```javascript
+const result = await client.clients.list(1);
+
+// The result would be something like the following:
+[
+  {
+    id: 123,
+    name: 'Test 1',
+    archive: false,
+    url: 'https://secure.tickspot.com/87543/api/v2/clients/123.json',
+    updated_at: '2022-03-25T18:15:16.000-04:00',
+  },
+  {
+    id: 456,
+    name: 'Test 2',
+    archive: false,
+    url: 'https://secure.tickspot.com/87543/api/v2/clients/456.json',
+    updated_at: '2022-03-26T17:04:22.000-04:00',
+  },
+];
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+
+const callback = (responseData) => {
+  responseData.map((clientData) => {
+    return {
+      name: clientData.name,
+    };
+  });
+};
+
+const result = await client.clients.list(1, callback);
+
+// The result would be something like the following:
+[
+  { name: 'Client #1' },
+  { name: 'Client #2' },
+  { name: 'Client #3' },
   ...
 ]
 ```

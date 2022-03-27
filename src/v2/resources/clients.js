@@ -1,0 +1,27 @@
+import BaseResource from '#src/v2/baseResource';
+
+/**
+ * Clients module for tickspot V2 API.
+ */
+class Clients extends BaseResource {
+  /**
+   * This method will return all the clients that have opened projects.
+   * @param {Number} page, the first page returns
+   *     up to 100 records and you can check the next page for more results
+   * @param {callback} responseCallback
+   *    is an optional function to perform a process over the response data.
+   * @return {Array} list of all the clients that have opened projects.
+   */
+  async list(page, responseCallback) {
+    if (!page) throw new Error('page field is missing');
+
+    const URL = `${this.baseURL}/clients.json`;
+    const params = { page };
+
+    return this.makeRequest({
+      URL, method: 'get', params, responseCallback,
+    });
+  }
+}
+
+export default Clients;
