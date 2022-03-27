@@ -3,6 +3,7 @@ import Entries from './resources/entries.js';
 import Tasks from './resources/tasks.js';
 import Projects from './resources/projects.js';
 import Users from './resources/users.js';
+import Clients from './resources/clients.js';
 
 /**
  * Client module for tickspor v2 API, it is the main class.
@@ -20,5 +21,6 @@ export default class Client {
     this.tasks = new Tasks({ auth: this.auth, baseURL: this.baseURL, agentEmail });
     this.projects = new Projects({ auth: this.auth, baseURL: this.baseURL, agentEmail });
     this.users = new Users({ auth: this.auth, baseURL: this.baseURL, agentEmail });
+    this.clients = new Clients({ auth: this.auth, baseURL: this.baseURL, agentEmail });
   }
 }
