@@ -1426,7 +1426,6 @@ This method will return all the clients that have opened projects. This method n
 
 ```javascript
 const result = await client.clients.list(1);
-
 // The result would be something like the following:
 [
   {
@@ -1449,7 +1448,6 @@ const result = await client.clients.list(1);
 Optionally, You can send a callback to perform an action on the response data. e.g:
 
 ```javascript
-
 const callback = (responseData) => {
   responseData.map((clientData) => {
     return {
@@ -1457,9 +1455,7 @@ const callback = (responseData) => {
     };
   });
 };
-
 const result = await client.clients.list(1, callback);
-
 // The result would be something like the following:
 [
   { name: 'Client #1' },
@@ -1467,6 +1463,43 @@ const result = await client.clients.list(1, callback);
   { name: 'Client #3' },
   ...
 ]
+```
+
+#### Get Client
+
+This will return the specified client along with a summary of project information. This method needs the following params:
+
+- [Required] clientId, client unique identificator.
+
+```javascript
+const result = await client.clients.getClient(123);
+// The result would be something like the following:
+{
+  id: 123,
+  name: 'Client #1',
+  archive: false,
+  url: 'https://secure.tickspot.com/654321/api/v2/clients/123.json',
+  updated_at: '2022-03-26T19:47:12.000-04:00',
+  projects: {
+    count: 9,
+    url: 'https://secure.tickspot.com/654321/api/v2/clients/123/projects.json',
+    updated_at: '2022-03-26T19:47:12.000-04:00'
+  }
+}
+```
+
+Optionally, You can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  return {
+    id: responseData.id,
+  };
+};
+
+const result = await client.clients.getClient(123, callback);
+// The result would be something like the following:
+{ id: 123, name: 'Client #1' }
 ```
 
 ## Code of conduct
