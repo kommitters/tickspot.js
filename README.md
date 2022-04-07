@@ -1502,6 +1502,18 @@ const result = await client.clients.getClient(123, callback);
 { id: 123, name: 'Client #1' }
 ```
 
+#### Delete Client
+
+This method will delete a specific client. Only clients without any projects can be deleted. The params you can send are the following:
+
+- [Required] clientId, the client unique identificator.
+
+```javascript
+const result = await client.clients.delete(123456);
+
+// The result will be true if the client was deleted
+```
+
 ## Code of conduct
 
 We welcome everyone to contribute. Make sure you have read the [CODE_OF_CONDUCT][coc] before.

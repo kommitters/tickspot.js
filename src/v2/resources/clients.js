@@ -37,6 +37,19 @@ class Clients extends BaseResource {
     const URL = `${this.baseURL}/clients/${clientId}.json`;
     return this.makeRequest({ URL, method: 'get', responseCallback });
   }
+
+  /**
+   * This will will delete the client.
+   * @param {Number} clientId, client unique identificator. Only clients without any
+      projects can be deleted
+   * @returns {Boolean} true if the cliente was deleted or an error if the process fails.
+   */
+  async delete(clientId) {
+    if (!clientId) throw new Error('clientId field is missing');
+
+    const URL = `${this.baseURL}/clients/${clientId}.json`;
+    return this.makeRequest({ URL, method: 'delete' });
+  }
 }
 
 export default Clients;

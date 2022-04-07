@@ -19,4 +19,13 @@ export const noContentResponse = {
   },
 };
 
-export default { notFoundResponse, unprocessableEntityResponse, noContentResponse };
+export const notAcceptable = {
+  data: {
+    status: 406,
+    statusText: 'Not Acceptable',
+  },
+};
+
+export default {
+  notFoundResponse, unprocessableEntityResponse, noContentResponse, notAcceptable,
+};

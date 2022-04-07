@@ -39,6 +39,12 @@ const responseFactory = ({
             method, requestData, messageTimeMissed, auth),
       };
 
+    case 'notAcceptable':
+      return {
+        response: responseGenerator(URL, 406, 'Not Acceptable',
+          method, requestData, responseData, auth),
+      };
+
     default:
       throw new Error('responseType is missing');
   }
