@@ -1529,7 +1529,7 @@ const data = {
   archive: false,
 };
 
-const result = await client.projects.update(data);
+const result = await client.clients.update(data);
 // The result would be something like the following:
 {
   id: 123456,
@@ -1555,7 +1555,7 @@ const data = {
   archive: false,
 };
 
-const result = await client.projects.update(data, callback);
+const result = await client.clients.update(data, callback);
 // The result would be something like the following:
 { name: 'Client #1' }
 ```

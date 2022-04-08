@@ -54,7 +54,7 @@ class Clients extends BaseResource {
   /**
    * This will update the client from the parameters passed.
    * @param {object} Client contains the params to update the client.
-   *    [Required] clientId, project unique identificator.
+   *    [Required] clientId, client unique identificator.
    *    [Optional] name
    *    [Optional] archive
    * @param {function} responseCallback
