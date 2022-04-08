@@ -54,7 +54,7 @@ class Projects extends BaseResource {
 
   /**
    * This will update the project from the parameters passed.
-   * @param {object} Task contains the params to update the task.
+   * @param {object} Project contains the params to update the project.
    *    [Required] projectId, project unique identificator.
    *    [Optional] name
    *    [Optional] client_id

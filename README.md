@@ -1514,6 +1514,52 @@ const result = await client.clients.delete(123456);
 // The result will be true if the client was deleted
 ```
 
+#### Update Client
+
+This method will update a specific client from the parameters passed and return the client info. This method needs the following params:
+
+- [Required] clientId, client unique identificator.
+- [Optional] name, name of the client
+- [Optional] archive
+
+```javascript
+const data = {
+  clientId: 123456,
+  name: 'Client #1',
+  archive: false,
+};
+
+const result = await client.projects.update(data);
+// The result would be something like the following:
+{
+  id: 123456,
+  name: 'Client #1',
+  archive: false,
+  url: 'https://secure.tickspot.com/141761/api/v2/clients/123456.json',
+  updated_at: '2022-04-07T18:10:03.000-04:00'
+}
+```
+
+Optionally, you can send a callback to perform an action on the response data. e.g:
+
+```javascript
+const callback = (responseData) => {
+  return {
+    name: responseData.name,
+  };
+};
+
+const data = {
+  clientId: 123456,
+  name: 'Client #1',
+  archive: false,
+};
+
+const result = await client.projects.update(data, callback);
+// The result would be something like the following:
+{ name: 'Client #1' }
+```
+
 ## Code of conduct
 
 We welcome everyone to contribute. Make sure you have read the [CODE_OF_CONDUCT][coc] before.

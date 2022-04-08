@@ -50,6 +50,36 @@ class Clients extends BaseResource {
     const URL = `${this.baseURL}/clients/${clientId}.json`;
     return this.makeRequest({ URL, method: 'delete' });
   }
+
+  /**
+   * This will update the client from the parameters passed.
+   * @param {object} Client contains the params to update the client.
+   *    [Required] clientId, project unique identificator.
+   *    [Optional] name
+   *    [Optional] archive
+   * @param {function} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @returns {object} client info or an error if the process fails.
+   */
+  async update({
+    clientId,
+    name,
+    archive,
+  }, responseCallback) {
+    if (!clientId) throw new Error('clientId field is missing');
+
+    const body = {
+      ...(name && { name }),
+      ...(typeof archive === 'boolean' && { archive }),
+    };
+
+    const URL = `${this.baseURL}/clients/${clientId}.json`;
+
+    return this.makeRequest({
+      URL, method: 'put', body, responseCallback,
+    });
+  }
 }
 
 export default Clients;
