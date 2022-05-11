@@ -2,13 +2,13 @@
 
 This module allows you to interact with the Tickspot clients.
 
-- [List All Clients](#list-all-clients)
+- [List Clients](#list-clients)
 - [Get Client](#get-client)
 - [Create Client](#create-client)
 - [Update Client](#update-client)
 - [Delete Client](#delete-client)
 
-## List All Clients
+## List Clients
 
 This method will return all the clients that have opened projects. This method needs the following params:
 

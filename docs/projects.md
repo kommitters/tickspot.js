@@ -2,7 +2,7 @@
 
 This module allows you to interact with the Tickspot projects.
 
-- [List All Opened Projects](#list-all-opened-projects)
+- [List Opened Projects](#list-opened-projects)
 - [List Closed Projects](#list-closed-projects)
 - [Get Project](#get-project)
 - [Create Project](#create-project)
@@ -12,7 +12,7 @@ This module allows you to interact with the Tickspot projects.
 - [List Project Opened Tasks](#list-project-opened-tasks)
 - [List Project Closed Tasks](#list-project-closed-tasks)
 
-## List All Opened Projects
+## List Opened Projects
 
 This method will return all opened projects. This method needs the following params:
 

@@ -2,15 +2,15 @@
 
 This module allows you to interact with the Tickspot tasks.
 
-- [List Opened Tasks](#list-all-opened-tasks)
+- [List Opened Tasks](#list-opened-tasks)
 - [List Closed Tasks](#list-closed-tasks)
-- [Get Single Taks](#get-single-task)
+- [Get Task](#get-task)
 - [Create Task](#create-task)
 - [Update Task](#update-task)
 - [Delete Task](#delete-task)
 - [List Task Entries](#list-task-entries)
 
-## List All Opened Tasks
+## List Opened Tasks
 
 This method will return all opened tasks across all projects.
 
@@ -126,7 +126,7 @@ const result = await client.tasks.listClosed(callback);
 ]
 ```
 
-## Get Single Task
+## Get Task
 
 This method will return the specified task. This method needs the following params:
 
