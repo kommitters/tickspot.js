@@ -1,4 +1,4 @@
-const dataEntriesSuccessful = {
+const listEntriesFixture = {
   data: [{
     id: 123456,
     date: '2021-11-08',
@@ -23,4 +23,4 @@ const dataEntriesSuccessful = {
   }],
 };
 
-export default dataEntriesSuccessful;
+export default listEntriesFixture;

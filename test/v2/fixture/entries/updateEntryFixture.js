@@ -1,4 +1,4 @@
-const dataEntrySuccessful = {
+const updateEntryFixture = {
   data: {
     id: 123456,
     date: '2021-12-29',
@@ -12,4 +12,4 @@ const dataEntrySuccessful = {
   },
 };
 
-export default dataEntrySuccessful;
+export default updateEntryFixture;

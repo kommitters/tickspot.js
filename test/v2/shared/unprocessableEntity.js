@@ -1,5 +1,5 @@
 import responseFactory from '#test/v2/factories/responseFactory';
-import { unprocessableEntityResponse } from '#test/v2/fixture/shared/responseData';
+import { unprocessableEntityResponse } from '#test/v2/fixture/shared/errorResponses';
 import { mockRejectedValueOnce, shouldHaveBeenCalledTimes } from './utils/axios';
 
 /**

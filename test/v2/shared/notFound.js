@@ -1,5 +1,5 @@
 import responseFactory from '#test/v2/factories/responseFactory';
-import { notFoundResponse } from '#test/v2/fixture/shared/responseData';
+import { notFoundResponse } from '#test/v2/fixture/shared/errorResponses';
 import { mockRejectedValueOnce, shouldHaveBeenCalledTimes } from './utils/axios';
 
 /**

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import tickspot from '#src/index';
 import userInfo from '#test/v2/fixture/client';
-import successfulResponseData from '#test/v2/fixture/entries/listEntriesResponseData';
+import successfulResponseData from '#test/v2/fixture/entries/listEntriesFixture';
 import responseFactory from '#test/v2/factories/responseFactory';
 import authenticationErrorTests from '#test/v2/shared/authentication';
 import {

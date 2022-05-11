@@ -1,4 +1,4 @@
-const dataSuccessful = {
+const createEntryFixture = {
   data: {
     id: 99547865,
     date: '2021-11-08',
@@ -12,4 +12,4 @@ const dataSuccessful = {
   },
 };
 
-export default dataSuccessful;
+export default createEntryFixture;
