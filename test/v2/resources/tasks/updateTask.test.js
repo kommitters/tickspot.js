@@ -14,7 +14,7 @@ jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const URL = `${client.baseURL}/tasks/123456.json`;
 
-describe('#updateTask', () => {
+describe('#update', () => {
   const params = {
     taskId: 123456,
     budget: 10,

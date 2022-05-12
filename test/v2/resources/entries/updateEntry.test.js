@@ -15,7 +15,7 @@ jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const URL = `${client.baseURL}/entries/123456.json`;
 
-describe('updateEntry', () => {
+describe('#update', () => {
   const requestResponse = responseFactory({
     requestData: {},
     responseType: 'successful',
@@ -44,7 +44,7 @@ describe('updateEntry', () => {
         billed: false,
       };
 
-      const response = await client.entries.updateEntry(data);
+      const response = await client.entries.update(data);
 
       expect(axios.put).toHaveBeenCalledTimes(1);
       expect(response).toEqual(requestResponse.data);
@@ -63,7 +63,7 @@ describe('updateEntry', () => {
         billed: false,
       };
 
-      await client.entries.updateEntry(data);
+      await client.entries.update(data);
     },
     URL,
     method: 'put',
@@ -76,7 +76,7 @@ describe('updateEntry', () => {
         taskId: 111,
       };
 
-      await client.entries.updateEntry(data);
+      await client.entries.update(data);
     },
     URL,
     method: 'put',
@@ -88,7 +88,7 @@ describe('updateEntry', () => {
         entryId: 654321,
         taskId: 111,
       };
-      await client.entries.updateEntry(data, {});
+      await client.entries.update(data, {});
     },
   });
 
@@ -102,7 +102,7 @@ describe('updateEntry', () => {
         entryId: 654321,
         taskId: 111,
       };
-      const response = await client.entries.updateEntry(data, dataCallback);
+      const response = await client.entries.update(data, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -112,7 +112,7 @@ describe('updateEntry', () => {
 
   wrongParamsTests({
     requestToExecute: async (requestParams) => {
-      await client.entries.updateEntry(requestParams);
+      await client.entries.update(requestParams);
     },
     URL,
     requestData: {},

@@ -14,7 +14,7 @@ jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const URL = `${client.baseURL}/clients/123456.json`;
 
-describe('getClient', () => {
+describe('#get', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -32,7 +32,7 @@ describe('getClient', () => {
     });
 
     it('should return the client information', async () => {
-      const response = await client.clients.getClient(123456);
+      const response = await client.clients.get(123456);
 
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toEqual(requestResponse.data);
@@ -41,14 +41,14 @@ describe('getClient', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.clients.getClient(123456);
+      await client.clients.get(123456);
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.clients.getClient(123456, {});
+      await client.clients.get(123456, {});
     },
   });
 
@@ -57,7 +57,7 @@ describe('getClient', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.clients.getClient(123456, dataCallback);
+      const response = await client.clients.get(123456, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -66,7 +66,7 @@ describe('getClient', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.clients.getClient();
+      await client.clients.get();
     },
     URL,
     paramsList: ['clientId'],

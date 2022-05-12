@@ -15,7 +15,7 @@ jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const URL = `${client.baseURL}/entries/123456.json`;
 
-describe('getEntry', () => {
+describe('#get', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -33,7 +33,7 @@ describe('getEntry', () => {
     });
 
     it('should return the entry information', async () => {
-      const response = await client.entries.getEntry('123456');
+      const response = await client.entries.get('123456');
 
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(axios.get).toHaveBeenCalledWith(
@@ -47,21 +47,21 @@ describe('getEntry', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.entries.getEntry('123456');
+      await client.entries.get('123456');
     },
     URL,
   });
 
   notFoundTests({
     requestToExecute: async () => {
-      await client.entries.getEntry('123456');
+      await client.entries.get('123456');
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.entries.getEntry('123456', {});
+      await client.entries.get('123456', {});
     },
   });
 
@@ -70,7 +70,7 @@ describe('getEntry', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.entries.getEntry('123456', dataCallback);
+      const response = await client.entries.get('123456', dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -79,7 +79,7 @@ describe('getEntry', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.entries.getEntry();
+      await client.entries.get();
     },
     URL,
     paramsList: ['entryId'],

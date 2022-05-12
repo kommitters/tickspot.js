@@ -14,7 +14,7 @@ jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const URL = `${client.baseURL}/entries.json`;
 
-describe('listTickEntries', () => {
+describe('#list', () => {
   const params = {
     startDate: '2021-11-08',
     endDate: '2021-11-09',

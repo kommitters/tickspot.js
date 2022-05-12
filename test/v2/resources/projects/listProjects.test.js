@@ -19,7 +19,7 @@ const getUrl = (method) => (method === 'listOpened'
   ? `${client.baseURL}/projects.json`
   : `${client.baseURL}/projects/closed.json`);
 
-describe.each(methods)('%s', (method) => {
+describe.each(methods)('#%s', (method) => {
   beforeEach(() => {
     axios.get.mockReset();
   });

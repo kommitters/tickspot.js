@@ -53,7 +53,7 @@ class Entries extends BaseResource {
    *
    * @returns {object} entry info or an error if the process fails.
    */
-  async getEntry(entryId, responseCallback) {
+  async get(entryId, responseCallback) {
     if (!entryId) throw new Error('entryId field is missing');
 
     const URL = `${this.baseURL}/entries/${entryId}.json`;
@@ -112,7 +112,7 @@ class Entries extends BaseResource {
    *
    * @returns {object} entry info or an error if the process fails.
    */
-  async updateEntry({
+  async update({
     entryId,
     date,
     hours,
@@ -144,7 +144,7 @@ class Entries extends BaseResource {
    *
    * @returns {Boolean} true if entry was deleted or an error if the process fails.
    */
-  async deleteEntry(entryId) {
+  async delete(entryId) {
     if (!entryId) throw new Error('entryId field is missing');
 
     const URL = `${this.baseURL}/entries/${entryId}.json`;

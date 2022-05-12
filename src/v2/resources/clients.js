@@ -5,34 +5,6 @@ import BaseResource from '#src/v2/baseResource';
  */
 class Clients extends BaseResource {
   /**
-   * This method will create a new client, it is strictly limited to administrators.
-   * @param {object} Client contains the params to create the client.
-   *    [Required] name
-   *    [Optional] archive
-
-   * @param {callback} responseCallback
-   *    is an optional function to perform a process over the response data.
-   *
-   * @return {Object} a object with created client data.
-   */
-  async create({
-    name,
-    archive,
-  }, responseCallback) {
-    if (!name) throw new Error('name field is missing');
-
-    const body = {
-      name,
-      ...(typeof archive === 'boolean' && { archive }),
-    };
-
-    const URL = `${this.baseURL}/clients.json`;
-    return this.makeRequest({
-      URL, method: 'post', body, responseCallback,
-    });
-  }
-
-  /**
    * This method will return all the clients that have opened projects.
    * @param {Number} page, the first page returns
    *     up to 100 records and you can check the next page for more results
@@ -59,7 +31,7 @@ class Clients extends BaseResource {
    *
    * @returns {object} client info or an error if the process fails.
    */
-  async getClient(clientId, responseCallback) {
+  async get(clientId, responseCallback) {
     if (!clientId) throw new Error('clientId field is missing');
 
     const URL = `${this.baseURL}/clients/${clientId}.json`;
@@ -67,16 +39,31 @@ class Clients extends BaseResource {
   }
 
   /**
-   * This will will delete the client.
-   * @param {Number} clientId, client unique identificator. Only clients without any
-      projects can be deleted
-   * @returns {Boolean} true if the cliente was deleted or an error if the process fails.
-   */
-  async delete(clientId) {
-    if (!clientId) throw new Error('clientId field is missing');
+   * This method will create a new client, it is strictly limited to administrators.
+   * @param {object} Client contains the params to create the client.
+   *    [Required] name
+   *    [Optional] archive
 
-    const URL = `${this.baseURL}/clients/${clientId}.json`;
-    return this.makeRequest({ URL, method: 'delete' });
+   * @param {callback} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @return {Object} a object with created client data.
+   */
+  async create({
+    name,
+    archive,
+  }, responseCallback) {
+    if (!name) throw new Error('name field is missing');
+
+    const body = {
+      name,
+      ...(typeof archive === 'boolean' && { archive }),
+    };
+
+    const URL = `${this.baseURL}/clients.json`;
+    return this.makeRequest({
+      URL, method: 'post', body, responseCallback,
+    });
   }
 
   /**
@@ -107,6 +94,19 @@ class Clients extends BaseResource {
     return this.makeRequest({
       URL, method: 'put', body, responseCallback,
     });
+  }
+
+  /**
+   * This will will delete the client.
+   * @param {Number} clientId, client unique identificator. Only clients without any
+      projects can be deleted
+   * @returns {Boolean} true if the cliente was deleted or an error if the process fails.
+   */
+  async delete(clientId) {
+    if (!clientId) throw new Error('clientId field is missing');
+
+    const URL = `${this.baseURL}/clients/${clientId}.json`;
+    return this.makeRequest({ URL, method: 'delete' });
   }
 }
 

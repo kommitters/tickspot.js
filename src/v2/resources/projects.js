@@ -6,6 +6,60 @@ import listEntriesHelper from '#src/v2/helpers/listEntriesHelper';
  */
 class Projects extends BaseResource {
   /**
+   * This method will return all opened projects.
+   * @param {Number} page, the first page returns
+   *     up to 100 records and you can check the next page for more results
+   * @param {callback} responseCallback
+   *    is an optional function to perform a process over the response data.
+   * @return {Array} list of all opened projects.
+   */
+  async listOpened(page, responseCallback) {
+    if (!page) throw new Error('page field is missing');
+
+    const URL = `${this.baseURL}/projects.json`;
+    const params = { page };
+
+    return this.makeRequest({
+      URL, method: 'get', params, responseCallback,
+    });
+  }
+
+  /**
+   * This method will return all closed projects.
+   * @param {Number} page, the first page returns
+   *     up to 100 records and you can check the next page for more results
+   * @param {callback} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @return {Array} a list of all the closed projects.
+   */
+  async listClosed(page, responseCallback) {
+    if (!page) throw new Error('page field is missing');
+
+    const URL = `${this.baseURL}/projects/closed.json`;
+    const params = { page };
+
+    return this.makeRequest({
+      URL, method: 'get', params, responseCallback,
+    });
+  }
+
+  /**
+   * This will return specific project info.
+   * @param {Number} projectId, project unique identificator.
+   * @param {function} responseCallback
+   *    is an optional function to perform a process over the response data.
+   *
+   * @returns {object} project info or an error if the process fails.
+   */
+  async get(projectId, responseCallback) {
+    if (!projectId) throw new Error('projectId field is missing');
+
+    const URL = `${this.baseURL}/projects/${projectId}.json`;
+    return this.makeRequest({ URL, method: 'get', responseCallback });
+  }
+
+  /**
    * This method will create a new project, it is strictly limited to administrators,
    * no tasks will be created, time entries will not be allowed until at least one
    * task is created.
@@ -111,25 +165,6 @@ class Projects extends BaseResource {
   }
 
   /**
-   * This method will return all opened projects.
-   * @param {Number} page, the first page returns
-   *     up to 100 records and you can check the next page for more results
-   * @param {callback} responseCallback
-   *    is an optional function to perform a process over the response data.
-   * @return {Array} list of all opened projects.
-   */
-  async listOpened(page, responseCallback) {
-    if (!page) throw new Error('page field is missing');
-
-    const URL = `${this.baseURL}/projects.json`;
-    const params = { page };
-
-    return this.makeRequest({
-      URL, method: 'get', params, responseCallback,
-    });
-  }
-
-  /**
    * This method will return all time entries that are related to a project.
    *
    * @param {object} Filters contains the params to get the entries.
@@ -170,41 +205,6 @@ class Projects extends BaseResource {
     return this.makeRequest({
       URL, method: 'get', params, responseCallback,
     });
-  }
-
-  /**
-   * This method will return all closed projects.
-   * @param {Number} page, the first page returns
-   *     up to 100 records and you can check the next page for more results
-   * @param {callback} responseCallback
-   *    is an optional function to perform a process over the response data.
-   *
-   * @return {Array} a list of all the closed projects.
-   */
-  async listClosed(page, responseCallback) {
-    if (!page) throw new Error('page field is missing');
-
-    const URL = `${this.baseURL}/projects/closed.json`;
-    const params = { page };
-
-    return this.makeRequest({
-      URL, method: 'get', params, responseCallback,
-    });
-  }
-
-  /**
-   * This will return specific project info.
-   * @param {Number} projectId, project unique identificator.
-   * @param {function} responseCallback
-   *    is an optional function to perform a process over the response data.
-   *
-   * @returns {object} project info or an error if the process fails.
-   */
-  async getProject(projectId, responseCallback) {
-    if (!projectId) throw new Error('projectId field is missing');
-
-    const URL = `${this.baseURL}/projects/${projectId}.json`;
-    return this.makeRequest({ URL, method: 'get', responseCallback });
   }
 
   /**

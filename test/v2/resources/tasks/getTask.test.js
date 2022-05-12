@@ -15,7 +15,7 @@ jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const URL = `${client.baseURL}/tasks/123456.json`;
 
-describe('#getTask', () => {
+describe('#get', () => {
   beforeEach(() => {
     axios.get.mockClear();
   });
@@ -33,7 +33,7 @@ describe('#getTask', () => {
     });
 
     it('should return the task data', async () => {
-      const response = await client.tasks.getTask(123456);
+      const response = await client.tasks.get(123456);
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -41,21 +41,21 @@ describe('#getTask', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.tasks.getTask(123456);
+      await client.tasks.get(123456);
     },
     URL,
   });
 
   notFoundTests({
     requestToExecute: async () => {
-      await client.tasks.getTask(654321);
+      await client.tasks.get(654321);
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.tasks.getTask(123456, {});
+      await client.tasks.get(123456, {});
     },
   });
 
@@ -64,7 +64,7 @@ describe('#getTask', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.tasks.getTask(123456, dataCallback);
+      const response = await client.tasks.get(123456, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -73,7 +73,7 @@ describe('#getTask', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.tasks.getTask();
+      await client.tasks.get();
     },
     URL,
     paramsList: ['taskId'],

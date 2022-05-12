@@ -14,7 +14,7 @@ jest.mock('axios');
 const client = tickspot({ apiVersion: 2, ...userInfo });
 const URL = `${client.baseURL}/projects/16.json`;
 
-describe('getProject', () => {
+describe('#get', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -32,7 +32,7 @@ describe('getProject', () => {
     });
 
     it('should return the project information', async () => {
-      const response = await client.projects.getProject('16');
+      const response = await client.projects.get('16');
 
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(axios.get).toHaveBeenCalledWith(
@@ -46,14 +46,14 @@ describe('getProject', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.projects.getProject('16');
+      await client.projects.get('16');
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.projects.getProject('16', {});
+      await client.projects.get('16', {});
     },
   });
 
@@ -62,7 +62,7 @@ describe('getProject', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.projects.getProject('16', dataCallback);
+      const response = await client.projects.get('16', dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -71,7 +71,7 @@ describe('getProject', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.projects.getProject();
+      await client.projects.get();
     },
     URL,
     paramsList: ['projectId'],
