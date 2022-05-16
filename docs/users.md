@@ -11,7 +11,7 @@ This module allows you to interact with the Tickspot users.
 This method will return information about the users on the subscription. Non-administrators will only have visibility of themselves, while administrators will see everyone.
 
 ```javascript
-const result = await client.users.list();
+const result = await tickspot.users.list();
 
 // The result would be something like the following:
 [
@@ -46,7 +46,7 @@ const callback = (responseData) =>
     };
   });
 
-const result = await client.users.list(callback);
+const result = await tickspot.users.list(callback);
 // The result would be something like the following:
 [
   {
@@ -67,7 +67,7 @@ const result = await client.users.list(callback);
 This method will return users who have been deleted from the subscription and have time entries. Non-administrators will not have access.
 
 ```javascript
-const result = await client.users.listDeleted();
+const result = await tickspot.users.listDeleted();
 
 // The result would be something like the following:
 [
@@ -94,7 +94,7 @@ const callback = (responseData) =>
     };
   });
 
-const result = await client.users.listDeleted(callback);
+const result = await tickspot.users.listDeleted(callback);
 // The result would be something like the following:
 [
   {
@@ -125,7 +125,7 @@ const params = {
   endDate: "2021-11-09",
   billable: true,
 };
-const result = await client.users.listEntries(params);
+const result = await tickspot.users.listEntries(params);
 // The result would be something like the following:
 [
   {
@@ -162,7 +162,7 @@ const callback = (responseData) =>
       year: date.getFullYear(),
     };
   });
-const result = await client.users.listEntries(params, callback);
+const result = await tickspot.users.listEntries(params, callback);
 // The result would be something like the following:
 [
   {

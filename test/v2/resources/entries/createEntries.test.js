@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/entries/createEntryFixture';
@@ -11,8 +11,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/entries.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/entries.json`;
 
 describe('#create', () => {
   const entryData = {
@@ -39,13 +39,13 @@ describe('#create', () => {
     });
 
     it('should return the tick data entry', async () => {
-      const response = await client.entries.create(entryData);
+      const response = await tickspot.entries.create(entryData);
 
       expect(response).toBe(requestResponse.data);
     });
 
     it('should create the tick entry', async () => {
-      const response = await client.entries.create(entryData);
+      const response = await tickspot.entries.create(entryData);
 
       expect(response.data.date).toBe(entryData.date);
       expect(response.data.notes).toBe(entryData.notes);
@@ -54,7 +54,7 @@ describe('#create', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.entries.create(entryData);
+      await tickspot.entries.create(entryData);
     },
     URL,
     method: 'post',
@@ -62,7 +62,7 @@ describe('#create', () => {
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.entries.create(entryData, {});
+      await tickspot.entries.create(entryData, {});
     },
     method: 'post',
   });
@@ -72,7 +72,7 @@ describe('#create', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.entries.create(entryData, dataCallback);
+      const response = await tickspot.entries.create(entryData, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -82,7 +82,7 @@ describe('#create', () => {
 
   wrongParamsTests({
     requestToExecute: async (requestParams) => {
-      await client.entries.create(requestParams);
+      await tickspot.entries.create(requestParams);
     },
     URL,
     method: 'post',

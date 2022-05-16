@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/entries/getEntryFixture';
@@ -12,8 +12,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/entries/123456.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/entries/123456.json`;
 
 describe('#get', () => {
   beforeEach(() => {
@@ -33,12 +33,12 @@ describe('#get', () => {
     });
 
     it('should return the entry information', async () => {
-      const response = await client.entries.get('123456');
+      const response = await tickspot.entries.get('123456');
 
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(axios.get).toHaveBeenCalledWith(
         URL,
-        { headers: client.entries.DEFAULT_HEADERS },
+        { headers: tickspot.entries.DEFAULT_HEADERS },
       );
 
       expect(response).toEqual(requestResponse.data);
@@ -47,21 +47,21 @@ describe('#get', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.entries.get('123456');
+      await tickspot.entries.get('123456');
     },
     URL,
   });
 
   notFoundTests({
     requestToExecute: async () => {
-      await client.entries.get('123456');
+      await tickspot.entries.get('123456');
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.entries.get('123456', {});
+      await tickspot.entries.get('123456', {});
     },
   });
 
@@ -70,7 +70,7 @@ describe('#get', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.entries.get('123456', dataCallback);
+      const response = await tickspot.entries.get('123456', dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -79,7 +79,7 @@ describe('#get', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.entries.get();
+      await tickspot.entries.get();
     },
     URL,
     paramsList: ['entryId'],

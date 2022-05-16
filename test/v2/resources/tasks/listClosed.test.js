@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/tasks/closedTasksFixture';
@@ -10,8 +10,8 @@ import {
 } from '#test/v2/shared/responseCallback';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/tasks/closed.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/tasks/closed.json`;
 
 describe('#listClosed', () => {
   beforeEach(() => {
@@ -31,7 +31,7 @@ describe('#listClosed', () => {
     });
 
     it('should return a list of closed tasks', async () => {
-      const response = await client.tasks.listClosed();
+      const response = await tickspot.tasks.listClosed();
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -39,14 +39,14 @@ describe('#listClosed', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.tasks.listClosed();
+      await tickspot.tasks.listClosed();
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.tasks.listClosed({});
+      await tickspot.tasks.listClosed({});
     },
   });
 
@@ -55,7 +55,7 @@ describe('#listClosed', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.tasks.listClosed(dataCallback);
+      const response = await tickspot.tasks.listClosed(dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,

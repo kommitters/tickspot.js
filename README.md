@@ -12,20 +12,20 @@ npm i tickspot.js
 
 ## Usage
 
-To use tickspot.js client, just import the tickspot module as following:
+To use tickspot.js client, just import the Tickspot module as following:
 
 ```javascript
-import tickspot from "tickspot.js";
+import Tickspot from "tickspot.js";
 ```
 
-Once the module is imported, create an instance using the `tickspot` function. This function will require the following data:
+Once the module is imported, create an instance using the `init` function. This function will require the following data:
 
 - `apiVersion` - This is version of the Tick API.
 - `subscriptionId` and `apiToken` - Those are unique data that you will find in your Tickspot profile.
 - `agentEmail` - Your email.
 
 ```javascript
-const client = tickspot({
+const tickspot = Tickspot.init({
   apiVersion: 2,
   subscriptionId: "subscriptionId",
   apiToken: "apiToken",

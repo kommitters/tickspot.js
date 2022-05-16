@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/projects/listProjectsFixture';
@@ -11,13 +11,13 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
 
 const methods = ['listOpened', 'listClosed'];
 
 const getUrl = (method) => (method === 'listOpened'
-  ? `${client.baseURL}/projects.json`
-  : `${client.baseURL}/projects/closed.json`);
+  ? `${tickspot.baseURL}/projects.json`
+  : `${tickspot.baseURL}/projects/closed.json`);
 
 describe.each(methods)('#%s', (method) => {
   beforeEach(() => {
@@ -39,7 +39,7 @@ describe.each(methods)('#%s', (method) => {
     });
 
     it('should return a list of projects', async () => {
-      const response = await client.projects[`${method}`](1);
+      const response = await tickspot.projects[`${method}`](1);
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -47,14 +47,14 @@ describe.each(methods)('#%s', (method) => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.projects[`${method}`](1);
+      await tickspot.projects[`${method}`](1);
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.projects[`${method}`](1, {});
+      await tickspot.projects[`${method}`](1, {});
     },
   });
 
@@ -63,7 +63,7 @@ describe.each(methods)('#%s', (method) => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.projects[`${method}`](1, dataCallback);
+      const response = await tickspot.projects[`${method}`](1, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -72,7 +72,7 @@ describe.each(methods)('#%s', (method) => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.projects[`${method}`]();
+      await tickspot.projects[`${method}`]();
     },
     URL,
     paramsList: ['page'],

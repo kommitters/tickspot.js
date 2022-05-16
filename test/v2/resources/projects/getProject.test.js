@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/projects/getProjectFixture';
@@ -11,8 +11,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/projects/16.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/projects/16.json`;
 
 describe('#get', () => {
   beforeEach(() => {
@@ -32,12 +32,12 @@ describe('#get', () => {
     });
 
     it('should return the project information', async () => {
-      const response = await client.projects.get('16');
+      const response = await tickspot.projects.get('16');
 
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(axios.get).toHaveBeenCalledWith(
         URL,
-        { headers: client.projects.DEFAULT_HEADERS },
+        { headers: tickspot.projects.DEFAULT_HEADERS },
       );
 
       expect(response).toEqual(requestResponse.data);
@@ -46,14 +46,14 @@ describe('#get', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.projects.get('16');
+      await tickspot.projects.get('16');
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.projects.get('16', {});
+      await tickspot.projects.get('16', {});
     },
   });
 
@@ -62,7 +62,7 @@ describe('#get', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.projects.get('16', dataCallback);
+      const response = await tickspot.projects.get('16', dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -71,7 +71,7 @@ describe('#get', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.projects.get();
+      await tickspot.projects.get();
     },
     URL,
     paramsList: ['projectId'],

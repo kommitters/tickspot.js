@@ -15,7 +15,7 @@ This method will return all the clients that have opened projects. This method n
 - [Required] page, parameter for your request.
 
 ```javascript
-const result = await client.clients.list(1);
+const result = await tickspot.clients.list(1);
 // The result would be something like the following:
 [
   {
@@ -45,7 +45,7 @@ const callback = (responseData) => {
     };
   });
 };
-const result = await client.clients.list(1, callback);
+const result = await tickspot.clients.list(1, callback);
 // The result would be something like the following:
 [
   { name: 'Client #1' },
@@ -62,7 +62,7 @@ This will return the specified client along with a summary of project informatio
 - [Required] clientId, client unique identificator.
 
 ```javascript
-const result = await client.clients.getClient(123);
+const result = await tickspot.clients.getClient(123);
 // The result would be something like the following:
 {
   id: 123,
@@ -87,7 +87,7 @@ const callback = (responseData) => {
   };
 };
 
-const result = await client.clients.getClient(123, callback);
+const result = await tickspot.clients.getClient(123, callback);
 // The result would be something like the following:
 { id: 123, name: 'Client #1' }
 ```
@@ -107,7 +107,7 @@ const data = {
   archive: false,
 };
 
-const result = await client.clients.create(data);
+const result = await tickspot.clients.create(data);
 
 // The result would be something like the following:
 {
@@ -133,7 +133,7 @@ const data = {
   archive: false,
 };
 
-const result = await client.clients.create(data, callback);
+const result = await tickspot.clients.create(data, callback);
 
 // The result would be something like the following:
 { name: 'test #1', archive: false }
@@ -154,7 +154,7 @@ const data = {
   archive: false,
 };
 
-const result = await client.clients.update(data);
+const result = await tickspot.clients.update(data);
 // The result would be something like the following:
 {
   id: 123456,
@@ -180,7 +180,7 @@ const data = {
   archive: false,
 };
 
-const result = await client.clients.update(data, callback);
+const result = await tickspot.clients.update(data, callback);
 // The result would be something like the following:
 {
   name: "Client #1";
@@ -189,12 +189,12 @@ const result = await client.clients.update(data, callback);
 
 ## Delete Client
 
-This method will delete a specific client. Only clients without any projects can be deleted. The params you can send are the following:
+This method will delete a specific tickspot. Only clients without any projects can be deleted. The params you can send are the following:
 
 - [Required] clientId, the client unique identificator.
 
 ```javascript
-const result = await client.clients.delete(123456);
+const result = await tickspot.clients.delete(123456);
 
 // The result will be true if the client was deleted
 ```

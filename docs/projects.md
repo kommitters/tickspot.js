@@ -19,7 +19,7 @@ This method will return all opened projects. This method needs the following par
 - [Required] page, parameter for your request.
 
 ```javascript
-const result = await client.projects.listOpened(1);
+const result = await tickspot.projects.listOpened(1);
 
 // The result would be something like the following:
 [
@@ -66,7 +66,7 @@ const callback = (responseData) => {
   });
 };
 
-const result = await client.projects.listOpened(1, callback);
+const result = await tickspot.projects.listOpened(1, callback);
 
 // The result would be something like the following:
 [
@@ -84,7 +84,7 @@ This method will return all closed projects. This method needs the following par
 - [Required] page, parameter for your request.
 
 ```javascript
-const result = await client.projects.listClosed(1);
+const result = await tickspot.projects.listClosed(1);
 
 // The result would be something like the following:
 [
@@ -119,7 +119,7 @@ const callback = (responseData) => {
   });
 };
 
-const result = await client.projects.listClosed(1, callback);
+const result = await tickspot.projects.listClosed(1, callback);
 
 // The result would be something like the following:
 [
@@ -136,7 +136,7 @@ This method will return the specified project info. This method needs the follow
 - [Required] projectId, project unique identificator.
 
 ```javascript
-const result = await client.projects.getProject(16);
+const result = await tickspot.projects.getProject(16);
 // The result would be something like the following:
 [
   {
@@ -178,7 +178,7 @@ const callback = (responseData) => {
   };
 };
 
-const result = await client.projects.getProject(16, callback);
+const result = await tickspot.projects.getProject(16, callback);
 // The result would be something like the following:
 {
   id: 16;
@@ -210,7 +210,7 @@ const data = {
   recurring: false,
 };
 
-const result = await client.projects.create(data);
+const result = await tickspot.projects.create(data);
 
 // The result would be something like the following:
 {
@@ -249,7 +249,7 @@ const data = {
   recurring: false,
 };
 
-const result = await client.projects.create(data, callback);
+const result = await tickspot.projects.create(data, callback);
 
 // The result would be something like the following:
 { name: 'test #1', budget: 50 }
@@ -280,7 +280,7 @@ const data = {
   recurring: false,
 };
 
-const result = await client.projects.update(data);
+const result = await tickspot.projects.update(data);
 // The result would be something like the following:
 {
   id: 2210008,
@@ -319,7 +319,7 @@ const data = {
   recurring: false,
 };
 
-const result = await client.projects.update(data, callback);
+const result = await tickspot.projects.update(data, callback);
 // The result would be something like the following:
 { name: 'test #1', budget: 40 }
 ```
@@ -333,7 +333,7 @@ This method will delete a specific project. The params you can send are the foll
 **Warning**: The project and all time entries will be immediately deleted
 
 ```javascript
-const result = await client.projects.delete(123456);
+const result = await tickspot.projects.delete(123456);
 
 // The result will be true if the project was deleted
 ```
@@ -359,7 +359,7 @@ const params = {
   billable: true,
 };
 
-const result = await client.projects.listEntries(params);
+const result = await tickspot.projects.listEntries(params);
 // The result would be something like the following:
 [
   {
@@ -398,7 +398,7 @@ const callback = (responseData) =>
     };
   });
 
-const result = await client.projects.listEntries(params, callback);
+const result = await tickspot.projects.listEntries(params, callback);
 // The result would be something like the following:
 [
   {
@@ -419,7 +419,7 @@ This method will return all opened tasks for the project. This method needs the 
 - [Required] projectId, project unique identificator.
 
 ```javascript
-const result = await client.projects.listOpenedTasks(16);
+const result = await tickspot.projects.listOpenedTasks(16);
 // The result would be something like the following:
 [
   {
@@ -453,7 +453,7 @@ const callback = (responseData) => {
   });
 };
 
-const result = await client.projects.listOpenedTasks(16, callback);
+const result = await tickspot.projects.listOpenedTasks(16, callback);
 // The result would be something like the following:
 [
   { id: 123456, name: 'Task #1' },
@@ -469,7 +469,7 @@ This method will return all closed tasks for the project. This method needs the 
 - [Required] projectId, project unique identificator.
 
 ```javascript
-const result = await client.projects.listClosedTasks(16);
+const result = await tickspot.projects.listClosedTasks(16);
 // The result would be something like the following:
 [
   {
@@ -507,7 +507,7 @@ const callback = (responseData) => {
   });
 };
 
-const result = await client.projects.listClosedTasks(16, callback);
+const result = await tickspot.projects.listClosedTasks(16, callback);
 // The result would be something like the following:
 [
   { id: 123456, name: 'Task #1', day: 19, month: 0, year: 2022 },

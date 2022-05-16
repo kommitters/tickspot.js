@@ -1,6 +1,6 @@
 import ClientV2 from './v2/client.js';
 
-const tickspot = ({
+const init = ({
   apiVersion,
   subscriptionId,
   apiToken,
@@ -14,4 +14,4 @@ const tickspot = ({
   }
 };
 
-export default tickspot;
+export default { init };

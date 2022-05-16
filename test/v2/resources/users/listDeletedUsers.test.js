@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import listDeletedUsersFixture from '#test/v2/fixture/users/listDeletedUsersFixture';
@@ -10,8 +10,8 @@ import {
 } from '#test/v2/shared/responseCallback';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/users/deleted.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/users/deleted.json`;
 
 describe('#listDeleted', () => {
   beforeEach(() => {
@@ -31,7 +31,7 @@ describe('#listDeleted', () => {
     });
 
     it('should return a list with all deleted users', async () => {
-      const response = await client.users.listDeleted();
+      const response = await tickspot.users.listDeleted();
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -39,14 +39,14 @@ describe('#listDeleted', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.users.listDeleted();
+      await tickspot.users.listDeleted();
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.users.listDeleted({});
+      await tickspot.users.listDeleted({});
     },
   });
 
@@ -55,7 +55,7 @@ describe('#listDeleted', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.users.listDeleted(dataCallback);
+      const response = await tickspot.users.listDeleted(dataCallback);
       return [response, dataCallback];
     },
     responseData: listDeletedUsersFixture,

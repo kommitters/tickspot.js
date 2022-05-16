@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/tasks/getTaskFixture';
@@ -12,8 +12,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/tasks/123456.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/tasks/123456.json`;
 
 describe('#get', () => {
   beforeEach(() => {
@@ -33,7 +33,7 @@ describe('#get', () => {
     });
 
     it('should return the task data', async () => {
-      const response = await client.tasks.get(123456);
+      const response = await tickspot.tasks.get(123456);
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -41,21 +41,21 @@ describe('#get', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.tasks.get(123456);
+      await tickspot.tasks.get(123456);
     },
     URL,
   });
 
   notFoundTests({
     requestToExecute: async () => {
-      await client.tasks.get(654321);
+      await tickspot.tasks.get(654321);
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.tasks.get(123456, {});
+      await tickspot.tasks.get(123456, {});
     },
   });
 
@@ -64,7 +64,7 @@ describe('#get', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.tasks.get(123456, dataCallback);
+      const response = await tickspot.tasks.get(123456, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -73,7 +73,7 @@ describe('#get', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.tasks.get();
+      await tickspot.tasks.get();
     },
     URL,
     paramsList: ['taskId'],

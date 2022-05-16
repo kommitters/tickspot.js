@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/clients/createClientFixture.js';
@@ -11,8 +11,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/clients.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/clients.json`;
 
 describe('#create', () => {
   const clientData = {
@@ -37,14 +37,14 @@ describe('#create', () => {
     });
 
     it('should create the new client', async () => {
-      const response = await client.clients.create(clientData);
+      const response = await tickspot.clients.create(clientData);
       expect(response.data.name).toBe(clientData.name);
     });
   });
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.clients.create(clientData);
+      await tickspot.clients.create(clientData);
     },
     URL,
     method: 'post',
@@ -52,7 +52,7 @@ describe('#create', () => {
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.clients.create(clientData, {});
+      await tickspot.clients.create(clientData, {});
     },
     method: 'post',
   });
@@ -62,7 +62,7 @@ describe('#create', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.clients.create(clientData, dataCallback);
+      const response = await tickspot.clients.create(clientData, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -72,7 +72,7 @@ describe('#create', () => {
 
   wrongParamsTests({
     requestToExecute: async (requestParams) => {
-      await client.clients.create(requestParams);
+      await tickspot.clients.create(requestParams);
     },
     URL,
     method: 'post',

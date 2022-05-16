@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/clients/updateClientFixture.js';
@@ -11,8 +11,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/clients/123456.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/clients/123456.json`;
 
 describe('#update', () => {
   const clientData = {
@@ -38,14 +38,14 @@ describe('#update', () => {
     });
 
     it('should update the specific client', async () => {
-      const response = await client.clients.update(clientData);
+      const response = await tickspot.clients.update(clientData);
       expect(response.name).toBe(clientData.name);
     });
   });
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.clients.update(clientData);
+      await tickspot.clients.update(clientData);
     },
     URL,
     method: 'put',
@@ -53,7 +53,7 @@ describe('#update', () => {
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.clients.update(clientData, {});
+      await tickspot.clients.update(clientData, {});
     },
     method: 'put',
   });
@@ -63,7 +63,7 @@ describe('#update', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.clients.update(clientData, dataCallback);
+      const response = await tickspot.clients.update(clientData, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -73,7 +73,7 @@ describe('#update', () => {
 
   wrongParamsTests({
     requestToExecute: async (requestParams) => {
-      await client.clients.update(requestParams);
+      await tickspot.clients.update(requestParams);
     },
     URL,
     method: 'put',

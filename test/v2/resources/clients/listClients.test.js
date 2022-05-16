@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/clients/listClientsFixture';
@@ -11,8 +11,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/clients.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/clients.json`;
 
 describe('#list', () => {
   beforeEach(() => {
@@ -32,7 +32,7 @@ describe('#list', () => {
     });
 
     it('should return a list with all clients', async () => {
-      const response = await client.clients.list(1);
+      const response = await tickspot.clients.list(1);
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -40,14 +40,14 @@ describe('#list', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.clients.list(1);
+      await tickspot.clients.list(1);
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.clients.list(1, {});
+      await tickspot.clients.list(1, {});
     },
   });
 
@@ -56,7 +56,7 @@ describe('#list', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.clients.list(1, dataCallback);
+      const response = await tickspot.clients.list(1, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -65,7 +65,7 @@ describe('#list', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.clients.list();
+      await tickspot.clients.list();
     },
     URL,
     paramsList: ['page'],

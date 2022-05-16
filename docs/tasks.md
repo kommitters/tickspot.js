@@ -15,7 +15,7 @@ This module allows you to interact with the Tickspot tasks.
 This method will return all opened tasks across all projects.
 
 ```javascript
-const result = await client.tasks.listOpened();
+const result = await tickspot.tasks.listOpened();
 
 // The result would be something like the following:
 [
@@ -52,7 +52,7 @@ const callback = (responseData) => {
   });
 };
 
-const result = await client.tasks.listOpened(callback);
+const result = await tickspot.tasks.listOpened(callback);
 
 // The result would be something like the following:
 [
@@ -73,7 +73,7 @@ const result = await client.tasks.listOpened(callback);
 This method will return all closed tasks across all projects.
 
 ```javascript
-const result = await client.tasks.listClosed();
+const result = await tickspot.tasks.listClosed();
 
 // The result would be something like the following:
 [
@@ -110,7 +110,7 @@ const callback = (responseData) => {
   });
 };
 
-const result = await client.tasks.listClosed(callback);
+const result = await tickspot.tasks.listClosed(callback);
 
 // The result would be something like the following:
 [
@@ -133,7 +133,7 @@ This method will return the specified task. This method needs the following para
 - [Required] taskId, task unique identificator.
 
 ```javascript
-const result = await client.tasks.getTask(1);
+const result = await tickspot.tasks.getTask(1);
 
 // The result would be something like the following:
 {
@@ -185,7 +185,7 @@ const callback = (responseData) => {
   };
 };
 
-const result = await client.tasks.getTask(1, callback);
+const result = await tickspot.tasks.getTask(1, callback);
 
 // The result would be something like the following:
 {
@@ -216,7 +216,7 @@ const data = {
   billable: false,
   dateClosed: '2022-01-20',
 };
-const result = await client.tasks.create(data);
+const result = await tickspot.tasks.create(data);
 // The result would be something like the following:
 {
   id: 123456,
@@ -249,7 +249,7 @@ const data = {
   billable: false,
   dateClosed: '2022-01-20',
 };
-const result = await client.tasks.create(data, callback);
+const result = await tickspot.tasks.create(data, callback);
 // The result would be something like the following:
 {
   id: 1,
@@ -280,7 +280,7 @@ const data = {
   projectId: 7890,
   dateClosed: '2022-01-20',
 };
-const result = await client.tasks.update(data);
+const result = await tickspot.tasks.update(data);
 // The result would be something like the following:
 {
   id: 123456,
@@ -315,7 +315,7 @@ const data = {
   projectId: 7890,
   dateClosed: '2022-01-20',
 };
-const result = await client.tasks.update(data, callback);
+const result = await tickspot.tasks.update(data, callback);
 // The result would be something like the following:
 {
   id: 1,
@@ -333,7 +333,7 @@ This method will delete a specific task. The params you can send are the followi
 **Warning**: Only tasks without any entries can be deleted
 
 ```javascript
-const result = await client.tasks.delete(123456);
+const result = await tickspot.tasks.delete(123456);
 
 // The result will be true if the task was deleted
 ```
@@ -358,7 +358,7 @@ const params = {
   endDate: "2021-11-09",
   billable: true,
 };
-const result = await client.tasks.listEntries(params);
+const result = await tickspot.tasks.listEntries(params);
 // The result would be something like the following:
 [
   {
@@ -397,7 +397,7 @@ const callback = (responseData) =>
     };
   });
 
-const result = await client.tasks.listEntries(params, callback);
+const result = await tickspot.tasks.listEntries(params, callback);
 // The result would be something like the following:
 [
   {

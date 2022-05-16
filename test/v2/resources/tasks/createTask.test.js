@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/tasks/createTaskFixture';
 import responseFactory from '#test/v2/factories/responseFactory';
@@ -11,8 +11,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/tasks.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/tasks.json`;
 
 describe('#create', () => {
   const params = {
@@ -37,13 +37,13 @@ describe('#create', () => {
     });
 
     it('should return the data of the created task', async () => {
-      const response = await client.tasks.create(params);
+      const response = await tickspot.tasks.create(params);
 
       expect(axios.post).toHaveBeenCalledTimes(1);
       expect(axios.post).toHaveBeenCalledWith(
         URL,
         { name: 'Test', project_id: 7890 },
-        { headers: client.tasks.DEFAULT_HEADERS },
+        { headers: tickspot.tasks.DEFAULT_HEADERS },
       );
       expect(response).toEqual(requestResponse.data);
     });
@@ -51,7 +51,7 @@ describe('#create', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.tasks.create(params);
+      await tickspot.tasks.create(params);
     },
     URL,
     method: 'post',
@@ -59,7 +59,7 @@ describe('#create', () => {
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.tasks.create(params, {});
+      await tickspot.tasks.create(params, {});
     },
     method: 'post',
   });
@@ -70,7 +70,7 @@ describe('#create', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.tasks.create(params, dataCallback);
+      const response = await tickspot.tasks.create(params, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -79,7 +79,7 @@ describe('#create', () => {
 
   wrongParamsTests({
     requestToExecute: async (requestParams) => {
-      await client.tasks.create(requestParams);
+      await tickspot.tasks.create(requestParams);
     },
     URL,
     requestData: params,

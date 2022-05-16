@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/entries/updateEntryFixture';
@@ -12,8 +12,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/entries/123456.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/entries/123456.json`;
 
 describe('#update', () => {
   const requestResponse = responseFactory({
@@ -44,7 +44,7 @@ describe('#update', () => {
         billed: false,
       };
 
-      const response = await client.entries.update(data);
+      const response = await tickspot.entries.update(data);
 
       expect(axios.put).toHaveBeenCalledTimes(1);
       expect(response).toEqual(requestResponse.data);
@@ -63,7 +63,7 @@ describe('#update', () => {
         billed: false,
       };
 
-      await client.entries.update(data);
+      await tickspot.entries.update(data);
     },
     URL,
     method: 'put',
@@ -76,7 +76,7 @@ describe('#update', () => {
         taskId: 111,
       };
 
-      await client.entries.update(data);
+      await tickspot.entries.update(data);
     },
     URL,
     method: 'put',
@@ -88,7 +88,7 @@ describe('#update', () => {
         entryId: 654321,
         taskId: 111,
       };
-      await client.entries.update(data, {});
+      await tickspot.entries.update(data, {});
     },
   });
 
@@ -102,7 +102,7 @@ describe('#update', () => {
         entryId: 654321,
         taskId: 111,
       };
-      const response = await client.entries.update(data, dataCallback);
+      const response = await tickspot.entries.update(data, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -112,7 +112,7 @@ describe('#update', () => {
 
   wrongParamsTests({
     requestToExecute: async (requestParams) => {
-      await client.entries.update(requestParams);
+      await tickspot.entries.update(requestParams);
     },
     URL,
     requestData: {},

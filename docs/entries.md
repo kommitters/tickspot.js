@@ -29,7 +29,7 @@ const params = {
   billable: true,
 };
 
-const result = await client.entries.list(params);
+const result = await tickspot.entries.list(params);
 
 // The result would be something like the following:
 [
@@ -68,7 +68,7 @@ const callback = (responseData) =>
     };
   });
 
-const result = await client.entries.list(params, callback);
+const result = await tickspot.entries.list(params, callback);
 // The result would be something like the following:
 [
   {
@@ -89,7 +89,7 @@ This will return the specified entry info. This method needs the following param
 - [Required] entryId, entry unique identificator.
 
 ```javascript
-const result = await client.entries.getEntry(1);
+const result = await tickspot.entries.getEntry(1);
 
 // The result would be something like the following:
 {
@@ -132,7 +132,7 @@ const callback = (responseData) => {
   };
 };
 
-const result = await client.entries.getEntry(1, callback);
+const result = await tickspot.entries.getEntry(1, callback);
 
 // The result would be something like the following:
 {
@@ -165,7 +165,7 @@ const data = {
   taskId: 12345678,
 };
 
-const result = await client.entries.create(data);
+const result = await tickspot.entries.create(data);
 
 // The result would be something like the following:
 {
@@ -200,7 +200,7 @@ const callback = (responseData) => {
   };
 };
 
-const result = await client.entries.create(data, callback);
+const result = await tickspot.entries.create(data, callback);
 
 // The result would be something like the following:
 {
@@ -236,7 +236,7 @@ const data = {
   billed: true,
 };
 
-const result = await client.entries.updateEntry(data);
+const result = await tickspot.entries.updateEntry(data);
 
 // The result would be something like the following:
 {
@@ -276,7 +276,7 @@ const data = {
   billed: true,
 };
 
-const result = await client.entries.updateEntry(data, callback);
+const result = await tickspot.entries.updateEntry(data, callback);
 // The result would be something like the following:
 {
   id: 1,
@@ -294,7 +294,7 @@ This method will delete the entry. The params you can send are the following:
 - [Required] entryId, entry unique identificator.
 
 ```javascript
-const result = await client.entries.deleteEntry("100773532");
+const result = await tickspot.entries.deleteEntry("100773532");
 
 // The result will be true if task was deleted
 ```

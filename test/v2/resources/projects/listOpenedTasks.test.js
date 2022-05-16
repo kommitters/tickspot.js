@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/tasks/openedTasksFixture';
@@ -11,8 +11,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/projects/123/tasks.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/projects/123/tasks.json`;
 
 describe('#listOpenedTasks', () => {
   beforeEach(() => {
@@ -32,7 +32,7 @@ describe('#listOpenedTasks', () => {
     });
 
     it('should return all opened tasks for the project', async () => {
-      const response = await client.projects.listOpenedTasks(123);
+      const response = await tickspot.projects.listOpenedTasks(123);
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -40,14 +40,14 @@ describe('#listOpenedTasks', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.projects.listOpenedTasks(123);
+      await tickspot.projects.listOpenedTasks(123);
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.projects.listOpenedTasks(123, {});
+      await tickspot.projects.listOpenedTasks(123, {});
     },
   });
 
@@ -56,7 +56,7 @@ describe('#listOpenedTasks', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.projects.listOpenedTasks(123, dataCallback);
+      const response = await tickspot.projects.listOpenedTasks(123, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -65,7 +65,7 @@ describe('#listOpenedTasks', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.projects.listOpenedTasks();
+      await tickspot.projects.listOpenedTasks();
     },
     URL,
     paramsList: ['projectId'],

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/entries/listEntriesFixture';
 import responseFactory from '#test/v2/factories/responseFactory';
@@ -11,8 +11,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/entries.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/entries.json`;
 
 describe('#list', () => {
   const params = {
@@ -38,13 +38,13 @@ describe('#list', () => {
     });
 
     it('should return the list of tick entries', async () => {
-      const response = await client.entries.list(params);
+      const response = await tickspot.entries.list(params);
 
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(axios.get).toHaveBeenCalledWith(
         URL,
         {
-          headers: client.entries.DEFAULT_HEADERS,
+          headers: tickspot.entries.DEFAULT_HEADERS,
           params: { end_date: '2021-11-09', start_date: '2021-11-08', user_id: 'userId' },
         },
       );
@@ -54,14 +54,14 @@ describe('#list', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.entries.list(params);
+      await tickspot.entries.list(params);
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.entries.list(params, {});
+      await tickspot.entries.list(params, {});
     },
   });
 
@@ -70,7 +70,7 @@ describe('#list', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.entries.list(params, dataCallback);
+      const response = await tickspot.entries.list(params, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -79,7 +79,7 @@ describe('#list', () => {
 
   wrongParamsTests({
     requestToExecute: async (requestParams) => {
-      await client.entries.list(requestParams);
+      await tickspot.entries.list(requestParams);
     },
     URL,
     requestData: params,

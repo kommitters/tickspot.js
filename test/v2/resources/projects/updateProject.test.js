@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/projects/createProjectFixture.js';
@@ -11,8 +11,8 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/projects/123456.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/projects/123456.json`;
 
 describe('#update', () => {
   const projectData = {
@@ -43,14 +43,14 @@ describe('#update', () => {
     });
 
     it('should update the specific project', async () => {
-      const response = await client.projects.update(projectData);
+      const response = await tickspot.projects.update(projectData);
       expect(response.data.name).toBe(projectData.name);
     });
   });
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.projects.update(projectData);
+      await tickspot.projects.update(projectData);
     },
     URL,
     method: 'put',
@@ -58,7 +58,7 @@ describe('#update', () => {
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.projects.update(projectData, {});
+      await tickspot.projects.update(projectData, {});
     },
     method: 'put',
   });
@@ -68,7 +68,7 @@ describe('#update', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.projects.update(projectData, dataCallback);
+      const response = await tickspot.projects.update(projectData, dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
@@ -78,7 +78,7 @@ describe('#update', () => {
 
   wrongParamsTests({
     requestToExecute: async (requestParams) => {
-      await client.projects.update(requestParams);
+      await tickspot.projects.update(requestParams);
     },
     URL,
     method: 'put',

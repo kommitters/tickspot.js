@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import { noContentResponse } from '#test/v2/fixture/shared/errorResponses';
@@ -9,8 +9,8 @@ import wrongParamsTests from '#test/v2/shared/wrongParams';
 import notAcceptableTest from '#test/v2/shared/notAcceptable';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/clients/123456.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/clients/123456.json`;
 
 describe('#delete', () => {
   beforeEach(() => {
@@ -30,7 +30,7 @@ describe('#delete', () => {
     });
 
     it('should return true', async () => {
-      const response = await client.clients.delete(123456);
+      const response = await tickspot.clients.delete(123456);
 
       expect(axios.delete).toHaveBeenCalledTimes(1);
       expect(response).toEqual(true);
@@ -39,7 +39,7 @@ describe('#delete', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.clients.delete(123456);
+      await tickspot.clients.delete(123456);
     },
     URL,
     method: 'delete',
@@ -47,7 +47,7 @@ describe('#delete', () => {
 
   notFoundTests({
     requestToExecute: async () => {
-      await client.clients.delete(654321);
+      await tickspot.clients.delete(654321);
     },
     URL,
     method: 'delete',
@@ -55,7 +55,7 @@ describe('#delete', () => {
 
   wrongParamsTests({
     requestToExecute: async () => {
-      await client.clients.delete();
+      await tickspot.clients.delete();
     },
     URL,
     paramsList: ['clientId'],
@@ -64,7 +64,7 @@ describe('#delete', () => {
 
   notAcceptableTest({
     requestToExecute: async () => {
-      await client.clients.delete(123456);
+      await tickspot.clients.delete(123456);
     },
     URL,
     method: 'delete',

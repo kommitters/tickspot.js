@@ -1,5 +1,5 @@
 import axios from 'axios';
-import tickspot from '#src/index';
+import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
 import userInfo from '#test/v2/fixture/client';
 import successfulResponseData from '#test/v2/fixture/tasks/openedTasksFixture';
@@ -10,8 +10,8 @@ import {
 } from '#test/v2/shared/responseCallback';
 
 jest.mock('axios');
-const client = tickspot({ apiVersion: 2, ...userInfo });
-const URL = `${client.baseURL}/tasks.json`;
+const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const URL = `${tickspot.baseURL}/tasks.json`;
 
 describe('#listOpened', () => {
   beforeEach(() => {
@@ -31,7 +31,7 @@ describe('#listOpened', () => {
     });
 
     it('should return a list with all opened tasks across all projects', async () => {
-      const response = await client.tasks.listOpened();
+      const response = await tickspot.tasks.listOpened();
       expect(axios.get).toHaveBeenCalledTimes(1);
       expect(response).toBe(requestResponse.data);
     });
@@ -39,14 +39,14 @@ describe('#listOpened', () => {
 
   authenticationErrorTests({
     requestToExecute: async () => {
-      await client.tasks.listOpened();
+      await tickspot.tasks.listOpened();
     },
     URL,
   });
 
   badResponseCallbackTests({
     requestToExecute: async () => {
-      await client.tasks.listOpened({});
+      await tickspot.tasks.listOpened({});
     },
   });
 
@@ -55,7 +55,7 @@ describe('#listOpened', () => {
       const dataCallback = jest
         .fn()
         .mockImplementation((data) => ({ newStructure: { ...data } }));
-      const response = await client.tasks.listOpened(dataCallback);
+      const response = await tickspot.tasks.listOpened(dataCallback);
       return [response, dataCallback];
     },
     responseData: successfulResponseData,
