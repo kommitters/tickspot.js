@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Tickspot from '#src/index';
 import responseFactory from '#test/v2/factories/responseFactory';
-import userInfo from '#test/v2/fixture/client';
+import credentials from '#test/v2/fixture/credentials';
 import successfulResponseData from '#test/v2/fixture/clients/updateClientFixture.js';
 import authenticationErrorTests from '#test/v2/shared/authentication';
 import {
@@ -11,7 +11,7 @@ import {
 import wrongParamsTests from '#test/v2/shared/wrongParams';
 
 jest.mock('axios');
-const tickspot = Tickspot.init({ apiVersion: 2, ...userInfo });
+const tickspot = Tickspot.init({ apiVersion: 2, ...credentials });
 const URL = `${tickspot.baseURL}/clients/123456.json`;
 
 describe('#update', () => {

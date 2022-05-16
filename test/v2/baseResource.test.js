@@ -1,5 +1,5 @@
 import BaseResource from '#src/v2/baseResource';
-import userInfo from '#test/v2/fixture/client';
+import credentials from '#test/v2/fixture/credentials';
 import { TICK_BASE_URL_START } from '#src/v2/constants';
 import {
   badResponseCallbackTests,
@@ -8,10 +8,10 @@ import {
 import { mockResolvedValueOnce, shouldHaveBeenCalledTimes } from './shared/utils/axios';
 
 jest.mock('axios');
-const auth = `Token token=${userInfo.apiToken}`;
+const auth = `Token token=${credentials.apiToken}`;
 const URL = TICK_BASE_URL_START;
 const resource = new BaseResource({
-  auth, baseURL: URL, agentEmail: userInfo.agentEmail,
+  auth, baseURL: URL, agentEmail: credentials.agentEmail,
 });
 
 describe('BaseResource', () => {
